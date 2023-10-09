@@ -6,13 +6,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using DB_Setup;
-using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        CultureInfo cultureInfo = new CultureInfo("uk-UA");
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
         SetupScript setupScript = new SetupScript();
         setupScript.SetupDatabase();
 

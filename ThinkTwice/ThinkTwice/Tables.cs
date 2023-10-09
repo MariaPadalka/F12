@@ -7,6 +7,10 @@ namespace DB_Setup
 {
     public class Tables
     {
+        int numberOfUsers = 3;
+        int numberOfCategories = 10;
+
+        // Створення користувачів та категорій
         public void Fill_Tables()
         {
             // Отримання рядка підключення до бази даних з appsettings.json
@@ -24,20 +28,21 @@ namespace DB_Setup
                     connection.Open();
 
                     // Заповнення таблиці Users
-                    FillUsersTable(connection, 3, 30, 50);
+                    Guid[] userIds = FillUsersTable(connection, numberOfUsers);
 
                     // Заповнення таблиці Categories
-                    FillCategoryTable(connection, 10);
+                    Guid[] categoryIds = FillCategoryTable(connection, numberOfCategories);
 
                     // Заповнення таблиці Transactions
-                    FillTransactionsTable(connection, 3, 30, 50);
+                    FillTransactionsTable(connection, userIds, categoryIds, 30, 50);
 
                     // Заповнення таблиці Planning
-                    FillPlanningTable(connection, 3, 5);
+                    FillPlanningTable(connection, userIds, categoryIds);
 
                     Console.WriteLine("Данi успiшно доданi до бази даних.");
                     Console.WriteLine("Натиснiть будь-яку клавiшу для друку даних з таблиць...");
                     Console.ReadKey();
+                    Print_Tables(connectionString);
                     Console.WriteLine("");
                 }
             }
@@ -47,12 +52,14 @@ namespace DB_Setup
             }
         }
 
-        // Функція заповнення таблиці Users
-        static void FillUsersTable(SqlConnection connection, int numberOfUsers, int minTransactions, int maxTransactions)
+        // Функція заповнення таблиці Users і повернення створених id
+        static Guid[] FillUsersTable(SqlConnection connection, int numberOfUsers)
         {
             var faker = new Faker();
+            Guid[] userIds = new Guid[numberOfUsers];
+
             using (SqlCommand command = new SqlCommand("INSERT INTO Users (Email, Password, Name, Surname, BirthDate, Currency, AverageIncome) " +
-                "VALUES (@Email, @Password, @Name, @Surname, @BirthDate, @Currency, @AverageIncome)", connection))
+                "OUTPUT INSERTED.Id VALUES (@Email, @Password, @Name, @Surname, @BirthDate, @Currency, @AverageIncome)", connection))
             {
                 for (int i = 0; i < numberOfUsers; i++)
                 {
@@ -65,20 +72,21 @@ namespace DB_Setup
                     command.Parameters.AddWithValue("@Currency", faker.PickRandom("USD", "EUR", "GBP"));
                     command.Parameters.AddWithValue("@AverageIncome", faker.Random.Decimal(30000, 80000));
 
-                    command.ExecuteNonQuery();
-
-                    // Заповнення таблиці Transactions для поточного користувача
-                    FillTransactionsTable(connection, 1, minTransactions, maxTransactions);
+                    userIds[i] = (Guid)command.ExecuteScalar();
                 }
             }
+
+            return userIds;
         }
 
-        // Функція заповнення таблиці Categories
-        static void FillCategoryTable(SqlConnection connection, int numberOfCategories)
+        // Функція заповнення таблиці Categories і повернення створених id
+        static Guid[] FillCategoryTable(SqlConnection connection, int numberOfCategories)
         {
             var faker = new Faker();
+            Guid[] categoryIds = new Guid[numberOfCategories];
+
             using (SqlCommand command = new SqlCommand("INSERT INTO Categories (UserId, Title, IsGeneral) " +
-                "VALUES (@UserId, @Title, @IsGeneral)", connection))
+                "OUTPUT INSERTED.Id VALUES (@UserId, @Title, @IsGeneral)", connection))
             {
                 for (int i = 0; i < numberOfCategories; i++)
                 {
@@ -87,51 +95,108 @@ namespace DB_Setup
                     command.Parameters.AddWithValue("@Title", faker.Commerce.Department());
                     command.Parameters.AddWithValue("@IsGeneral", faker.Random.Bool() ? 1 : 0);
 
-                    command.ExecuteNonQuery();
+                    categoryIds[i] = (Guid)command.ExecuteScalar();
                 }
             }
+
+            return categoryIds;
         }
 
         // Функція заповнення таблиці Transactions
-        static void FillTransactionsTable(SqlConnection connection, int userId, int minTransactions, int maxTransactions)
+        static void FillTransactionsTable(SqlConnection connection, Guid[] userIds, Guid[] categoryIds, int minTransactions, int maxTransactions)
         {
             var faker = new Faker();
             using (SqlCommand command = new SqlCommand("INSERT INTO Transactions (UserId, CategoryId, Amount, Date, Title, Details, Planned) " +
                 "VALUES (@UserId, @CategoryId, @Amount, @Date, @Title, @Details, @Planned)", connection))
             {
-                for (int i = 0; i < faker.Random.Number(minTransactions, maxTransactions); i++)
+                for (int i = 0; i < userIds.Length; i++)
                 {
-                    command.Parameters.Clear();
-                    command.Parameters.AddWithValue("@UserId", userId);
-                    command.Parameters.AddWithValue("@CategoryId", faker.Random.Number(1, 10)); // Замініть 10 на кількість категорій
-                    command.Parameters.AddWithValue("@Amount", faker.Random.Decimal(1, 1000));
-                    command.Parameters.AddWithValue("@Date", faker.Date.Past());
-                    command.Parameters.AddWithValue("@Title", faker.Commerce.ProductName());
-                    command.Parameters.AddWithValue("@Details", faker.Lorem.Sentence());
-                    command.Parameters.AddWithValue("@Planned", faker.Random.Bool() ? 1 : 0);
+                    for (int j = 0; j < faker.Random.Number(minTransactions, maxTransactions); j++)
+                    {
+                        command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@UserId", userIds[i]);
+                        command.Parameters.AddWithValue("@CategoryId", faker.PickRandom(categoryIds));
+                        command.Parameters.AddWithValue("@Amount", faker.Random.Decimal(1, 1000));
+                        command.Parameters.AddWithValue("@Date", faker.Date.Past());
+                        command.Parameters.AddWithValue("@Title", faker.Commerce.ProductName());
+                        command.Parameters.AddWithValue("@Details", faker.Lorem.Sentence());
+                        command.Parameters.AddWithValue("@Planned", faker.Random.Bool() ? 1 : 0);
 
-                    command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
+                    }
                 }
             }
         }
 
         // Функція заповнення таблиці Planning
-        static void FillPlanningTable(SqlConnection connection, int numberOfUsers, int numberOfCategories)
+        static void FillPlanningTable(SqlConnection connection, Guid[] userIds, Guid[] categoryIds)
         {
             var faker = new Faker();
             using (SqlCommand command = new SqlCommand("INSERT INTO Planning (UserId, CategoryId, PercentageAmount) " +
                 "VALUES (@UserId, @CategoryId, @PercentageAmount)", connection))
             {
-                for (int i = 1; i <= numberOfUsers; i++)
+                for (int i = 0; i < userIds.Length; i++)
                 {
-                    for (int j = 1; j <= numberOfCategories; j++)
+                    for (int j = 0; j < categoryIds.Length; j++)
                     {
                         command.Parameters.Clear();
-                        command.Parameters.AddWithValue("@UserId", i);
-                        command.Parameters.AddWithValue("@CategoryId", j);
+                        command.Parameters.AddWithValue("@UserId", userIds[i]);
+                        command.Parameters.AddWithValue("@CategoryId", categoryIds[j]);
                         command.Parameters.AddWithValue("@PercentageAmount", faker.Random.Decimal(0, 100));
 
                         command.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+
+        public void Print_Tables(string connectionString)
+        {
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Виведення всіх даних з таблиці користувачів
+                    Console.WriteLine("\nДанi з таблицi користувачів:");
+                    DisplayDataFromTable(connection, "users");
+
+                    // Виведення всіх даних з інших таблиць аналогічним чином
+                    Console.WriteLine("\nДанi з таблицi транзакцій:");
+                    DisplayDataFromTable(connection, "transactions");
+
+                    Console.WriteLine("\nДанi з таблицi категорій:");
+                    DisplayDataFromTable(connection, "categories");
+
+                    Console.WriteLine("\nДанi з таблицi розподілу бюджету:");
+                    DisplayDataFromTable(connection, "planning");
+
+                    connection.Close();
+                }
+
+                Console.WriteLine("Натиснiть будь-яку клавiшу для завершення...");
+                Console.ReadKey();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Помилка: " + ex.Message);
+            }
+        }
+        static void DisplayDataFromTable(SqlConnection connection, string tableName)
+        {
+            using (SqlCommand command = new SqlCommand($"SELECT * FROM {tableName}", connection))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            Console.WriteLine($"{reader.GetName(i)}: {reader[i]}");
+                        }
+                        Console.WriteLine("---------------");
                     }
                 }
             }
