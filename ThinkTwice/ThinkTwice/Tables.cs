@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using Bogus;
 using System.Data;
+using BCrypt.Net;
 
 namespace DB_Setup
 {
@@ -65,7 +66,8 @@ namespace DB_Setup
                 {
                     command.Parameters.Clear();
                     command.Parameters.AddWithValue("@Email", faker.Internet.Email());
-                    command.Parameters.AddWithValue("@Password", faker.Internet.Password());
+                    string password = faker.Internet.Password();
+                    command.Parameters.AddWithValue("@Password", BCrypt.Net.BCrypt.HashPassword(password));
                     command.Parameters.AddWithValue("@Name", faker.Name.FirstName());
                     command.Parameters.AddWithValue("@Surname", faker.Name.LastName());
                     command.Parameters.AddWithValue("@BirthDate", faker.Date.Between(new DateTime(1960, 1, 1), new DateTime(2005, 1, 1)));
