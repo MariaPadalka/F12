@@ -6,8 +6,7 @@ CREATE TABLE Users (
     Name NVARCHAR(50) NOT NULL,
     Surname NVARCHAR(50) NOT NULL,
     BirthDate DATE,
-    Currency NVARCHAR(3) NOT NULL,
-    AverageIncome DECIMAL(10, 2)
+    Currency NVARCHAR(3) NOT NULL
 );
 
 -- Таблиця категорій
@@ -16,14 +15,18 @@ CREATE TABLE Categories (
     UserId UNIQUEIDENTIFIER,
     Title NVARCHAR(50) NOT NULL,
     IsGeneral BIT NOT NULL, 
-    FOREIGN KEY (UserId) REFERENCES Users(Id)
+    PercentageAmount DECIMAL(5, 2) NOT NULL,
+    Type nvarchar(50) NOT NULL,
+    FOREIGN KEY (UserId) REFERENCES Users(Id),
+    CHECK (Type IN ('Дохід', 'Витрати', 'Баланс')) 
 );
 
 -- Таблиця записів про доходи та витрати
 CREATE TABLE Transactions (
     Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
     UserId UNIQUEIDENTIFIER NOT NULL,
-    CategoryId UNIQUEIDENTIFIER,
+    From_category UNIQUEIDENTIFIER,
+    To_category UNIQUEIDENTIFIER,
     Amount DECIMAL(10, 2) NOT NULL,
     Date DATE,
     Title NVARCHAR(50) NOT NULL,
@@ -31,16 +34,6 @@ CREATE TABLE Transactions (
     Planned BIT NOT NULL,
 
     FOREIGN KEY (UserId) REFERENCES Users(Id),
-    FOREIGN KEY (CategoryId) REFERENCES Categories(Id)
-);
-
--- Таблиця записів про планування
-CREATE TABLE Planning (
-    Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-    CategoryId UNIQUEIDENTIFIER NOT NULL,
-    UserId UNIQUEIDENTIFIER NOT NULL,
-    PercentageAmount DECIMAL(5, 2) NOT NULL,
-
-    FOREIGN KEY (UserId) REFERENCES Users(Id),
-    FOREIGN KEY (CategoryId) REFERENCES Categories(Id)
+    FOREIGN KEY (From_category) REFERENCES Categories(Id),
+    FOREIGN KEY (To_category) REFERENCES Categories(Id)
 );

@@ -6,6 +6,12 @@ using BCrypt.Net;
 
 namespace DB_Setup
 {
+    public enum TransType
+    {
+        Дохід, 
+        Витрати, 
+        Баланс
+    }
     public class Tables
     {
         int numberOfUsers = 3;
@@ -37,8 +43,6 @@ namespace DB_Setup
                     // Заповнення таблиці Transactions
                     FillTransactionsTable(connection, userIds, categoryIds, 30, 50);
 
-                    // Заповнення таблиці Planning
-                    FillPlanningTable(connection, userIds, categoryIds);
 
                     Console.WriteLine("Данi успiшно доданi до бази даних.");
                     Console.WriteLine("Натиснiть будь-яку клавiшу для друку даних з таблиць...");
@@ -59,8 +63,8 @@ namespace DB_Setup
             var faker = new Faker();
             Guid[] userIds = new Guid[numberOfUsers];
 
-            using (SqlCommand command = new SqlCommand("INSERT INTO Users (Email, Password, Name, Surname, BirthDate, Currency, AverageIncome) " +
-                "OUTPUT INSERTED.Id VALUES (@Email, @Password, @Name, @Surname, @BirthDate, @Currency, @AverageIncome)", connection))
+            using (SqlCommand command = new SqlCommand("INSERT INTO Users (Email, Password, Name, Surname, BirthDate, Currency) " +
+                "OUTPUT INSERTED.Id VALUES (@Email, @Password, @Name, @Surname, @BirthDate, @Currency)", connection))
             {
                 for (int i = 0; i < numberOfUsers; i++)
                 {
@@ -72,7 +76,6 @@ namespace DB_Setup
                     command.Parameters.AddWithValue("@Surname", faker.Name.LastName());
                     command.Parameters.AddWithValue("@BirthDate", faker.Date.Between(new DateTime(1960, 1, 1), new DateTime(2005, 1, 1)));
                     command.Parameters.AddWithValue("@Currency", faker.PickRandom("USD", "EUR", "GBP"));
-                    command.Parameters.AddWithValue("@AverageIncome", faker.Random.Decimal(30000, 80000));
 
                     userIds[i] = (Guid)command.ExecuteScalar();
                 }
@@ -87,8 +90,8 @@ namespace DB_Setup
             var faker = new Faker();
             Guid[] categoryIds = new Guid[numberOfCategories];
 
-            using (SqlCommand command = new SqlCommand("INSERT INTO Categories (UserId, Title, IsGeneral) " +
-                "OUTPUT INSERTED.Id VALUES (@UserId, @Title, @IsGeneral)", connection))
+            using (SqlCommand command = new SqlCommand("INSERT INTO Categories (UserId, Title, IsGeneral, PercentageAmount, Type) " +
+                "OUTPUT INSERTED.Id VALUES (@UserId, @Title, @IsGeneral, @PercentageAmount, @Type)", connection))
             {
                 for (int i = 0; i < numberOfCategories; i++)
                 {
@@ -96,6 +99,8 @@ namespace DB_Setup
                     command.Parameters.AddWithValue("@UserId", DBNull.Value); // UserId = null
                     command.Parameters.AddWithValue("@Title", faker.Commerce.Department());
                     command.Parameters.AddWithValue("@IsGeneral", faker.Random.Bool() ? 1 : 0);
+                    command.Parameters.AddWithValue("@PercentageAmount", faker.Random.Decimal(0, 100));
+                    command.Parameters.AddWithValue("@Type", ((TransType)faker.Random.Number(0,2)).ToString());
 
                     categoryIds[i] = (Guid)command.ExecuteScalar();
                 }
@@ -108,8 +113,8 @@ namespace DB_Setup
         static void FillTransactionsTable(SqlConnection connection, Guid[] userIds, Guid[] categoryIds, int minTransactions, int maxTransactions)
         {
             var faker = new Faker();
-            using (SqlCommand command = new SqlCommand("INSERT INTO Transactions (UserId, CategoryId, Amount, Date, Title, Details, Planned) " +
-                "VALUES (@UserId, @CategoryId, @Amount, @Date, @Title, @Details, @Planned)", connection))
+            using (SqlCommand command = new SqlCommand("INSERT INTO Transactions (UserId, From_category, To_category, Amount, Date, Title, Details, Planned) " +
+                "VALUES (@UserId, @From_category, @To_category, @Amount, @Date, @Title, @Details, @Planned)", connection))
             {
                 for (int i = 0; i < userIds.Length; i++)
                 {
@@ -117,34 +122,13 @@ namespace DB_Setup
                     {
                         command.Parameters.Clear();
                         command.Parameters.AddWithValue("@UserId", userIds[i]);
-                        command.Parameters.AddWithValue("@CategoryId", faker.PickRandom(categoryIds));
+                        command.Parameters.AddWithValue("@From_category", faker.PickRandom(categoryIds));
+                        command.Parameters.AddWithValue("@To_category", faker.PickRandom(categoryIds));
                         command.Parameters.AddWithValue("@Amount", faker.Random.Decimal(1, 1000));
                         command.Parameters.AddWithValue("@Date", faker.Date.Past());
                         command.Parameters.AddWithValue("@Title", faker.Commerce.ProductName());
                         command.Parameters.AddWithValue("@Details", faker.Lorem.Sentence());
                         command.Parameters.AddWithValue("@Planned", faker.Random.Bool() ? 1 : 0);
-
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-        }
-
-        // Функція заповнення таблиці Planning
-        static void FillPlanningTable(SqlConnection connection, Guid[] userIds, Guid[] categoryIds)
-        {
-            var faker = new Faker();
-            using (SqlCommand command = new SqlCommand("INSERT INTO Planning (UserId, CategoryId, PercentageAmount) " +
-                "VALUES (@UserId, @CategoryId, @PercentageAmount)", connection))
-            {
-                for (int i = 0; i < userIds.Length; i++)
-                {
-                    for (int j = 0; j < categoryIds.Length; j++)
-                    {
-                        command.Parameters.Clear();
-                        command.Parameters.AddWithValue("@UserId", userIds[i]);
-                        command.Parameters.AddWithValue("@CategoryId", categoryIds[j]);
-                        command.Parameters.AddWithValue("@PercentageAmount", faker.Random.Decimal(0, 100));
 
                         command.ExecuteNonQuery();
                     }
@@ -171,9 +155,6 @@ namespace DB_Setup
 
                     Console.WriteLine("\nДанi з таблицi категорій:");
                     DisplayDataFromTable(connection, "categories");
-
-                    Console.WriteLine("\nДанi з таблицi розподілу бюджету:");
-                    DisplayDataFromTable(connection, "planning");
 
                     connection.Close();
                 }
