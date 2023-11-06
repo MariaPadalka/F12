@@ -1,4 +1,4 @@
-﻿namespace DLL
+﻿namespace DAL
 {
     public class Class1
     {
