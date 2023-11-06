@@ -18,7 +18,7 @@ CREATE TABLE Categories (
     PercentageAmount DECIMAL(5, 2) NOT NULL,
     Type nvarchar(50) NOT NULL,
     FOREIGN KEY (UserId) REFERENCES Users(Id),
-    CHECK (Type IN ('Дохід', 'Витрати', 'Баланс')) 
+    CHECK (Type IN (N'Дохід', N'Витрати', N'Баланс')) 
 );
 
 -- Таблиця записів про доходи та витрати
