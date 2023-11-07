@@ -8,15 +8,55 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="icons\blue_dollar.png" />
+    <None Remove="icons\green-dollar.png" />
+    <None Remove="icons\home.png" />
+    <None Remove="icons\payment.png" />
+    <None Remove="icons\red-dollar.png" />
+    <None Remove="icons\settings.png" />
+    <None Remove="icons\statistics.png" />
     <None Remove="icons\thinkTwice.PNG" />
     <None Remove="icons\ThinkTwice2.PNG" />
+    <None Remove="icons\ThinkTwiceBlack.PNG" />
+    <None Remove="icons\transactions.png" />
+    <None Remove="icons\violet-dollar.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="icons\blue_dollar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\green-dollar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\home.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\payment.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\red-dollar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\settings.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\statistics.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="icons\thinkTwice.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="icons\ThinkTwice2.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\ThinkTwiceBlack.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\transactions.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\violet-dollar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

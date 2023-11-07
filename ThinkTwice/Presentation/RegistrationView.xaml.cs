@@ -154,7 +154,7 @@ namespace Presentation
             {
                 firstNameError.Text = "Ім'я повинне мати від 2 до 18 символів.";                
             }
-            else if (!Regex.IsMatch(firstName, "^[a-zA-Z&]*$") && !Regex.IsMatch(firstName, "[а-яА-ЯїЇєЄґҐіІ\']"))
+            else if (!Regex.IsMatch(firstName, "[a-zA-Z&]*$") || !Regex.IsMatch(firstName, "[а-яА-ЯїЇєЄґҐіІ\']*"))
             {
                 firstNameError.Text = "Введіть коректне ім'я.";
             }

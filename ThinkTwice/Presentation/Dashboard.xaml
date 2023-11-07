@@ -16,7 +16,66 @@
         </Grid.ColumnDefinitions>
 
         <!-- Blue container for the menu -->
+
+        <!-- White container for the main content -->
+        <!-- Blue container for the menu -->
         <Grid Background="#121B28">
+            <TextBlock Text="Think Twice" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,22,0,0" FontSize="17" Foreground="White"/>
+
+            <Grid MaxHeight="200" Margin="0,75,0,162">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Border Grid.Row="0" Background="White" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Height="30" Margin="0,75,0,0">
+                        <TextBlock Text="Панель керування" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black" FontSize="12" FontWeight="Bold" Margin="32,0,0,0"/>
+                    </Border>
+                </Grid>
+            </Grid>
+
+
+
+            <TextBlock Grid.Row="1" Text="Транзакції" HorizontalAlignment="Center" VerticalAlignment="Top"  Foreground="#A0A4A9"  FontSize="12" FontWeight="Bold" Margin="0,133,0,0"/>
+
+
+            <TextBlock Grid.Row="2" Text="Оплата" HorizontalAlignment="Center" VerticalAlignment="Top"  Foreground="#A0A4A9"  FontSize="12" FontWeight="Bold" Margin="0,172,0,0"/>
+
+
+            <TextBlock Grid.Row="3" Text="Статистика" HorizontalAlignment="Center" VerticalAlignment="Top"  Foreground="#A0A4A9"  FontSize="12" FontWeight="Bold" Margin="0,213,0,0"/>
+
+            <TextBlock Grid.Row="4" Text="Налаштування" HorizontalAlignment="Left" VerticalAlignment="Top"  Foreground="#A0A4A9"  FontSize="12" FontWeight="Bold" Margin="50,255,0,0"/>
+            <Image x:Name="___icons_statistics" Margin="14,213,123,222" RenderTransformOrigin="-3.669,-1.36" Height="15" Grid.Row="2">
+                <Image.Source>
+                    <BitmapImage UriSource="/icons/statistics.PNG" />
+                </Image.Source>
+            </Image>
+            <Image x:Name="___icons_home" Margin="14,82,123,353" RenderTransformOrigin="-3.669,-1.36" Height="15" Grid.Row="4">
+                <Image.Source>
+                    <BitmapImage UriSource="/icons/home.PNG" />
+                </Image.Source>
+            </Image>
+            <Image x:Name="___icons_settings" Margin="14,256,123,179" RenderTransformOrigin="-3.669,-1.36" Height="15" Grid.Row="0">
+                <Image.Source>
+                    <BitmapImage UriSource="/icons/settings.PNG" />
+                </Image.Source>
+            </Image>
+            <Image x:Name="___icons_payment" Margin="14,130,123,222" RenderTransformOrigin="-3.669,-1.36" Height="15" Grid.Row="3">
+                <Image.Source>
+                    <BitmapImage UriSource="/icons/payment.PNG" />
+                </Image.Source>
+            </Image>
+            <Image x:Name="___icons_transactions" Margin="14,55,123,222" RenderTransformOrigin="-3.669,-1.36" Height="15" Grid.Row="1">
+                <Image.Source>
+                    <BitmapImage UriSource="/icons/transactions.PNG" />
+                </Image.Source>
+            </Image>
+
+
             <!--<TextBlock Height="24" HorizontalAlignment="Left" Margin="132,105,0,0" x:Name="textBlockHeading" Text="Перекази" VerticalAlignment="Top" Width="154"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold"/>
                 <TextBlock Height="24" HorizontalAlignment="Left" Margin="132,105,0,0" x:Name="textBlockHeading" Text="Dashboard" VerticalAlignment="Top" Width="154"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold"/>
                 <TextBlock Height="24" HorizontalAlignment="Left" Margin="132,105,0,0" x:Name="textBlockHeading" Text="Статистика:" VerticalAlignment="Top" Width="154"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold"/>
@@ -24,38 +83,47 @@
         </Grid>
 
         <!-- White container for the main content -->
-        <Grid Grid.Column="1" Background="White">
+        <Grid Grid.Column="1" Background="White" Margin="1,0,-1,0">
             <!-- Add main content here -->
             <Grid ShowGridLines="false" Margin="29,308,146,0">
                 <TextBlock Height="22" HorizontalAlignment="Left" Margin="0,-286,0,0" x:Name="textBlockHeading" Text="Панель керування:" VerticalAlignment="Top" Width="161"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold"/>
-                <Grid Margin="0,-229,-45,314">
+                <Grid Margin="0,-245,-45,299" MaxHeight="1000"  HorizontalAlignment="Stretch" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="114*"/>
-                        <ColumnDefinition Width="57*"/>
-                        <ColumnDefinition Width="338*"/>
+                        <ColumnDefinition MaxWidth="200" Width="1*"/>
+                        <ColumnDefinition MaxWidth="200" Width="1*"/>
+                        <ColumnDefinition MaxWidth="200" Width="1*"/>
+                        <ColumnDefinition MaxWidth="200" Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="___icons_greenDollar" Margin="-72,-23,14,55" RenderTransformOrigin="-3.669,-1.36">
+                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="0,62,0,0" x:Name="balance" Text="Баланс:" VerticalAlignment="Top" Width="107"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="0"/>
+                    <Image x:Name="___icons_greenDollar" HorizontalAlignment="Left" Height="22" Margin="1,0,103,52" >
                         <Image.Source>
                             <BitmapImage UriSource="/icons/green-dollar.PNG" />
                         </Image.Source>
                     </Image>
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="10,35,0,0" x:Name="balance" Text="Баланс:" VerticalAlignment="Top" Width="161"  FontSize="12" FontStretch="ExtraCondensed" Grid.ColumnSpan="3" />
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="10,7,0,0" x:Name="balanceValue" Text="$3,596" VerticalAlignment="Top" Width="161"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.ColumnSpan="3"/>
-
-                    <Image x:Name="___icons_blueDollar" Margin="78,-26,336,49" RenderTransformOrigin="-3.669,-1.36" Grid.ColumnSpan="3">
+                    <TextBlock Height="22" HorizontalAlignment="Left" x:Name="balanceValue" Text="$3,596" VerticalAlignment="Center" Width="107"  FontSize="20" FontStretch="ExtraCondensed"  FontWeight="Bold" Grid.Column="0"/>
+                    <Image x:Name="___icons_blueDollar" HorizontalAlignment="Left" Height="22" Margin="1,0,103,52" RenderTransformOrigin="-3.669,-1.36" Grid.Column="1">
                         <Image.Source>
                             <BitmapImage UriSource="/icons/blue_dollar.PNG" />
                         </Image.Source>
                     </Image>
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="11,33,0,0" x:Name="income" Text="Дохід:" VerticalAlignment="Top" Width="62"  FontSize="12" FontStretch="ExtraCondensed" Grid.ColumnSpan="2" Grid.Column="1" />
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="9,8,0,0" x:Name="incomeValue" Text="$421:" VerticalAlignment="Top" Width="62"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,30,0,0" x:Name="incomeValue" Text="$421" VerticalAlignment="Top" Width="62"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="1"/>
+                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,62,0,0" x:Name="expenses" Text="Витрати:" VerticalAlignment="Top" Width="73"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="2"/>
+                    <Image x:Name="___icons_redDollar" HorizontalAlignment="Left" Height="22" Margin="1,0,103,52" RenderTransformOrigin="-3.669,-1.36" Grid.Column="2">
+                        <Image.Source>
+                            <BitmapImage UriSource="/icons/red-dollar.PNG" />
+                        </Image.Source>
+                    </Image>
+                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,30,0,0" x:Name="expensesValue" Text="$164" VerticalAlignment="Top" Width="62"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="2"/>
 
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="84,35,0,0" x:Name="expenses" Text="Витрати:" VerticalAlignment="Top" Width="73"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="2" />
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="84,7,0,0" x:Name="expensesValue" Text="$164:" VerticalAlignment="Top" Width="62"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="2"/>
 
-
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="219,35,0,0" x:Name="savings" Text="Збереження:" VerticalAlignment="Top" Width="73"  FontSize="12" FontStretch="ExtraCondensed" RenderTransformOrigin="0.749,0.89" Grid.Column="2" />
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="219,7,0,0" x:Name="savingsValue" Text="$257:" VerticalAlignment="Top" Width="62"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="2"/>
+                    <Image x:Name="___icons_violetDollar" HorizontalAlignment="Left" Height="22" Margin="1,0,103,52" RenderTransformOrigin="-3.669,-1.36" Grid.Column="3">
+                        <Image.Source>
+                            <BitmapImage UriSource="/icons/violet-dollar.PNG" />
+                        </Image.Source>
+                    </Image>
+                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,62,0,0" x:Name="savings" Text="Збереження:" VerticalAlignment="Top" Width="73"  FontSize="12" FontStretch="ExtraCondensed" RenderTransformOrigin="-0.686,0.982" Grid.Column="3" />
+                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,30,0,0" x:Name="savingsValue" Text="$257" VerticalAlignment="Top" Width="62"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="3"/>
+                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,62,0,0" x:Name="income" Text="Дохід:" VerticalAlignment="Top" Width="62"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="1" />
 
                 </Grid>
                 <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" SelectionChanged="dataGrid_SelectionChanged">
@@ -66,8 +134,6 @@
                         <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <Grid.Resources>
-                </Grid.Resources>
                 <!-- Date items and layout (as in the original XAML) -->
                 <!-- ... -->
             </Grid>
