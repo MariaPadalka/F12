@@ -21,7 +21,7 @@ namespace Presentation
     /// <summary>
     /// Interaction logic for RegistrationView.xaml
     /// </summary>
-    public partial class RegistrationView : UserControl
+    public partial class RegistrationView : Page
     {
         public RegistrationView()
         {
@@ -29,8 +29,18 @@ namespace Presentation
         }
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            Login login = new Login();
-            contentContainer.Content = login;
+            //Login login = new Login();
+            //contentContainer.Content = login;
+            //nav.Navigate(new Uri("page2.xaml", UriKind.RelativeOrAbsolute));
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Login.xaml", UriKind.Relative));
+        }
+        private void GoToDashboard(object sender, RoutedEventArgs e)
+        {
+            //Dashboard dashboard = new Dashboard();
+            //contentContainer.Content = dashboard;
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
         }
         private void button2_Click(object sender, RoutedEventArgs e)
         {
@@ -99,29 +109,39 @@ namespace Presentation
             return Regex.IsMatch(password, passwordPattern);
         }
 
-        private void textBoxPassword_TextChanged(object sender, RoutedEventArgs e)
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             PasswordBox passwordBox = (PasswordBox)sender;
             string password = passwordBox.Password;
 
-            if (string.IsNullOrEmpty(password))
+            if (IsPasswordValid(password))
             {
-                passwordError.Text = "Введіть пароль.";
+                passwordError.Text = ""; // Clear any previous error message
             }
             else if (password.Length < 8 || password.Length > 20)
             {
-                passwordError.Text = "Пароль повинен мати від 8 до 20 символів.";
-            }
-            else if (!IsPasswordValid(password))
-            {
-                passwordError.Text = "Введіть коректний пароль.";
+                passwordError.Text = "Пароль повинен мати від 8 до 20 символів.";                
             }
             else
             {
-                passwordError.Text = "";
+                passwordError.Text = "Пароль повинен містити принаймні одну малу літеру, одну велику літеру та одну цифру"; // Display an error message
             }
         }
+        
+        private void PasswordConfirmBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            PasswordBox passwordBox = (PasswordBox)sender;
+            string password = passwordBox.Password;
 
+            if (password != passwordBox1.Password)
+            {
+                confirmPassError.Text = "Паролі не співпадають.";
+            }
+            else
+            {
+                confirmPassError.Text = ""; // Display an error message
+            }
+        }
         private void textBoxFirstName_TextChanged(object sender, TextChangedEventArgs e)
         {
             string firstName = textBoxFirstName.Text;
@@ -172,9 +192,12 @@ namespace Presentation
             {
                 emailError.Text = "Введіть електронну пошту.";  
             }
-            else if (!Regex.IsMatch(email, @"^[a-zA-Z0-9._%+-]{3,20}@[a-zA-Z0-9.-]{2,20}\.[a-zA-Z]{2,10}$"))
+            else if (!IsEmailValid(email))
             {
                 emailError.Text = "Введіть коректну електронну пошту.";
+            }
+            else{
+                emailError.Text = "";
             }
         }
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -200,19 +223,6 @@ namespace Presentation
                 dateError.Text = "Введіть коректну дату народження.";
             }
         }
-        //private void textBoxFirstName_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    string firstName = textBoxFirstName.Text;
-
-        //    if (string.IsNullOrWhiteSpace(firstName))
-        //    {
-        //        firstNameError.Text = "Ім'я не може бути порожнім.";
-        //    }
-        //    else
-        //    {
-        //        firstNameError.Text = ""; // Очистити повідомлення про помилку
-        //    }
-        //}
 
     }
 }

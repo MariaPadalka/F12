@@ -19,21 +19,50 @@ namespace Presentation
     /// <summary>
     /// Interaction logic for Login.xaml
     /// </summary>
-    public partial class Login : UserControl
+    public partial class Login : Page
     {
+
         public Login()
         {
             InitializeComponent();
         }
         private void Registration_Click(object sender, RoutedEventArgs e)
         {
-            RegistrationView reg = new RegistrationView();
-            contentContainer.Content = reg;
+            //RegistrationView reg = new RegistrationView();
+            //contentContainer.Content = reg;
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("RegistrationView.xaml", UriKind.Relative));
+        }
+        private void GoToDashboard(object sender, RoutedEventArgs e)
+        {
+            //Dashboard dashboard = new Dashboard();
+            //contentContainer.Content = dashboard;
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
         }
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
+            string email = textBoxEmail.Text;
+            string password = passwordBox1.Password;
             
+            if(!IsEmailValid(email))
+            {
+                //emailError.Text = "Введіть коректну електронну пошту.";
+            }
+            else 
+            {
+                
+            }
+        }
+        public static bool IsEmailValid(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            string emailPattern = @"^[a-zA-Z0-9._%+-]{3,20}@[a-zA-Z0-9.-]{2,20}\.[a-zA-Z]{2,10}$";
+
+            return Regex.IsMatch(email, emailPattern);
         }
     }
 
