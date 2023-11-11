@@ -48,11 +48,11 @@ namespace Presentation
             
             if(!IsEmailValid(email))
             {
-                //emailError.Text = "Введіть коректну електронну пошту.";
+                errormessage.Text = "Введіть коректну електронну пошту.";
             }
             else 
             {
-                
+                errormessage.Text = "";
             }
         }
         public static bool IsEmailValid(string email)

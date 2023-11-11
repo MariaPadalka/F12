@@ -154,7 +154,7 @@ namespace Presentation
             {
                 firstNameError.Text = "Ім'я повинне мати від 2 до 18 символів.";                
             }
-            else if (!Regex.IsMatch(firstName, "[a-zA-Z&]*$") || !Regex.IsMatch(firstName, "[а-яА-ЯїЇєЄґҐіІ\']*"))
+            else if (!Regex.IsMatch(firstName, "^(?:[A-Za-z]+|[А-ЩЬЮЯҐЄІЇа-щьюяґєії']+)$"))
             {
                 firstNameError.Text = "Введіть коректне ім'я.";
             }
@@ -175,7 +175,7 @@ namespace Presentation
             {
                 lastNameError.Text = "Прізвище повинне мати від 2 до 18 символів.";                
             }
-            else if (!Regex.IsMatch(lastName, "^[a-zA-Z&]*$") && !Regex.IsMatch(lastName, "[а-яА-ЯїЇєЄґҐіІ\']"))
+            else if (!Regex.IsMatch(lastName, "^(?:[A-Za-z]+|[А-ЩЬЮЯҐЄІЇа-щьюяґєії']+)$"))
             {
                 lastNameError.Text = "Введіть коректне прізвище.";
             }
