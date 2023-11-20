@@ -15,14 +15,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BLL;
+using ThinkTwice_Context;
 
 namespace Presentation
 {
-    /// <summary>
-    /// Interaction logic for RegistrationView.xaml
-    /// </summary>
     public partial class RegistrationView : Page
     {
+        RegistrationService reg_serv = new RegistrationService();
         public RegistrationView()
         {
             InitializeComponent();
@@ -42,10 +42,6 @@ namespace Presentation
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
         }
-        private void button2_Click(object sender, RoutedEventArgs e)
-        {
-            Reset();
-        }
         public void Reset()
         {
             textBoxFirstName.Text = "";
@@ -54,40 +50,27 @@ namespace Presentation
             passwordBox1.Password = "";
             passwordBoxConfirm.Password = "";
         }
-        private void button3_Click(object sender, RoutedEventArgs e)
-        {
-            //Close();
-        }
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            if (textBoxEmail.Text.Length == 0)
+            string email = textBoxEmail.Text;
+            string password = passwordBox1.Password;
+            string first_name = textBoxFirstName.Text;
+            string last_name = textBoxLastName.Text;
+            DateTime? date = datePickerBirthdate.SelectedDate;
+            string currency = comboBoxCurrency.Text;
+            bool all_fields_present = email != "" && password != "" && first_name != "" && last_name != "" && !date.HasValue && currency != "";
+
+            if (!all_fields_present || passwordError.Text != "" || confirmPassError.Text != "" || firstNameError.Text != "" || lastNameError.Text != "" || emailError.Text != "" || dateError.Text != "")
             {
-                errormessage.Text = "Введіть електронну пошту.";
-                textBoxEmail.Focus();
-            }
-            else if (!IsEmailValid(textBoxEmail.Text))
-            {
-                errormessage.Text = "Введіть валідну електронну пошту.";
-                textBoxEmail.Select(0, textBoxEmail.Text.Length);
-                textBoxEmail.Focus();
+                errormessage.Text = "Будь ласка, введіть коректні дані у всіх полях.";
             }
             else
             {
-                string lastname = textBoxLastName.Text;
-                string firstname = textBoxFirstName.Text;
-                string email = textBoxEmail.Text;
-                string password = passwordBox1.Password;
-
-                errormessage.Text = "";
-                SqlConnection con = new SqlConnection("Data Source=TESTPURU;Initial Catalog=Data;User ID=sa;Password=wintellect");
-                con.Open();
-                //SqlCommand cmd = new SqlCommand("Insert into Registration (FirstName,LastName,Email,Password,Address) values('" + firstName + "','" + lastname + "','" + email + "','" + password + "','" + address + "')", con);
-                //cmd.CommandType = CommandType.Text;
-                //cmd.ExecuteNonQuery();
-                con.Close();
+                reg_serv.Register(email, password, first_name, last_name, date, currency);
                 errormessage.Text = "Ви успішно зареєструвались.";
-                Reset();
+                GoToDashboard(sender, e);
             }
+            Reset();
         }
         public static bool IsEmailValid(string email)
         {
@@ -98,7 +81,6 @@ namespace Presentation
 
             return Regex.IsMatch(email, emailPattern);
         }
-
         public static bool IsPasswordValid(string password)
         {
             if (string.IsNullOrWhiteSpace(password))
@@ -108,7 +90,6 @@ namespace Presentation
 
             return Regex.IsMatch(password, passwordPattern);
         }
-
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             PasswordBox passwordBox = (PasswordBox)sender;
@@ -126,8 +107,8 @@ namespace Presentation
             {
                 passwordError.Text = "Пароль повинен містити принаймні одну малу літеру, одну велику літеру та одну цифру"; // Display an error message
             }
+            errormessage.Text = "";
         }
-        
         private void PasswordConfirmBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             PasswordBox passwordBox = (PasswordBox)sender;
@@ -141,6 +122,7 @@ namespace Presentation
             {
                 confirmPassError.Text = ""; // Display an error message
             }
+            errormessage.Text = "";
         }
         private void textBoxFirstName_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -162,6 +144,7 @@ namespace Presentation
             {
                 firstNameError.Text = "";
             }
+            errormessage.Text = "";
         }
         private void textBoxLastName_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -169,20 +152,21 @@ namespace Presentation
 
             if (string.IsNullOrEmpty(lastName))
             {
-                lastNameError.Text = "Введіть прізвище.";  
-            } 
+                lastNameError.Text = "Введіть прізвище.";
+            }
             else if (lastName.Length < 2 || lastName.Length > 18)
             {
-                lastNameError.Text = "Прізвище повинне мати від 2 до 18 символів.";                
+                lastNameError.Text = "Прізвище повинне мати від 2 до 18 символів.";
             }
             else if (!Regex.IsMatch(lastName, "^(?:[A-Za-z]+|[А-ЩЬЮЯҐЄІЇа-щьюяґєії']+)$"))
             {
                 lastNameError.Text = "Введіть коректне прізвище.";
             }
-            else 
+            else
             {
                 lastNameError.Text = "";
             }
+            errormessage.Text = "";
         }
         private void textBoxEmail_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -199,6 +183,7 @@ namespace Presentation
             else{
                 emailError.Text = "";
             }
+            errormessage.Text = "";
         }
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -222,6 +207,7 @@ namespace Presentation
                 // Введена недійсна дата
                 dateError.Text = "Введіть коректну дату народження.";
             }
+            errormessage.Text = "";
         }
 
     }

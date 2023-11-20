@@ -13,14 +13,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BLL;
 
 namespace Presentation
 {
-    /// <summary>
-    /// Interaction logic for Login.xaml
-    /// </summary>
     public partial class Login : Page
     {
+        UserRepository user_repo = new UserRepository();
 
         public Login()
         {
@@ -45,14 +44,27 @@ namespace Presentation
         {
             string email = textBoxEmail.Text;
             string password = passwordBox1.Password;
-            
-            if(!IsEmailValid(email))
+            AuthenticationService authenticationService = new AuthenticationService(user_repo);
+
+            if (!IsEmailValid(email))
             {
                 errormessage.Text = "Введіть коректну електронну пошту.";
             }
             else 
             {
-                errormessage.Text = "";
+                if (authenticationService.AuthenticateUser(email, password) == null)
+                {
+                    errormessage.Text = "Електронної пошти не знайдено.";
+                }
+                else if (authenticationService.AuthenticateUser(email, password) == false)
+                {
+                    errormessage.Text = "Неправильний пароль";
+                }
+                else
+                {
+                    errormessage.Text = "";
+                    GoToDashboard(sender, e);
+                }
             }
         }
         public static bool IsEmailValid(string email)

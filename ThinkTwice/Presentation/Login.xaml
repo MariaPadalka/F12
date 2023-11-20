@@ -33,7 +33,7 @@
                     Grid.ColumnSpan="2"
                     Background="#40667D"
                     Foreground="white"
-                    Click="GoToDashboard">
+                    Click="Submit_Click">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="7"/>

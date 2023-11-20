@@ -49,7 +49,7 @@
             </DatePicker>
             <TextBlock Height="20" HorizontalAlignment="Left" Margin="229,387,0,0" x:Name ="dateError" VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Grid.ColumnSpan="2" />
             <TextBlock Text="Валюта:"  Margin="113,405,150,75" />
-            <ComboBox Height="23" HorizontalAlignment="Left" Margin="229,407,0,0" x:Name="comboBoxCurrency" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2">
+            <ComboBox Height="23" HorizontalAlignment="Left" Margin="229,407,0,0" x:Name="comboBoxCurrency" IsEditable="True" IsReadOnly="True" Text="UAH" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2">
                 <ComboBoxItem Content="USD"/>
                 <ComboBoxItem Content="EUR"/>
                 <ComboBoxItem Content="UAH"/>
@@ -83,7 +83,7 @@
                 Grid.ColumnSpan="2"
                 Background="#40667D"
                 Foreground="white"
-                Click="GoToDashboard">
+                Click="Submit_Click">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="7"/>
