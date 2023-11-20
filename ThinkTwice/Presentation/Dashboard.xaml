@@ -49,7 +49,7 @@
 
 
             <Canvas>
-                <Image x:Name="___icons_statistics" Height="5%" Canvas.Left="27" Canvas.Top="210" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Image x:Name="___icons_statistics" Height="15" Canvas.Left="27" Canvas.Top="210" HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Image.Source>
                         <BitmapImage UriSource="/icons/statistics.PNG" />
                     </Image.Source>
