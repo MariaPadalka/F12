@@ -30,51 +30,55 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
+            </Grid>
 
-                <Grid Grid.Row="0">
-                    <Border Grid.Row="0" Background="White" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Height="30" Margin="0,75,0,0">
-                        <TextBlock Text="Панель керування" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black" FontSize="12" FontWeight="Bold" Margin="32,0,0,0"/>
-                    </Border>
-                </Grid>
+            <Grid Grid.Row="0">
+                <Border Grid.Row="0" Background="White" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,75,0,0">
+                    <TextBlock Text="Панель керування" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black" FontSize="12" FontWeight="Bold" Margin="39,0,0,0"/>
+                </Border>
             </Grid>
 
 
+            <TextBlock Text="Транзакції" HorizontalAlignment="Center" VerticalAlignment="Top"  Foreground="#A0A4A9"  FontSize="12" FontWeight="Bold" Margin="0,127,0,0"/>
 
-            <TextBlock Grid.Row="1" Text="Транзакції" HorizontalAlignment="Center" VerticalAlignment="Top"  Foreground="#A0A4A9"  FontSize="12" FontWeight="Bold" Margin="0,133,0,0"/>
+            <TextBlock Text="Оплата" HorizontalAlignment="Center" VerticalAlignment="Top"  Foreground="#A0A4A9"  FontSize="12" FontWeight="Bold" Margin="0,167,0,0"/>
+
+            <TextBlock Text="Статистика" HorizontalAlignment="Center" VerticalAlignment="Top"  Foreground="#A0A4A9"  FontSize="12" FontWeight="Bold" Margin="0,209,0,0"/>
+
+            <TextBlock Text="Налаштування" HorizontalAlignment="Center" VerticalAlignment="Top"  Foreground="#A0A4A9"  FontSize="12" FontWeight="Bold" Margin="0,251,0,0"/>
 
 
-            <TextBlock Grid.Row="2" Text="Оплата" HorizontalAlignment="Center" VerticalAlignment="Top"  Foreground="#A0A4A9"  FontSize="12" FontWeight="Bold" Margin="0,172,0,0"/>
+            <Canvas>
+                <Image x:Name="___icons_statistics" Height="5%" Canvas.Left="27" Canvas.Top="210" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Image.Source>
+                        <BitmapImage UriSource="/icons/statistics.PNG" />
+                    </Image.Source>
+                </Image>
 
+                <Image x:Name="___icons_home" Height="15" Canvas.Left="27" Canvas.Top="83" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Image.Source>
+                        <BitmapImage UriSource="/icons/home.PNG" />
+                    </Image.Source>
+                </Image>
 
-            <TextBlock Grid.Row="3" Text="Статистика" HorizontalAlignment="Center" VerticalAlignment="Top"  Foreground="#A0A4A9"  FontSize="12" FontWeight="Bold" Margin="0,213,0,0"/>
+                <Image x:Name="___icons_settings" Height="15" Canvas.Left="27" Canvas.Top="253" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Image.Source>
+                        <BitmapImage UriSource="/icons/settings.PNG" />
+                    </Image.Source>
+                </Image>
 
-            <TextBlock Grid.Row="4" Text="Налаштування" HorizontalAlignment="Left" VerticalAlignment="Top"  Foreground="#A0A4A9"  FontSize="12" FontWeight="Bold" Margin="50,255,0,0"/>
-            <Image x:Name="___icons_statistics" Margin="14,213,123,222" RenderTransformOrigin="-3.669,-1.36" Height="15" Grid.Row="2">
-                <Image.Source>
-                    <BitmapImage UriSource="/icons/statistics.PNG" />
-                </Image.Source>
-            </Image>
-            <Image x:Name="___icons_home" Margin="14,82,123,353" RenderTransformOrigin="-3.669,-1.36" Height="15" Grid.Row="4">
-                <Image.Source>
-                    <BitmapImage UriSource="/icons/home.PNG" />
-                </Image.Source>
-            </Image>
-            <Image x:Name="___icons_settings" Margin="14,256,123,179" RenderTransformOrigin="-3.669,-1.36" Height="15" Grid.Row="0">
-                <Image.Source>
-                    <BitmapImage UriSource="/icons/settings.PNG" />
-                </Image.Source>
-            </Image>
-            <Image x:Name="___icons_payment" Margin="14,130,123,222" RenderTransformOrigin="-3.669,-1.36" Height="15" Grid.Row="3">
-                <Image.Source>
-                    <BitmapImage UriSource="/icons/payment.PNG" />
-                </Image.Source>
-            </Image>
-            <Image x:Name="___icons_transactions" Margin="14,55,123,222" RenderTransformOrigin="-3.669,-1.36" Height="15" Grid.Row="1">
-                <Image.Source>
-                    <BitmapImage UriSource="/icons/transactions.PNG" />
-                </Image.Source>
-            </Image>
+                <Image x:Name="___icons_payment" Height="15" Canvas.Left="27" Canvas.Top="168" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Image.Source>
+                        <BitmapImage UriSource="/icons/payment.PNG" />
+                    </Image.Source>
+                </Image>
 
+                <Image x:Name="___icons_transactions" Height="15" Canvas.Left="27" Canvas.Top="128" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Image.Source>
+                        <BitmapImage UriSource="/icons/transactions.PNG" />
+                    </Image.Source>
+                </Image>
+            </Canvas>
 
             <!--<TextBlock Height="24" HorizontalAlignment="Left" Margin="132,105,0,0" x:Name="textBlockHeading" Text="Перекази" VerticalAlignment="Top" Width="154"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold"/>
                 <TextBlock Height="24" HorizontalAlignment="Left" Margin="132,105,0,0" x:Name="textBlockHeading" Text="Dashboard" VerticalAlignment="Top" Width="154"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold"/>
