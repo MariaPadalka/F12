@@ -28,16 +28,11 @@ namespace Presentation
         }
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            //Login login = new Login();
-            //contentContainer.Content = login;
-            //nav.Navigate(new Uri("page2.xaml", UriKind.RelativeOrAbsolute));
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Login.xaml", UriKind.Relative));
         }
         private void GoToDashboard(object sender, RoutedEventArgs e)
         {
-            //Dashboard dashboard = new Dashboard();
-            //contentContainer.Content = dashboard;
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
         }
@@ -103,7 +98,7 @@ namespace Presentation
 
             if (IsPasswordValid(password))
             {
-                passwordError.Text = ""; // Clear any previous error message
+                passwordError.Text = "";
             }
             else if (password.Length < 8 || password.Length > 20)
             {
@@ -111,7 +106,25 @@ namespace Presentation
             }
             else
             {
-                passwordError.Text = "Пароль має містити комбінацію цифр та літер різних регістрів."; // Display an error message
+                passwordError.Text = "Пароль має містити комбінацію цифр та літер різних регістрів.        ";
+            }
+            errormessage.Text = "";
+        }
+        private void textBoxPassword_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string password = textBoxPassword.Text;
+
+            if (IsPasswordValid(password))
+            {
+                passwordError.Text = "";
+            }
+            else if (password.Length < 8 || password.Length > 20)
+            {
+                passwordError.Text = "Пароль повинен мати від 8 до 20 символів.";
+            }
+            else
+            {
+                passwordError.Text = "Пароль має містити комбінацію цифр та літер різних регістрів.        ";
             }
             errormessage.Text = "";
         }
@@ -126,7 +139,21 @@ namespace Presentation
             }
             else
             {
-                confirmPassError.Text = ""; // Display an error message
+                confirmPassError.Text = "";
+            }
+            errormessage.Text = "";
+        }
+        private void textBoxConfirmPassword_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string password = textBoxConfirmPassword.Text;
+
+            if (password != passwordBox1.Password)
+            {
+                confirmPassError.Text = "Паролі не співпадають.";
+            }
+            else
+            {
+                confirmPassError.Text = "";
             }
             errormessage.Text = "";
         }
@@ -197,24 +224,52 @@ namespace Presentation
 
             if (selectedDate.HasValue)
             {
-                // Перевірка чи дата народження не більше поточної дати
                 if (selectedDate > DateTime.Now)
                 {
                     dateError.Text = "Дата народження не може бути у майбутньому.";
                 }
                 else
                 {
-                    // Скинути повідомлення про помилку
                     dateError.Text = "";
                 }
             }
             else
             {
-                // Введена недійсна дата
                 dateError.Text = "Введіть коректну дату народження.";
             }
             errormessage.Text = "";
         }
+        private void ShowPassword_Checked(object sender, RoutedEventArgs e)
+        {
+            passwordBox1.Visibility = Visibility.Collapsed; 
+            textBoxPassword.Visibility = Visibility.Visible;
+            textBoxPassword.Text = passwordBox1.Password;
+            toggleButtonShowPassword.IsChecked = true;
+        }
 
+        private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
+        {
+            passwordBox1.Visibility = Visibility.Visible;
+            textBoxPassword.Visibility = Visibility.Collapsed;
+            passwordBox1.Password = textBoxPassword.Text;
+            textBoxPassword.Text = string.Empty;
+            toggleButtonShowPassword.IsChecked = false;
+        }
+        private void ShowConfirmPassword_Checked(object sender, RoutedEventArgs e)
+        {
+            passwordBoxConfirm.Visibility = Visibility.Collapsed;
+            textBoxConfirmPassword.Visibility = Visibility.Visible;
+            textBoxConfirmPassword.Text = passwordBoxConfirm.Password;
+            toggleButtonShowConfirmPassword.IsChecked = true;
+        }
+
+        private void ShowConfirmPassword_Unchecked(object sender, RoutedEventArgs e)
+        {
+            passwordBoxConfirm.Visibility = Visibility.Visible;
+            textBoxConfirmPassword.Visibility = Visibility.Collapsed;
+            passwordBoxConfirm.Password = textBoxConfirmPassword.Text;
+            textBoxConfirmPassword.Text = string.Empty;
+            toggleButtonShowConfirmPassword.IsChecked = false;
+        }
     }
 }

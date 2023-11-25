@@ -72,6 +72,22 @@ namespace Presentation
 
             return Regex.IsMatch(email, emailPattern);
         }
+        private void ShowPassword_Checked(object sender, RoutedEventArgs e)
+        {
+            passwordBox1.Visibility = Visibility.Collapsed;
+            textBoxPassword.Visibility = Visibility.Visible;
+            textBoxPassword.Text = passwordBox1.Password;
+            toggleButtonShowPassword.IsChecked = true;
+        }
+
+        private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
+        {
+            passwordBox1.Visibility = Visibility.Visible;
+            textBoxPassword.Visibility = Visibility.Collapsed;
+            passwordBox1.Password = textBoxPassword.Text;
+            textBoxPassword.Text = string.Empty;    
+            toggleButtonShowPassword.IsChecked = false;
+        }
     }
 
 }

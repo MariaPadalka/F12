@@ -47,10 +47,42 @@
                         <BitmapImage UriSource="/icons/ThinkTwice.PNG" />
                     </Image.Source>
                 </Image>
-                <TextBox Height="24" HorizontalAlignment="Left" Margin="231,227,0,0" x:Name="textBoxEmail" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2"/>
-                <TextBlock Height="24" HorizontalAlignment="Left" Margin="159,230,0,0" x:Name="textBlockEmailId" Text="Email:" VerticalAlignment="Top" Width="45" />
-                <TextBlock Height="24" HorizontalAlignment="Left" Margin="157,280,0,0" x:Name="textBlockPassword" Text="Пароль:" VerticalAlignment="Top" Width="61"  />
-                <PasswordBox Height="24" HorizontalAlignment="Left" Margin="230,278,0,0" x:Name="passwordBox1" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" />
+                <TextBox x:Name="textBoxEmail" Width="222" Height="24" Margin="231,227,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" Foreground="#302f2f">
+                    <TextBox.Template>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5">
+                                <ScrollViewer x:Name="PART_ContentHost"/>
+                            </Border>
+                        </ControlTemplate>
+                    </TextBox.Template>
+                </TextBox>
+                <TextBlock Height="24" HorizontalAlignment="Left" Margin="159,230,0,0" x:Name="textBlockEmailId" Text="Email:" VerticalAlignment="Top" Width="45" Foreground="#363633"/>
+                <TextBlock Height="24" HorizontalAlignment="Left" Margin="157,280,0,0" x:Name="textBlockPassword" Text="Пароль:" VerticalAlignment="Top" Width="61" Foreground="#363633" />
+                <PasswordBox Style="{StaticResource roundcornerpassword}" Height="24" HorizontalAlignment="Left" Margin="230,278,0,0" x:Name="passwordBox1" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2"/>
+                
+                <TextBox Height="24" HorizontalAlignment="Left" x:Name="textBoxPassword"  VerticalAlignment="Top" Visibility="Collapsed" Width="222" Grid.ColumnSpan="2" Margin="230,278,0,0">
+                    <TextBox.Template>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5">
+                                <ScrollViewer x:Name="PART_ContentHost"/>
+                            </Border>
+                        </ControlTemplate>
+                    </TextBox.Template>
+                </TextBox>
+                <ToggleButton x:Name="toggleButtonShowPassword" Checked="ShowPassword_Checked" Unchecked="ShowPassword_Unchecked" Margin="58,281,175,204" Grid.Column="1" Background="White" BorderBrush="White">
+                    <Image Width="16" Height="16">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="/icons/hide.png"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=toggleButtonShowPassword}" Value="True">
+                                        <Setter Property="Source" Value="/icons/view.png"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </ToggleButton>
             </Grid>
             <Button Margin="469,157,124,364" Content="Реєстрація" Cursor="Hand" RenderTransformOrigin="-0.231,6.167" Click="Registration_Click">
                 <Button.Template>
@@ -71,8 +103,8 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <TextBlock Height="24" HorizontalAlignment="Left" Margin="188,195,0,0" x:Name="textBlockHeading" Text="Увійдіть у свій акаунт:" VerticalAlignment="Top" Width="190"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" RenderTransformOrigin="0.593,0.569"/>
-            <ContentControl x:Name="contentContainer"/>
+            <TextBlock Height="24" HorizontalAlignment="Center" Margin="0,195,0,0" x:Name="textBlockHeading" Text="Увійдіть у свій обліковий запис:" VerticalAlignment="Top" Width="276"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" RenderTransformOrigin="0.593,0.569"/>
+            <!--<ContentControl x:Name="contentContainer"/>-->
         </Grid>
 
     </Viewbox>
