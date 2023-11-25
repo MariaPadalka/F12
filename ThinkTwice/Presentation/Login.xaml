@@ -8,25 +8,25 @@
     <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
 
 
-            <Grid Margin="0,0,47,56">
-                <!--Button as a Link button using style-->
-                <!--end Button as a Link button using style-->
-                <Grid Margin="30,23,0,0" Background="White" Height="504" VerticalAlignment="Top">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="107*"/>
-                        <ColumnDefinition Width="73*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="252*" />
-                        <!--   <RowDefinition Height="12*" />-->
-                    </Grid.RowDefinitions>
-                    <TextBlock Height="20" HorizontalAlignment="Left" Margin="229,415,0,0" x:Name ="errormessage" VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Grid.ColumnSpan="2" />
+        <Grid Margin="0,0,47,56">
+            <!--Button as a Link button using style-->
+            <!--end Button as a Link button using style-->
+            <Grid Margin="30,23,0,0" Background="White" Height="504" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="107*"/>
+                    <ColumnDefinition Width="73*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="252*" />
+                    <!--   <RowDefinition Height="12*" />-->
+                </Grid.RowDefinitions>
+                <TextBlock Height="20" HorizontalAlignment="Left" Margin="218,306,0,0" x:Name ="errormessage" VerticalAlignment="Top" Width="248"  OpacityMask="Crimson" Foreground="#FFE5572C" Grid.ColumnSpan="2" TextAlignment="Center" />
 
-                    <Button 
+                <Button 
                     Content="Увійти"
                     Height="24"
                     HorizontalAlignment="Left"
-                    Margin="232,331,0,0"
+                    Margin="230,331,0,0"
                     x:Name="Submit"
                     VerticalAlignment="Top"
                     Width="222"
@@ -34,47 +34,47 @@
                     Background="#40667D"
                     Foreground="white"
                     Click="Submit_Click">
-                        <Button.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="7"/>
-                            </Style>
-                        </Button.Resources>
-                    </Button>
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="7"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
 
 
-                    <Image x:Name="___icons_ThinkTwice2_PNG" Margin="167,90,147,346" RenderTransformOrigin="-3.669,-1.36">
-                        <Image.Source>
-                            <BitmapImage UriSource="/icons/ThinkTwice.PNG" />
-                        </Image.Source>
-                    </Image>
-                    <TextBox Height="24" HorizontalAlignment="Left" Margin="231,227,0,0" x:Name="textBoxEmail" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2"/>
-                    <TextBlock Height="24" HorizontalAlignment="Left" Margin="159,230,0,0" x:Name="textBlockEmailId" Text="Email:" VerticalAlignment="Top" Width="45" />
-                    <TextBlock Height="24" HorizontalAlignment="Left" Margin="157,280,0,0" x:Name="textBlockPassword" Text="Пароль:" VerticalAlignment="Top" Width="61"  />
-                    <PasswordBox Height="24" HorizontalAlignment="Left" Margin="230,278,0,0" x:Name="passwordBox1" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" />
-                </Grid>
-                <Button Margin="469,157,124,364" Content="Реєстрація" Cursor="Hand" RenderTransformOrigin="-0.231,6.167" Click="Registration_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <TextBlock TextDecorations="Underline"><InlineUIContainer>  
+                <Image x:Name="___icons_ThinkTwice2_PNG" Margin="167,90,147,346" RenderTransformOrigin="-3.669,-1.36">
+                    <Image.Source>
+                        <BitmapImage UriSource="/icons/ThinkTwice.PNG" />
+                    </Image.Source>
+                </Image>
+                <TextBox Height="24" HorizontalAlignment="Left" Margin="231,227,0,0" x:Name="textBoxEmail" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2"/>
+                <TextBlock Height="24" HorizontalAlignment="Left" Margin="159,230,0,0" x:Name="textBlockEmailId" Text="Email:" VerticalAlignment="Top" Width="45" />
+                <TextBlock Height="24" HorizontalAlignment="Left" Margin="157,280,0,0" x:Name="textBlockPassword" Text="Пароль:" VerticalAlignment="Top" Width="61"  />
+                <PasswordBox Height="24" HorizontalAlignment="Left" Margin="230,278,0,0" x:Name="passwordBox1" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" />
+            </Grid>
+            <Button Margin="469,157,124,364" Content="Реєстрація" Cursor="Hand" RenderTransformOrigin="-0.231,6.167" Click="Registration_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <TextBlock TextDecorations="Underline"><InlineUIContainer>  
                             <ContentPresenter />
                         </InlineUIContainer></TextBlock>
-                        </ControlTemplate>
-                    </Button.Template>
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Foreground" Value="Navy" />
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter Property="Foreground" Value="Red" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
-                <TextBlock Height="24" HorizontalAlignment="Left" Margin="188,195,0,0" x:Name="textBlockHeading" Text="Увійдіть у свій акаунт:" VerticalAlignment="Top" Width="190"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" RenderTransformOrigin="0.593,0.569"/>
-                <ContentControl x:Name="contentContainer"/>
-            </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Foreground" Value="Navy" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Foreground" Value="Red" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <TextBlock Height="24" HorizontalAlignment="Left" Margin="188,195,0,0" x:Name="textBlockHeading" Text="Увійдіть у свій акаунт:" VerticalAlignment="Top" Width="190"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" RenderTransformOrigin="0.593,0.569"/>
+            <ContentControl x:Name="contentContainer"/>
+        </Grid>
 
     </Viewbox>
-    
+
 </Page>

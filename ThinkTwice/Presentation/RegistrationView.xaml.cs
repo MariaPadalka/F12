@@ -16,7 +16,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BLL;
-using ThinkTwice_Context;
 
 namespace Presentation
 {
@@ -58,7 +57,7 @@ namespace Presentation
             string last_name = textBoxLastName.Text;
             DateTime? date = datePickerBirthdate.SelectedDate;
             string currency = comboBoxCurrency.Text;
-            bool all_fields_present = email != "" && password != "" && first_name != "" && last_name != "" && !date.HasValue && currency != "";
+            bool all_fields_present = email != "" && password != "" && first_name != "" && last_name != "" && date.HasValue && currency != "";;
 
             if (!all_fields_present || passwordError.Text != "" || confirmPassError.Text != "" || firstNameError.Text != "" || lastNameError.Text != "" || emailError.Text != "" || dateError.Text != "")
             {
@@ -66,11 +65,18 @@ namespace Presentation
             }
             else
             {
-                reg_serv.Register(email, password, first_name, last_name, date, currency);
-                errormessage.Text = "Ви успішно зареєструвались.";
-                GoToDashboard(sender, e);
+                var user = reg_serv.Register(email, password, first_name, last_name, date, currency);
+                if (user != null)
+                {
+                    errormessage.Text = "Ви успішно зареєструвались.";
+                    App.SetCurrentUser(user);
+                    GoToDashboard(sender, e);
+                }
+                else
+                {
+                    errormessage.Text = "Ця пошта вже комусь належить.";
+                }
             }
-            Reset();
         }
         public static bool IsEmailValid(string email)
         {
@@ -105,7 +111,7 @@ namespace Presentation
             }
             else
             {
-                passwordError.Text = "Пароль повинен містити принаймні одну малу літеру, одну велику літеру та одну цифру"; // Display an error message
+                passwordError.Text = "Пароль має містити комбінацію цифр та літер різних регістрів."; // Display an error message
             }
             errormessage.Text = "";
         }

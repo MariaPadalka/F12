@@ -1,31 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ThinkTwice_Context;
+using BLL.DTO;
 
 namespace BLL
 {
     public class AuthenticationService
     {
-        private readonly UserRepository _userService;
+        private readonly UserRepository _userService = new UserRepository();
 
-        public AuthenticationService(UserRepository userService)
-        {
-            _userService = userService;
-        }
-
-        public bool? AuthenticateUser(string email, string password)
+        public UserDTO? AuthenticateUser(string email, string password)
         {
             var user = _userService.GetUserByEmail(email);
-
             if (user != null)
             {
+                UserDTO userDTO = new UserDTO(user);
                 if (PasswordHasher.VerifyPassword(user.Password, password))
                 {
-                    return true;
+                    return userDTO;
                 }
-                else { return false; }
+                else { return null; }
             }
             else { return null; }
         }

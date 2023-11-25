@@ -24,7 +24,7 @@
                 <RowDefinition Height="252*" />
                 <!--   <RowDefinition Height="12*" />-->
             </Grid.RowDefinitions>
-            <TextBlock Height="20" HorizontalAlignment="Left" Margin="229,415,0,0" x:Name ="errormessage" VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Grid.ColumnSpan="2" />
+            <TextBlock Height="20" HorizontalAlignment="Left" Margin="214,433,0,0" x:Name ="errormessage" VerticalAlignment="Top" Width="250"  OpacityMask="Crimson" Foreground="#FFE5572C" Grid.ColumnSpan="2" TextAlignment="Center" />
             <TextBlock Height="23" HorizontalAlignment="Left" Margin="113,124,0,0" x:Name="textBlockFirstname" Text="Ім'я:" VerticalAlignment="Top" Width="110" />
             <TextBlock Height="23" HorizontalAlignment="Left" Margin="113,172,0,0" x:Name="textBlockLastName" Text="Прізвище:" VerticalAlignment="Top" Width="110" />
             <TextBlock Height="22" HorizontalAlignment="Left" Margin="113,222,0,0" x:Name="textBlockEmailId" Text="Email:" VerticalAlignment="Top" Width="110" />
@@ -67,7 +67,7 @@
             <TextBlock x:Name="emailError" Foreground="Red" Margin="229,252,126,0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
 
             <PasswordBox Height="23" HorizontalAlignment="Left" Margin="228,271,0,0" x:Name="passwordBox1" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" PasswordChanged="PasswordBox_PasswordChanged"/>
-            <TextBlock x:Name="passwordError" Foreground="Red" Margin="228,299,127,0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
+            <TextBlock x:Name="passwordError" Foreground="Red" Margin="113,294,163,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
 
             <PasswordBox Height="23" HorizontalAlignment="Left" Margin="229,317,0,0" x:Name="passwordBoxConfirm" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" PasswordChanged="PasswordConfirmBox_PasswordChanged"/>
             <TextBlock x:Name="confirmPassError" Foreground="Red" Margin="229,343,126,0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
@@ -119,6 +119,6 @@
         </Button>
 
         <TextBlock Height="24" HorizontalAlignment="Left" Margin="132,105,0,0" x:Name="textBlockHeading" Text="Створіть акаунт:" VerticalAlignment="Top" Width="154"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold"/>
-        <ContentControl x:Name="contentContainer"/>
+        <!--<ContentControl x:Name="contentContainer"/>-->
     </Grid>
 </Page>

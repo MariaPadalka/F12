@@ -19,8 +19,6 @@ namespace Presentation
 {
     public partial class Login : Page
     {
-        UserRepository user_repo = new UserRepository();
-
         public Login()
         {
             InitializeComponent();
@@ -44,7 +42,7 @@ namespace Presentation
         {
             string email = textBoxEmail.Text;
             string password = passwordBox1.Password;
-            AuthenticationService authenticationService = new AuthenticationService(user_repo);
+            AuthenticationService authenticationService = new AuthenticationService();
 
             if (!IsEmailValid(email))
             {
@@ -52,17 +50,15 @@ namespace Presentation
             }
             else 
             {
-                if (authenticationService.AuthenticateUser(email, password) == null)
+                var user = authenticationService.AuthenticateUser(email, password);
+                if (user == null)
                 {
-                    errormessage.Text = "Електронної пошти не знайдено.";
-                }
-                else if (authenticationService.AuthenticateUser(email, password) == false)
-                {
-                    errormessage.Text = "Неправильний пароль";
+                    errormessage.Text = "Користувача не знайдено.";
                 }
                 else
                 {
                     errormessage.Text = "";
+                    App.SetCurrentUser(user);
                     GoToDashboard(sender, e);
                 }
             }
