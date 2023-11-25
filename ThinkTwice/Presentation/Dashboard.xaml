@@ -44,7 +44,7 @@
 
 
             <Grid Grid.Row="1">
-                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,120,0,0">
+                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,120,0,0"  MouseLeftButtonDown="Transactions_Click">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -129,20 +129,6 @@
         <Grid Grid.Column="1" Background="White" Margin="1,0,-1,0">
 
             <Grid ShowGridLines="false" Margin="29,308,146,0">
-                <!--<Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="126*"/>
-                    <ColumnDefinition Width="14*"/>
-                    <ColumnDefinition Width="323*"/>
-                </Grid.ColumnDefinitions>-->
-
-                <!--<Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                     Перша третина сторінки 
-                    <RowDefinition Height="1*"/>
-                     Друга третина сторінки 
-                    <RowDefinition Height="1*"/>
-                     Третя третина сторінки 
-                </Grid.RowDefinitions>-->
 
                 <!--main panel-->
                 <TextBlock Height="22" HorizontalAlignment="Left" Margin="0,-286,0,0" x:Name="textBlockHeading" Text="Панель керування" VerticalAlignment="Top" Width="161"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.ColumnSpan="3"/>
@@ -191,54 +177,47 @@
 
 
                 <!--transaction history-->
-
                 <Grid Grid.Row="2" VerticalAlignment="Bottom">
-                <DataGrid x:Name="dataGrid" VerticalAlignment="Bottom" AutoGenerateColumns="False" SelectionChanged="dataGrid_SelectionChanged" GridLinesVisibility="None" Background="White" BorderBrush="Transparent" RowBackground="Transparent" Margin="0,31,0,0" RowHeight="30" ColumnHeaderHeight="50"  Grid.Row="2" Grid.ColumnSpan="3">
-                    <DataGrid.Resources>
-                        <Style TargetType="DataGridRowHeader">
-                            <Setter Property="Width" Value="0"/>
-                        </Style>
-                    </DataGrid.Resources>
+                    <DataGrid x:Name="dataGrid" VerticalAlignment="Bottom" AutoGenerateColumns="False" SelectionChanged="dataGrid_SelectionChanged" GridLinesVisibility="None" Background="White" BorderBrush="Transparent" RowBackground="Transparent" Margin="0,31,0,0" RowHeight="30" ColumnHeaderHeight="50"  Grid.Row="2" Grid.ColumnSpan="3">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridRowHeader">
+                                <Setter Property="Width" Value="0"/>
+                            </Style>
+                        </DataGrid.Resources>
 
-                    <DataGrid.ColumnHeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="BorderBrush" Value="Transparent"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="FontSize" Value="13"/>
-                        </Style>
-                    </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="FontSize" Value="13"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
 
-                    <DataGrid.RowStyle>
-                        <Style TargetType="DataGridRow">
-                            <Setter Property="Foreground" Value="Gray"/>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Style>
+                        </DataGrid.RowStyle>
 
-                            <!-- Додайте будь-які інші налаштування стилю для рядків тут -->
-                        </Style>
-                    </DataGrid.RowStyle>
-
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Категорія" Binding="{Binding Title}" Width="2*"/>
-                        <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" Width="3*"/>
-                        <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="3*"/>
-                        <!--<DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="2*"/>-->
-
-                        <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="2*">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Foreground" Value="Black"/>
-                                    <Setter Property="FontWeight" Value="Bold"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <TextBlock Height="22" HorizontalAlignment="Left" x:Name="textBlockHeading_Copy" Text="Історія транзакцій" VerticalAlignment="Top" Width="161"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.ColumnSpan="3" Margin="0,2,0,0"/>
+                        <DataGrid.Columns>
+                            <!--change due to real data structure-->
+                            <DataGridTextColumn Header="Категорія" Binding="{Binding Title}" Width="2*"/>
+                            <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" Width="3*"/>
+                            <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="3*"/>
+                            <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="2*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Foreground" Value="Black"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <TextBlock Height="22" HorizontalAlignment="Left" x:Name="textBlockHeading_Copy" Text="Історія транзакцій" VerticalAlignment="Top" Width="161"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.ColumnSpan="3" Margin="0,2,0,0"/>
                 </Grid>
-
-                <!-- Date items and layout (as in the original XAML) -->
-                <!-- ... -->
             </Grid>
         </Grid>
     </Grid>
