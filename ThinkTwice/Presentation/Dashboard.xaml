@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="821.053"
              MinWidth="600" MinHeight="400">
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -23,18 +23,7 @@
         <Grid Background="#121B28">
             <TextBlock Text="Think Twice" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,22,0,0" FontSize="17" Foreground="White"/>
 
-            <!--<Grid MaxHeight="200" Margin="0,75,0,162">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-            </Grid>-->
-
-
-             <Grid Grid.Row="0">
+            <Grid Grid.Row="0">
                 <Border Grid.Row="0" Background="White" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,75,0,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -44,7 +33,7 @@
 
                         <Image x:Name="___icons_home" Height="15" Margin="8,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                             <Image.Source>
-                                <BitmapImage UriSource="/icons/home.PNG" />
+                                <BitmapImage UriSource="/icons/home_black.PNG" />
                             </Image.Source>
                         </Image>
 
@@ -64,7 +53,7 @@
 
                         <Image x:Name="___icons_transactions" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Image.Source>
-                                <BitmapImage UriSource="/icons/transactions.PNG" />
+                                <BitmapImage UriSource="/icons/transactions_grey.PNG" />
                             </Image.Source>
                         </Image>
 
@@ -73,7 +62,6 @@
                 </Border>
             </Grid>
 
-            
             <Grid Grid.Row="2">
                 <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,165,0,0">
                     <Grid>
@@ -82,17 +70,16 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <Image x:Name="___icons_payment" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image x:Name="___icons_statistics" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Image.Source>
-                                <BitmapImage UriSource="/icons/payment.PNG" />
+                                <BitmapImage UriSource="/icons/statistics_grey.PNG" />
                             </Image.Source>
                         </Image>
 
-                        <TextBlock Text="Оплата" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold"/>
+                        <TextBlock Text="Статистика" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold"/>
                     </Grid>
                 </Border>
             </Grid>
-            
 
             <Grid Grid.Row="3">
                 <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,210,0,0">
@@ -102,30 +89,9 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <Image x:Name="___icons_statistics" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Image.Source>
-                                <BitmapImage UriSource="/icons/statistics.PNG" />
-                            </Image.Source>
-                        </Image>
-
-                        <TextBlock Text="Статистика" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold"/>
-                    </Grid>
-                </Border>
-            </Grid>
-
-
-
-            <Grid Grid.Row="4">
-                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,255,0,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
                         <Image x:Name="___icons_settings" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Image.Source>
-                                <BitmapImage UriSource="/icons/settings.PNG" />
+                                <BitmapImage UriSource="/icons/settings_grey.PNG" />
                             </Image.Source>
                         </Image>
 
@@ -136,37 +102,24 @@
 
 
 
+            <Grid Grid.Row="4">
+                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="163" Height="33" Margin="0,0,0,30">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
+                        <Image x:Name="___icons_logout" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="/icons/logout_grey.PNG" />
+                            </Image.Source>
+                        </Image>
 
-
-
-
-
-
-
-
-            <!--<TextBlock Text="Налаштування" HorizontalAlignment="Center" VerticalAlignment="Top"  Foreground="#A0A4A9"  FontSize="12" FontWeight="Bold" Margin="0,251,0,0"/>
-
-
-
-
-            <Grid>
-                <Image x:Name="___icons_statistics" Height="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,210,0,0">
-                    <Image.Source>
-                        <BitmapImage UriSource="/icons/statistics.PNG" />
-                    </Image.Source>
-                </Image>
-
-
-                <Image x:Name="___icons_settings" Height="15" Margin="27,253,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <Image.Source>
-                        <BitmapImage UriSource="/icons/settings.PNG" />
-                    </Image.Source>
-                </Image>
-
-
-
-            </Grid>-->
+                        <TextBlock Text="Вийти" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold" Margin="10,0,0,0"/>
+                    </Grid>
+                </Border>
+            </Grid>
 
 
 
