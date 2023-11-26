@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="821.053"
              MinWidth="600" MinHeight="400">
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -23,18 +23,7 @@
         <Grid Background="#121B28">
             <TextBlock Text="Think Twice" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,22,0,0" FontSize="17" Foreground="White"/>
 
-            <!--<Grid MaxHeight="200" Margin="0,75,0,162">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-            </Grid>-->
-
-
-             <Grid Grid.Row="0">
+            <Grid Grid.Row="0">
                 <Border Grid.Row="0" Background="White" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,75,0,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -44,7 +33,7 @@
 
                         <Image x:Name="___icons_home" Height="15" Margin="8,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                             <Image.Source>
-                                <BitmapImage UriSource="/icons/home.PNG" />
+                                <BitmapImage UriSource="/icons/home_black.PNG" />
                             </Image.Source>
                         </Image>
 
@@ -55,7 +44,7 @@
 
 
             <Grid Grid.Row="1">
-                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,120,0,0">
+                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,120,0,0"  MouseLeftButtonDown="Transactions_Click">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -64,7 +53,7 @@
 
                         <Image x:Name="___icons_transactions" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Image.Source>
-                                <BitmapImage UriSource="/icons/transactions.PNG" />
+                                <BitmapImage UriSource="/icons/transactions_grey.PNG" />
                             </Image.Source>
                         </Image>
 
@@ -73,7 +62,6 @@
                 </Border>
             </Grid>
 
-            
             <Grid Grid.Row="2">
                 <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,165,0,0">
                     <Grid>
@@ -82,17 +70,16 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <Image x:Name="___icons_payment" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image x:Name="___icons_statistics" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Image.Source>
-                                <BitmapImage UriSource="/icons/payment.PNG" />
+                                <BitmapImage UriSource="/icons/statistics_grey.PNG" />
                             </Image.Source>
                         </Image>
 
-                        <TextBlock Text="Оплата" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold"/>
+                        <TextBlock Text="Статистика" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold"/>
                     </Grid>
                 </Border>
             </Grid>
-            
 
             <Grid Grid.Row="3">
                 <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,210,0,0">
@@ -102,30 +89,9 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <Image x:Name="___icons_statistics" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Image.Source>
-                                <BitmapImage UriSource="/icons/statistics.PNG" />
-                            </Image.Source>
-                        </Image>
-
-                        <TextBlock Text="Статистика" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold"/>
-                    </Grid>
-                </Border>
-            </Grid>
-
-
-
-            <Grid Grid.Row="4">
-                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,255,0,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
                         <Image x:Name="___icons_settings" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Image.Source>
-                                <BitmapImage UriSource="/icons/settings.PNG" />
+                                <BitmapImage UriSource="/icons/settings_grey.PNG" />
                             </Image.Source>
                         </Image>
 
@@ -136,37 +102,24 @@
 
 
 
+            <Grid Grid.Row="4">
+                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="163" Height="33" Margin="0,0,0,30">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
+                        <Image x:Name="___icons_logout" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="/icons/logout_grey.PNG" />
+                            </Image.Source>
+                        </Image>
 
-
-
-
-
-
-
-
-            <!--<TextBlock Text="Налаштування" HorizontalAlignment="Center" VerticalAlignment="Top"  Foreground="#A0A4A9"  FontSize="12" FontWeight="Bold" Margin="0,251,0,0"/>
-
-
-
-
-            <Grid>
-                <Image x:Name="___icons_statistics" Height="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="27,210,0,0">
-                    <Image.Source>
-                        <BitmapImage UriSource="/icons/statistics.PNG" />
-                    </Image.Source>
-                </Image>
-
-
-                <Image x:Name="___icons_settings" Height="15" Margin="27,253,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <Image.Source>
-                        <BitmapImage UriSource="/icons/settings.PNG" />
-                    </Image.Source>
-                </Image>
-
-
-
-            </Grid>-->
+                        <TextBlock Text="Вийти" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold" Margin="10,0,0,0"/>
+                    </Grid>
+                </Border>
+            </Grid>
 
 
 
@@ -174,17 +127,19 @@
 
         <!-- White container for the main content -->
         <Grid Grid.Column="1" Background="White" Margin="1,0,-1,0">
-            <!-- Add main content here -->
+
             <Grid ShowGridLines="false" Margin="29,308,146,0">
-                <TextBlock Height="22" HorizontalAlignment="Left" Margin="0,-286,0,0" x:Name="textBlockHeading" Text="Панель керування:" VerticalAlignment="Top" Width="161"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold"/>
-                <Grid Margin="0,-245,-45,299" MaxHeight="1000"  HorizontalAlignment="Stretch" VerticalAlignment="Top">
+
+                <!--main panel-->
+                <TextBlock Height="22" HorizontalAlignment="Left" Margin="0,-286,0,0" x:Name="textBlockHeading" Text="Панель керування" VerticalAlignment="Top" Width="161"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.ColumnSpan="3"/>
+                <Grid Margin="0,-245,-45,0" MaxHeight="1000" VerticalAlignment="Top" Grid.ColumnSpan="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition MaxWidth="200" Width="1*"/>
                         <ColumnDefinition MaxWidth="200" Width="1*"/>
                         <ColumnDefinition MaxWidth="200" Width="1*"/>
                         <ColumnDefinition MaxWidth="200" Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="0,62,0,0" x:Name="balance" Text="Баланс:" VerticalAlignment="Top" Width="107"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="0"/>
+                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="0,62,0,0" x:Name="balance" Text="Баланс" VerticalAlignment="Top" Width="107"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="0"/>
                     <Image x:Name="___icons_greenDollar" HorizontalAlignment="Left" Height="22" Margin="1,0,103,52" >
                         <Image.Source>
                             <BitmapImage UriSource="/icons/green-dollar.PNG" />
@@ -197,7 +152,7 @@
                         </Image.Source>
                     </Image>
                     <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,30,0,0" x:Name="incomeValue" Text="$421" VerticalAlignment="Top" Width="62"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="1"/>
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,62,0,0" x:Name="expenses" Text="Витрати:" VerticalAlignment="Top" Width="73"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="2"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="1,62,0,0" x:Name="expenses" Text="Витрати" Width="73"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="2"/>
                     <Image x:Name="___icons_redDollar" HorizontalAlignment="Left" Height="22" Margin="1,0,103,52" RenderTransformOrigin="-3.669,-1.36" Grid.Column="2">
                         <Image.Source>
                             <BitmapImage UriSource="/icons/red-dollar.PNG" />
@@ -211,21 +166,58 @@
                             <BitmapImage UriSource="/icons/violet-dollar.PNG" />
                         </Image.Source>
                     </Image>
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,62,0,0" x:Name="savings" Text="Збереження:" VerticalAlignment="Top" Width="73"  FontSize="12" FontStretch="ExtraCondensed" RenderTransformOrigin="-0.686,0.982" Grid.Column="3" />
+                    <TextBlock HorizontalAlignment="Left" Margin="1,62,0,0" x:Name="savings" Text="Збереження" Width="73"  FontSize="12" FontStretch="ExtraCondensed" RenderTransformOrigin="-0.686,0.982" Grid.Column="3" />
                     <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,30,0,0" x:Name="savingsValue" Text="$257" VerticalAlignment="Top" Width="62"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="3"/>
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,62,0,0" x:Name="income" Text="Дохід:" VerticalAlignment="Top" Width="62"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="1" />
+                    <TextBlock HorizontalAlignment="Left" Margin="5,62,0,0" x:Name="income" Text="Дохід" Width="62"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="1" />
 
                 </Grid>
-                <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" SelectionChanged="dataGrid_SelectionChanged">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
-                        <DataGridTextColumn Header="Details" Binding="{Binding Details}" />
-                        <DataGridTextColumn Header="Date" Binding="{Binding Date}" />
-                        <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" />
-                    </DataGrid.Columns>
-                </DataGrid>
-                <!-- Date items and layout (as in the original XAML) -->
-                <!-- ... -->
+
+
+                <!--graph-->
+
+
+                <!--transaction history-->
+                <Grid Grid.Row="2" VerticalAlignment="Bottom">
+                    <DataGrid x:Name="dataGrid" VerticalAlignment="Bottom" AutoGenerateColumns="False" SelectionChanged="dataGrid_SelectionChanged" GridLinesVisibility="None" Background="White" BorderBrush="Transparent" RowBackground="Transparent" Margin="0,31,0,0" RowHeight="30" ColumnHeaderHeight="50"  Grid.Row="2" Grid.ColumnSpan="3">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridRowHeader">
+                                <Setter Property="Width" Value="0"/>
+                            </Style>
+                        </DataGrid.Resources>
+
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="FontSize" Value="13"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Style>
+                        </DataGrid.RowStyle>
+
+                        <DataGrid.Columns>
+                            <!--change due to real data structure-->
+                            <DataGridTextColumn Header="Категорія" Binding="{Binding Title}" Width="2*"/>
+                            <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" Width="3*"/>
+                            <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="3*"/>
+                            <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="2*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Foreground" Value="Black"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <TextBlock Height="22" HorizontalAlignment="Left" x:Name="textBlockHeading_Copy" Text="Історія транзакцій" VerticalAlignment="Top" Width="161"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.ColumnSpan="3" Margin="0,2,0,0"/>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

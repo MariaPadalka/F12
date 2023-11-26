@@ -1,0 +1,206 @@
+﻿<Page x:Class="Presentation.Settings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Presentation"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      MinWidth="600" MinHeight="400"
+      Title="Settings">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <!-- Blue container for the menu -->
+            <ColumnDefinition Width="7*"/>
+            <!-- White container for the main content -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Blue container for the menu -->
+
+        <!-- White container for the main content -->
+        <!-- Blue container for the menu -->
+        <Grid Background="#121B28">
+            <TextBlock Text="Think Twice" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,22,0,0" FontSize="17" Foreground="White"/>
+
+            <Grid Grid.Row="0">
+                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,75,0,0" MouseLeftButtonDown="Dashboard_Click">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image x:Name="___icons_home" Height="15" Margin="8,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="/icons/home_grey.PNG" />
+                            </Image.Source>
+                        </Image>
+
+                        <TextBlock Text="Панель керування" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+
+            <Grid Grid.Row="1">
+                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,120,0,0"  MouseLeftButtonDown="Transactions_Click">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image x:Name="___icons_transactions" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="/icons/transactions_grey.PNG" />
+                            </Image.Source>
+                        </Image>
+
+                        <TextBlock Text="Транзакції" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,165,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image x:Name="___icons_statistics" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="/icons/statistics_grey.PNG" />
+                            </Image.Source>
+                        </Image>
+
+                        <TextBlock Text="Статистика" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="3">
+                <Border Grid.Row="0" Background="White" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,210,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image x:Name="___icons_settings" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="/icons/settings_black.PNG" />
+                            </Image.Source>
+                        </Image>
+
+                        <TextBlock Text="Налаштування" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="12" FontWeight="Bold"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+
+
+            <Grid Grid.Row="4">
+                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="163" Height="33" Margin="0,0,0,30">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image x:Name="___icons_logout" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="/icons/logout_grey.PNG" />
+                            </Image.Source>
+                        </Image>
+
+                        <TextBlock Text="Вийти" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold" Margin="10,0,0,0"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+
+
+        </Grid>
+
+        <!-- White container for the main content -->
+        <Grid Grid.Column="1" Background="White" Margin="1,0,-1,0">
+
+            <Grid ShowGridLines="false" Margin="29,308,146,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--main panel-->
+                <Viewbox Grid.Column="0" Margin="0,-286,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="30" >
+                    <TextBlock Height="22" HorizontalAlignment="Left"  x:Name="textBlockHeading" Text="Налаштування" VerticalAlignment="Top" Width="161"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.ColumnSpan="3"/>
+                </Viewbox>
+                <Viewbox Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="30" >
+
+                    <Button 
+                Content="Змінити"
+                Height="23"
+                HorizontalAlignment="Left"
+                
+                x:Name="Submit"
+                VerticalAlignment="Center"
+                Width="80"
+                Background="#121B28"
+                Foreground="#E9E0E0">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="3"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Viewbox>
+                <Grid Margin="0,-245,-45,0" VerticalAlignment="Top" Grid.ColumnSpan="3">
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Grid.Row="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="60" >
+                        <TextBlock Height="23" HorizontalAlignment="Left" x:Name="textBlockEmailId" Text="Ел. пошта:" VerticalAlignment="Top" Width="360" FontStretch="UltraExpanded" FontSize="10" Background="#A8B2C0" Foreground="#302f2f" Padding="5"/>
+                    </Viewbox>
+                    <Viewbox Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="60">
+                        <TextBlock Height="23" HorizontalAlignment="Left" x:Name="textBlockFirstName" Text="Ім'я:" VerticalAlignment="Top" Width="360" Background="#A8B2C0" FontSize="10" Foreground="#302f2f" Padding="5"/>
+                    </Viewbox>
+                    <Viewbox Grid.Row="2" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="60">
+                        <TextBlock Height="23" HorizontalAlignment="Left" x:Name="textBlockLastName" Text="Прізвище:" VerticalAlignment="Top" Width="360" Background="#A8B2C0" FontSize="10" Foreground="#302f2f" Padding="5"/>
+                    </Viewbox>
+                    <Viewbox Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="60">
+                        <TextBlock Height="23" HorizontalAlignment="Left" x:Name="textBlockBirthDate" Text="Дата народження:" VerticalAlignment="Top" Width="360" Background="#A8B2C0" FontSize="10" Foreground="#302f2f" Padding="5"/>
+                    </Viewbox>
+                    <Viewbox Grid.Row="4" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="60">
+                        <TextBlock Height="23" HorizontalAlignment="Left" x:Name="textBlockCurrency" Text="Валюта:" VerticalAlignment="Top" Width="360" Background="#A8B2C0" FontSize="10" Foreground="#302f2f" Padding="5"/>
+                    </Viewbox>
+                    <Viewbox Grid.Row="5" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="60">
+                        <TextBlock Height="23" HorizontalAlignment="Left" x:Name="textBlockPassword" Text="Пароль:" VerticalAlignment="Top" Width="360" Background="#A8B2C0" FontSize="10" Foreground="#302f2f" Padding="5"/>
+                    </Viewbox>
+                    <Viewbox Grid.Row="6" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="60">
+                        <TextBlock Height="23" HorizontalAlignment="Left" x:Name="textBlockCategories" Text="Категорії:" VerticalAlignment="Top" Width="360" Background="#A8B2C0" FontSize="10" Foreground="#302f2f" Padding="5"/>
+                    </Viewbox>
+
+
+
+
+                </Grid>
+
+
+                <!--graph-->
+
+
+                <!--transaction history-->
+            </Grid>
+        </Grid>
+    </Grid>
+
+</Page>

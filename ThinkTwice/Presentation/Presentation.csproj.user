@@ -16,11 +16,20 @@
     <Compile Update="RegistrationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Settings.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ThinkTwiceHome.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Settings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Transactions.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Dashboard.xaml">
       <SubType>Designer</SubType>
     </Page>

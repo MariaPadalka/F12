@@ -19,9 +19,9 @@ namespace Presentation
     /// <summary>
     /// Interaction logic for Dashboard.xaml
     /// </summary>
-    public partial class Dashboard : Page
+    public partial class Settings : Page
     {
-        public Dashboard()
+        public Settings()
         {
             InitializeComponent();
             Loaded += YourWindow_Loaded;
@@ -42,7 +42,6 @@ namespace Presentation
                 //new Transaction { Title = "Expense", Details = "Clothes", Date = DateTime.Now.Date, Amount = -70.00M, Planned = false },
             };
 
-            dataGrid.ItemsSource = defaultData;
         }
 
         private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -55,8 +54,11 @@ namespace Presentation
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Transactions.xaml", UriKind.Relative));
         }
-
-
+        public void Dashboard_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
+        }
 
     }
 }
