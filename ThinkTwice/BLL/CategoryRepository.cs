@@ -19,7 +19,7 @@ namespace BLL
             _context.Categories.Add(newCategory);
             _context.SaveChanges();
         }
-        public Category GetCategoryById(Guid categoryId)
+        public Category? GetCategoryById(Guid categoryId)
         {
             return _context.Categories.FirstOrDefault(c => c.Id == categoryId);
         }
@@ -27,7 +27,7 @@ namespace BLL
         {
             return _context.Categories.Where(c => c.UserId == userId).ToList();
         }
-        public Category GetCategoryByName(Guid userId, string name)
+        public Category? GetCategoryByName(Guid userId, string name)
         {
             return _context.Categories.FirstOrDefault(c => c.UserId == userId && c.Title == name);
         }

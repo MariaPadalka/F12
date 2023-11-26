@@ -8,7 +8,6 @@ namespace BLL
 {
     public class RegistrationService
     {
-        private readonly ThinkTwiceContext _context = new ThinkTwiceContext();
         private readonly UserRepository _userService = new UserRepository();
 
         public UserDTO? Register(string email, string password, string first_name, string last_name, DateTime? date, string currency)
@@ -27,8 +26,7 @@ namespace BLL
                     BirthDate = date,
                     Currency = currency
                 };
-                _context.Users.Add(newUser);
-                _context.SaveChanges();
+                _userService.Add(newUser);
                 UserDTO userDTO = new UserDTO(newUser);
                 return userDTO;
             }
