@@ -55,6 +55,11 @@ namespace Presentation
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Transactions.xaml", UriKind.Relative));
         }
+        public void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Settings.xaml", UriKind.Relative));
+        }
 
 
 
