@@ -20,112 +20,167 @@
 
         <!-- White container for the main content -->
         <!-- Blue container for the menu -->
-        <Grid Background="#121B28">
-            <TextBlock Text="Think Twice" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,22,0,0" FontSize="17" Foreground="White"/>
+        <Grid Background="#121B28" MinWidth="185">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Viewbox Grid.Row="0" Margin="0,0,5,0" Stretch="Uniform" MaxHeight="30">
+                <TextBlock Text="Think Twice" Foreground="White"/>
+            </Viewbox>
+            <Grid Grid.Row="1" VerticalAlignment="Stretch" MinWidth="185">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
-                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,75,0,0" MouseLeftButtonDown="Dashboard_Click">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="1" Background="#121B28" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="Auto" Height="Auto"  MouseLeftButtonDown="Dashboard_Click">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="8*" />
+                            </Grid.ColumnDefinitions>
 
-                        <Image x:Name="___icons_home" Height="15" Margin="8,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
-                            <Image.Source>
-                                <BitmapImage UriSource="/icons/home_grey.PNG" />
-                            </Image.Source>
-                        </Image>
+                            <Image x:Name="___icons_home" Height="Auto" MaxHeight="24" Margin="10,10,5,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/icons/home_grey.PNG" />
+                                </Image.Source>
+                            </Image>
 
-                        <TextBlock Text="Панель керування" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold"/>
-                    </Grid>
-                </Border>
+                            <Viewbox Grid.Column="1" Stretch="Uniform" MaxHeight="24" HorizontalAlignment="Left">
+                                <TextBlock Text="Головна" Foreground="#A0A4A9" FontWeight="SemiBold"/>
+                            </Viewbox>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+
+                <Grid Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="1" Background="White" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="Auto" Height="Auto">
+                        <Grid  Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="8*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image x:Name="___icons_transactions" Height="Auto" MaxHeight="24" Margin="10,10,5,10" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/icons/transactions_black.PNG" />
+                                </Image.Source>
+                            </Image>
+
+                            <Viewbox Grid.Column="1"  Stretch="Uniform" MaxHeight="24" HorizontalAlignment="Left">
+                                <TextBlock Text="Транзакції" Foreground="Black" FontWeight="SemiBold" />
+                            </Viewbox>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="1" Background="#121B28" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="Auto" Height="Auto">
+                        <Grid  Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="8*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image x:Name="___icons_statistics" Height="Auto" MaxHeight="24" Margin="10,10,5,10" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/icons/statistics_grey.PNG" />
+                                </Image.Source>
+                            </Image>
+
+                            <Viewbox Grid.Column="1" Stretch="Uniform" MaxHeight="24" HorizontalAlignment="Left">
+                                <TextBlock Text="Статистика" Foreground="#A0A4A9" FontWeight="SemiBold"/>
+                            </Viewbox>
+
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="1" Background="#121B28" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="Auto" Height="Auto">
+                        <Grid  Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="8*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image x:Name="___icons_settings" Height="Auto" MaxHeight="24" Margin="10,10,5,10" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/icons/settings_grey.PNG" />
+                                </Image.Source>
+                            </Image>
+
+                            <Viewbox Grid.Column="1" Margin="0,0,5,0" Stretch="Uniform" MaxHeight="24" HorizontalAlignment="Left">
+                                <TextBlock Text="Налаштування" Foreground="#A0A4A9" FontWeight="SemiBold"/>
+                            </Viewbox>
+
+                        </Grid>
+                    </Border>
+                </Grid>
+
             </Grid>
 
 
-            <Grid Grid.Row="1">
-                <Border Grid.Row="0" Background="White" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,120,0,0">
-                    <Grid>
+            <Grid Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="12*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="1" Background="#121B28" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="Auto" Height="Auto">
+                    <Grid  Width="Auto">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="8*" />
                         </Grid.ColumnDefinitions>
 
-                        <Image x:Name="___icons_transactions" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Image.Source>
-                                <BitmapImage UriSource="/icons/transactions_black.PNG" />
-                            </Image.Source>
-                        </Image>
-
-                        <TextBlock Text="Транзакції" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="12" FontWeight="Bold"/>
-                    </Grid>
-                </Border>
-            </Grid>
-
-            <Grid Grid.Row="2">
-                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,165,0,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Image x:Name="___icons_statistics" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Image.Source>
-                                <BitmapImage UriSource="/icons/statistics_grey.PNG" />
-                            </Image.Source>
-                        </Image>
-
-                        <TextBlock Text="Статистика" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold"/>
-                    </Grid>
-                </Border>
-            </Grid>
-
-            <Grid Grid.Row="3">
-                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="163" Height="33" Margin="0,210,0,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Image x:Name="___icons_settings" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Image.Source>
-                                <BitmapImage UriSource="/icons/settings_grey.PNG" />
-                            </Image.Source>
-                        </Image>
-
-                        <TextBlock Text="Налаштування" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold"/>
-                    </Grid>
-                </Border>
-            </Grid>
-
-
-
-            <Grid Grid.Row="4">
-                <Border Grid.Row="0" Background="#121B28" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="163" Height="33" Margin="0,0,0,30">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Image x:Name="___icons_logout" Height="15" Margin="8,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image x:Name="___icons_logout" Height="Auto" MaxHeight="24" Margin="10,10,5,10" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Image.Source>
                                 <BitmapImage UriSource="/icons/logout_grey.PNG" />
                             </Image.Source>
                         </Image>
 
-                        <TextBlock Text="Вийти" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#A0A4A9" FontSize="12" FontWeight="Bold" Margin="10,0,0,0"/>
+                        <Viewbox Grid.Column="1" Margin="0,0,5,0" Stretch="Uniform" MaxHeight="24" HorizontalAlignment="Left">
+                            <TextBlock Text="Вийти" Foreground="#A0A4A9" FontWeight="SemiBold"/>
+                        </Viewbox>
+
                     </Grid>
                 </Border>
             </Grid>
 
 
-
         </Grid>
 
-        <Grid Grid.Column="1" Background="White" Margin="1,0,-1,0">
+        <!-- White container for the main content -->
+        <Grid Grid.Column="1" Background="White" Margin="1,0,-1,0" MinWidth="600">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
