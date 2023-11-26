@@ -61,7 +61,12 @@ namespace Presentation
             ns.Navigate(new Uri("Settings.xaml", UriKind.Relative));
         }
 
-
+        public void Logout(object sender, RoutedEventArgs e)
+        {
+            App.RemoveUser();
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Login.xaml", UriKind.Relative));
+        }
 
     }
 }

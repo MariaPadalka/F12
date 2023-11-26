@@ -59,6 +59,48 @@ namespace Presentation
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
         }
+        public void Logout(object sender, RoutedEventArgs e)
+        {
+            App.RemoveUser();
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Login.xaml", UriKind.Relative));
+        }
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //DateTime? selectedDate = datePickerBirthdate.SelectedDate;
 
+            //if (selectedDate.HasValue)
+            //{
+            //    if (selectedDate > DateTime.Now)
+            //    {
+            //        dateError.Text = "Дата народження не може бути у майбутньому.";
+            //    }
+            //    else
+            //    {
+            //        dateError.Text = "";
+            //    }
+            //}
+            //else
+            //{
+            //    dateError.Text = "Введіть коректну дату народження.";
+            //}
+            //errormessage.Text = "";
+        }
+        private void ShowPassword_Checked(object sender, RoutedEventArgs e)
+        {
+            passwordBox1.Visibility = Visibility.Collapsed;
+            textBoxPassword.Visibility = Visibility.Visible;
+            textBoxPassword.Text = passwordBox1.Password;
+            toggleButtonShowPassword.IsChecked = true;
+        }
+
+        private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
+        {
+            passwordBox1.Visibility = Visibility.Visible;
+            textBoxPassword.Visibility = Visibility.Collapsed;
+            passwordBox1.Password = textBoxPassword.Text;
+            textBoxPassword.Text = string.Empty;
+            toggleButtonShowPassword.IsChecked = false;
+        }
     }
 }

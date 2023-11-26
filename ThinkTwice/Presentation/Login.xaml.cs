@@ -25,15 +25,11 @@ namespace Presentation
         }
         private void Registration_Click(object sender, RoutedEventArgs e)
         {
-            //RegistrationView reg = new RegistrationView();
-            //contentContainer.Content = reg;
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("RegistrationView.xaml", UriKind.Relative));
         }
         private void GoToDashboard(object sender, RoutedEventArgs e)
         {
-            //Dashboard dashboard = new Dashboard();
-            //contentContainer.Content = dashboard;
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
         }

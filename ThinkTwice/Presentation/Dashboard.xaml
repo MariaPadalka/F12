@@ -110,7 +110,6 @@
                             <Viewbox Grid.Column="1" Stretch="Uniform" MaxHeight="24" HorizontalAlignment="Left">
                                 <TextBlock Text="Статистика" Foreground="#A0A4A9" FontWeight="SemiBold"/>
                             </Viewbox>
-
                         </Grid>
                     </Border>
                 </Grid>
@@ -151,7 +150,7 @@
                     <ColumnDefinition Width="12*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="1" Background="#121B28" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="Auto" Height="Auto">
+                <Border Grid.Column="1" Background="#121B28" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="Auto" Height="Auto" MouseLeftButtonDown="Logout">
                     <Grid  Width="Auto">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />

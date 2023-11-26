@@ -156,7 +156,7 @@
                     <ColumnDefinition Width="12*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="1" Background="#121B28" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="Auto" Height="Auto">
+                <Border Grid.Column="1" Background="#121B28" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="Auto" Height="Auto" MouseLeftButtonDown="Logout">
                     <Grid  Width="Auto">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
@@ -182,10 +182,11 @@
 
         <!-- White container for the main content -->
         <Grid Grid.Column="1" Background="White" Margin="1,0,-1,0" MinWidth="600">
-            <Grid Margin="20">
+            <Grid Margin="20, 20, 40, 20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="8*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" ShowGridLines="false">
                     <Grid.ColumnDefinitions>
@@ -206,7 +207,7 @@
                     Width="80"
                     Padding="5"
                     Background="#121B28"
-                    Foreground="#E9E0E0">   
+                    Foreground="#E9E0E0">
 
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
@@ -218,56 +219,199 @@
                 </Grid>
 
                 <Grid Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2">
-                        <Grid.RowDefinitions >
-                            <RowDefinition Height="1*" />
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="2*"/>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Margin="0,5,0,5" Height="Auto" Background="#A8B2C0">
-                            <Viewbox HorizontalAlignment="Left" VerticalAlignment="Stretch" Stretch="Uniform" >
-                                <TextBlock HorizontalAlignment="Left" x:Name="textBlockEmailId" Text="Ел. пошта:" VerticalAlignment="Top" Width="360"  Foreground="#302f2f" Padding="5"/>
-                            </Viewbox>
-                        </Grid>
-                        <Grid Grid.Row="1" Margin="0,5,0,5" Height="Auto" Background="#A8B2C0">
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
 
-                            <Viewbox Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Stretch="Uniform" Height="Auto">
-                                <TextBlock HorizontalAlignment="Left" x:Name="textBlockFirstName" Text="Ім'я:" VerticalAlignment="Top" Width="360" Background="#A8B2C0" Foreground="#302f2f" Padding="5"/>
-                            </Viewbox>
-                        </Grid>
-                        <Grid Grid.Row="2" Margin="0,5,0,5" Height="Auto" Background="#A8B2C0">
-                            <Viewbox Grid.Row="2" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Stretch="Uniform" MaxHeight="60">
-                                <TextBlock HorizontalAlignment="Left" x:Name="textBlockLastName" Text="Прізвище:" VerticalAlignment="Top" Width="360" Background="#A8B2C0" FontSize="10" Foreground="#302f2f" Padding="5"/>
-                            </Viewbox>
-                        </Grid>
+                    <Grid Grid.Row="0" Margin="0,5,0,5" Height="Auto" Background="#A8B2C0">
 
-                        <Viewbox Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="60">
-                            <TextBlock HorizontalAlignment="Left" x:Name="textBlockBirthDate" Text="Дата народження:" VerticalAlignment="Top" Width="360" Background="#A8B2C0" FontSize="10" Foreground="#302f2f" Padding="5"/>
-                        </Viewbox>
-                        <Viewbox Grid.Row="4" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" >
-                            <TextBlock HorizontalAlignment="Left" x:Name="textBlockCurrency" Text="Валюта:" VerticalAlignment="Top" Width="360" Background="#A8B2C0" FontSize="10" Foreground="#302f2f" Padding="5"/>
-                        </Viewbox>
-                        <Viewbox Grid.Row="5" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform">
-                            <TextBlock HorizontalAlignment="Left" x:Name="textBlockPassword" Text="Пароль:" VerticalAlignment="Top" Width="360" Background="#A8B2C0" FontSize="10" Foreground="#302f2f" Padding="5"/>
-                        </Viewbox>
-                        <Viewbox Grid.Row="6" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform">
-                            <TextBlock HorizontalAlignment="Left" x:Name="textBlockCategories" Text="Категорії:" VerticalAlignment="Top" Width="360" Background="#A8B2C0" FontSize="10" Foreground="#302f2f" Padding="5"/>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Uniform" Height="Auto" MaxHeight="40" Margin="8">
+                            <TextBlock HorizontalAlignment="Left" x:Name="textBlockFirstName" Text="Ім'я:" VerticalAlignment="Center"  Background="#A8B2C0" Foreground="#011140" Padding="5"/>
                         </Viewbox>
 
+                        <TextBox Grid.Column="1" x:Name="textBoxName" >
+                            <TextBox.Template>
+                                <ControlTemplate TargetType="TextBox" >
+                                    <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="2" Background="white" Margin="10">
+                                        <ScrollViewer x:Name="PART_ContentHost"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </TextBox.Template>
+                        </TextBox>
+                    </Grid>
+                    <Grid Grid.Row="1" Margin="0,5,0,5" Height="Auto" Background="#A8B2C0">
 
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Uniform" Height="Auto" MaxHeight="40" Margin="8">
+                            <TextBlock HorizontalAlignment="Left" x:Name="textBlockLastName" Text="Прізвище:" VerticalAlignment="Center"  Background="#A8B2C0" Foreground="#011140" Padding="5"/>
+                        </Viewbox>
 
+                        <TextBox Grid.Column="1" x:Name="textBoxSurname" >
+                            <TextBox.Template>
+                                <ControlTemplate TargetType="TextBox" >
+                                    <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="2" Background="white" Margin="10">
+                                        <ScrollViewer x:Name="PART_ContentHost"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </TextBox.Template>
+                        </TextBox>
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="0,5,0,5" Height="Auto" Background="#A8B2C0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Uniform" Height="Auto" MaxHeight="40" Margin="8">
+                            <TextBlock HorizontalAlignment="Left" x:Name="textBlockEmail" Text="Ел.адреса:" VerticalAlignment="Center"  Background="#A8B2C0" Foreground="#011140" Padding="5"/>
+                        </Viewbox>
+
+                        <TextBox Grid.Column="1" x:Name="textBoxEmail" >
+                            <TextBox.Template>
+                                <ControlTemplate TargetType="TextBox" >
+                                    <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="2" Background="white" Margin="10">
+                                        <ScrollViewer x:Name="PART_ContentHost"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </TextBox.Template>
+                        </TextBox>
+                    </Grid>
+                    <Grid Grid.Row="3" Margin="0,5,0,5" Height="Auto" Background="#A8B2C0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Uniform" Height="Auto" MaxHeight="40" Margin="8">
+                            <TextBlock HorizontalAlignment="Left" x:Name="textBlockBirthDate" Text="Дата народження:" VerticalAlignment="Center"  Background="#A8B2C0" Foreground="#011140" Padding="5"/>
+                        </Viewbox>
+
+                        <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3" Grid.Column="1" x:Name="DatePickerBorder" Margin="10" Background="white">
+                            <DatePicker BorderThickness="0" x:Name="datePickerBirthdate" Height="Auto" HorizontalAlignment="Right" VerticalAlignment="Center" Width="Auto" SelectedDateChanged="DatePicker_SelectedDateChanged" Language="uk-UA">
+                                <DatePicker.Resources>
+                                    <Style TargetType="{x:Type DatePickerTextBox}">
+                                        <Setter Property="Width" Value="{Binding ActualWidth, ElementName=DatePickerBorder}" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
+                                                    <StackPanel>
+                                                        <TextBlock Text="{TemplateBinding Text}" Width="Auto" Margin="5,0,0,0"/>
+                                                        <TextBox x:Name="PART_TextBox" HorizontalAlignment="Left" Width="Auto" Style="{x:Null}">
+                                                            <TextBox.Template>
+                                                                <ControlTemplate TargetType="TextBox">
+                                                                    <Border Background="Transparent"/>
+                                                                </ControlTemplate>
+                                                            </TextBox.Template>
+                                                        </TextBox>
+                                                    </StackPanel>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DatePicker.Resources>
+                            </DatePicker>
+                        </Border>
+                    </Grid>
+
+                    <Grid Grid.Row="4" Margin="0,5,0,5" Height="Auto" Background="#A8B2C0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Uniform" Height="Auto" MaxHeight="40" Margin="8">
+                            <TextBlock HorizontalAlignment="Left" x:Name="textBlockCurrency" Text="Валюта:" VerticalAlignment="Center"  Background="#A8B2C0" Foreground="#011140" Padding="5"/>
+                        </Viewbox>
+
+                        <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="1" CornerRadius="3" x:Name="CurrencyBorder" Margin="10" Background="white">
+                            <ComboBox  Background="white" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="Auto" x:Name="comboBoxCurrency" IsEditable="True" IsReadOnly="True" Text="UAH" >
+                                <ComboBoxItem Content="USD" BorderThickness="0" />
+                                <ComboBoxItem Content="EUR" BorderThickness="0"/>
+                                <ComboBoxItem Content="UAH" BorderThickness="0"/>
+                                <ComboBox.Style>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="Width" Value="{Binding ActualWidth, ElementName=CurrencyBorder}" />
+                                    </Style>
+                                </ComboBox.Style>
+                            </ComboBox>
+                        </Border>
 
                     </Grid>
 
+                    <Grid Grid.Row="5" Margin="0,5,0,5" Height="Auto" Background="#A8B2C0">
 
-                    <!--graph-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Uniform" Height="Auto" MaxHeight="40" Margin="8">
+                            <TextBlock HorizontalAlignment="Left" x:Name="textBlockPassword" Text="Змінити пароль:" VerticalAlignment="Center"  Background="#A8B2C0" Foreground="#011140" Padding="5"/>
+                        </Viewbox>
+
+                        <Grid Grid.Column="1" x:Name="myGrid" >
+                            <!--<Grid.Resources>
+                                <Style TargetType="Viewbox">
+                                    <Setter Property="Width" Value="{Binding ActualWidth, ElementName=myGrid}" />
+                                </Style>
+                            </Grid.Resources>-->
+                            <Viewbox x:Name="Viewbox" HorizontalAlignment="Left" VerticalAlignment="Stretch" Stretch="Uniform" Height="Auto" Width="Auto" >
+                                <TextBox Grid.Column="1" Width="700" x:Name="textBoxPassword" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <TextBox.Template>
+                                        <ControlTemplate TargetType="TextBox" >
+                                            <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="2" Background="white" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" Width="Auto">
+                                                <ScrollViewer x:Name="PART_ContentHost"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </TextBox.Template>
+                                </TextBox>
+                            </Viewbox>
+
+                            <PasswordBox FontSize="20" Padding="0,1,0,1" Grid.Column="1" Style="{StaticResource roundcornerpassword}"  HorizontalAlignment="Stretch" x:Name="passwordBox1" VerticalAlignment="Stretch" Margin="10"/>
+                            <Grid Grid.Column="1"  Margin="0,8,12,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton Grid.Column="1" x:Name="toggleButtonShowPassword" Checked="ShowPassword_Checked" HorizontalAlignment="Right" Unchecked="ShowPassword_Unchecked" Background="Transparent" BorderBrush="Transparent" Height="Auto" Width="Auto" Padding="0">
+                                    <Image >
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Setter Property="Source" Value="/icons/hide.png"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsChecked, ElementName=toggleButtonShowPassword}" Value="True">
+                                                        <Setter Property="Source" Value="/icons/view.png"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                </ToggleButton>
+                            </Grid>
+
+                        </Grid>
+
+                    </Grid>
+                    <Grid Grid.Row="6" Margin="0,5,0,5" Height="Auto" Background="#A8B2C0">
+                        <Viewbox HorizontalAlignment="Left" VerticalAlignment="Stretch" Stretch="Uniform" >
+                            <TextBlock HorizontalAlignment="Left" x:Name="textBlockCategories" Text="Категорії:" VerticalAlignment="Top"   Foreground="#302f2f" Padding="5"/>
+                        </Viewbox>
+                    </Grid>
                 </Grid>
-
-                <!--transaction history-->
             </Grid>
         </Grid>
+    </Grid>
 
 </Page>

@@ -9,12 +9,6 @@
 
     <Grid Margin="0,0,47,56">
 
-        <!--Button as a Link button using style-->
-        <!--end Button as a Link button using style-->
-
-        <!--end Button as a Link button using style-->
-
-        <!--end Button as a Link button using style-->
         <Grid Margin="30,23,0,0" Background="White" Height="504" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="107*"/>
@@ -22,7 +16,6 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="252*" />
-                <!--   <RowDefinition Height="12*" />-->
             </Grid.RowDefinitions>
             <TextBlock Height="20" HorizontalAlignment="Left" Margin="214,433,0,0" x:Name ="errormessage" VerticalAlignment="Top" Width="250"  OpacityMask="Crimson" Foreground="#FFE5572C" Grid.ColumnSpan="2" TextAlignment="Center" />
             <TextBlock Height="23" HorizontalAlignment="Left" Margin="113,124,0,0" x:Name="textBlockFirstname" Text="Ім'я:" VerticalAlignment="Top" Width="110" Foreground="#302f2f"/>

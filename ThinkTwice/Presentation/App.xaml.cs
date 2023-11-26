@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ThinkTwice_Context;
 using BLL.DTO;
+using System.Windows.Navigation;
 
 namespace Presentation
 {
