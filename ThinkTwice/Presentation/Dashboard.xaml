@@ -143,7 +143,7 @@
                 </Grid>
 
             </Grid>
-            
+
 
             <Grid Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
@@ -201,14 +201,14 @@
                             <BitmapImage UriSource="/icons/blue_dollar.PNG" />
                         </Image.Source>
                     </Image>
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,30,0,0" x:Name="incomeValue" Text="$421" VerticalAlignment="Top" Width="62"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="1"/>
+                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,0,0,0" x:Name="incomeValue" Text="$421" VerticalAlignment="Center" Width="107"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="1"/>
                     <TextBlock HorizontalAlignment="Left" Margin="1,62,0,0" x:Name="expenses" Text="Витрати" Width="73"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="2"/>
                     <Image x:Name="___icons_redDollar" HorizontalAlignment="Left" Height="22" Margin="1,0,103,52" RenderTransformOrigin="-3.669,-1.36" Grid.Column="2">
                         <Image.Source>
                             <BitmapImage UriSource="/icons/red-dollar.PNG" />
                         </Image.Source>
                     </Image>
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,30,0,0" x:Name="expensesValue" Text="$164" VerticalAlignment="Top" Width="62"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="2"/>
+                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,0,0,0" x:Name="expensesValue" Text="$164" VerticalAlignment="Center" Width="104"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="2"/>
 
 
                     <Image x:Name="___icons_violetDollar" HorizontalAlignment="Left" Height="22" Margin="1,0,103,52" RenderTransformOrigin="-3.669,-1.36" Grid.Column="3">
@@ -217,7 +217,7 @@
                         </Image.Source>
                     </Image>
                     <TextBlock HorizontalAlignment="Left" Margin="1,62,0,0" x:Name="savings" Text="Збереження" Width="73"  FontSize="12" FontStretch="ExtraCondensed" RenderTransformOrigin="-0.686,0.982" Grid.Column="3" />
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,30,0,0" x:Name="savingsValue" Text="$257" VerticalAlignment="Top" Width="62"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="3"/>
+                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,0,0,0" x:Name="savingsValue" Text="$257" VerticalAlignment="Center" Width="117"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="3"/>
                     <TextBlock HorizontalAlignment="Left" Margin="5,62,0,0" x:Name="income" Text="Дохід" Width="62"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="1" />
 
                 </Grid>
@@ -253,10 +253,22 @@
 
                         <DataGrid.Columns>
                             <!--change due to real data structure-->
-                            <DataGridTextColumn Header="Категорія" Binding="{Binding Title}" Width="2*"/>
-                            <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" Width="3*"/>
-                            <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="3*"/>
-                            <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="2*">
+                            <DataGridTextColumn Header="Категорія" Binding="{Binding Title}" IsReadOnly="True" Width="2*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" IsReadOnly="True" Width="3*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Дата" Binding="{Binding Date}" IsReadOnly="True" Width="2*"/>
+                            <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" IsReadOnly="True" Width="1*">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Foreground" Value="Black"/>
