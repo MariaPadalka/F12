@@ -12,22 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ThinkTwice_Context;
+using ThinkTwice.Models;
 
 namespace Presentation
 {
     /// <summary>
     /// Interaction logic for Dashboard.xaml
     /// </summary>
-    public partial class Dashboard : Page
+    public partial class Transactions : Page
     {
-        public Dashboard()
+        public Transactions()
         {
             InitializeComponent();
             Loaded += YourWindow_Loaded;
-            /*InitializeData();*/
-
-
         }
 
         private void YourWindow_Loaded(object sender, RoutedEventArgs e)
@@ -39,24 +36,36 @@ namespace Presentation
                 new Transaction { Title = "Income", Details = "Scholarship", Date = DateTime.Now.Date, Amount = 800.00M, Planned = false },
                 new Transaction { Title = "Expense", Details = "Utilities", Date = DateTime.Now.Date, Amount = -120.00M, Planned = false },
                 new Transaction { Title = "Income", Details = "Salary", Date = DateTime.Now.Date, Amount = 1000.00M, Planned = false },
-                //new Transaction { Title = "Expense", Details = "Clothes", Date = DateTime.Now.Date, Amount = -70.00M, Planned = false },
+                new Transaction { Title = "Expense", Details = "Clothes", Date = DateTime.Now.Date, Amount = -70.00M, Planned = false },
             };
 
             dataGrid.ItemsSource = defaultData;
         }
 
+
+        //    private void InitializeData()
+        //    {
+        //        List<Transaction> defaultData = new List<Transaction>
+        //{
+        //    new Transaction { Title = "Income", Details = "Salary", Date = DateTime.Now, Amount = 1000.00M, Planned = false },
+        //    new Transaction { Title = "Expense", Details = "Groceries", Date = DateTime.Now, Amount = -50.00M, Planned = false },
+        //    new Transaction { Title = "Income", Details = "Scholarship", Date = DateTime.Now, Amount = 800.00M, Planned = false },
+        //    new Transaction { Title = "Expense", Details = "Utilities", Date = DateTime.Now, Amount = -120.00M, Planned = false },
+        //    new Transaction { Title = "Income", Details = "Salary", Date = DateTime.Now, Amount = 1000.00M, Planned = false },
+        //    new Transaction { Title = "Expense", Details = "Clothes", Date = DateTime.Now, Amount = -70.00M, Planned = false },
+        //};
+
+        //        transactionsListView.ItemsSource = defaultData;
+        //    }
         private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-        public void Transactions_Click(object sender, RoutedEventArgs e)
+        public void Dashboard_Click(object sender, RoutedEventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new Uri("Transactions.xaml", UriKind.Relative));
+            ns.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
         }
-
-
-
     }
 }
