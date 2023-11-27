@@ -45,11 +45,6 @@ namespace Presentation
             dataGrid.ItemsSource = defaultData;
         }
 
-        private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         public void Transactions_Click(object sender, RoutedEventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
@@ -67,6 +62,5 @@ namespace Presentation
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Login.xaml", UriKind.Relative));
         }
-
     }
 }
