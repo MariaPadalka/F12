@@ -132,8 +132,8 @@ namespace BLL
                 {
                     return transactions.Where(i => _categoryRepository.GetCategoryById(i.ToCategory)?.Type == "Витрати").Sum(i => i.Amount);
                 }
-                else { return 1; }
-            } else { return 2; }
+                else { return 0; }
+            } else { return 0; }
         }
         public decimal GetIncome(UserDTO? userDTO)
         {

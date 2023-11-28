@@ -241,7 +241,7 @@
                         </Viewbox>
 
                         <Border Grid.Column="1"  BorderBrush="LightGray" BorderThickness="1" CornerRadius="2" Background="white" Margin="7" >
-                            <TextBox Grid.Column="1" x:Name="textBoxName" FontSize="18" VerticalAlignment="Center">
+                            <TextBox Grid.Column="1" IsEnabled="False" x:Name="textBoxName" FontSize="18" VerticalAlignment="Center">
                                 <TextBox.Template>
                                     <ControlTemplate TargetType="TextBox" >
                                         <ScrollViewer x:Name="PART_ContentHost"/>
@@ -261,7 +261,7 @@
                         </Viewbox>
 
                         <Border Grid.Column="1"  BorderBrush="LightGray" BorderThickness="1" CornerRadius="2" Background="white" Margin="7" >
-                            <TextBox Grid.Column="1" x:Name="textBoxSurname" FontSize="18" VerticalAlignment="Center">
+                            <TextBox IsEnabled="False" Grid.Column="1" x:Name="textBoxSurname" FontSize="18" VerticalAlignment="Center">
                                 <TextBox.Template>
                                     <ControlTemplate TargetType="TextBox" >
                                         <ScrollViewer x:Name="PART_ContentHost"/>
@@ -282,7 +282,7 @@
                         </Viewbox>
 
                         <Border Grid.Column="1"  BorderBrush="LightGray" BorderThickness="1" CornerRadius="2" Background="white" Margin="7" >
-                            <TextBox Grid.Column="1" x:Name="textBoxEmail" FontSize="18" VerticalAlignment="Center">
+                            <TextBox Grid.Column="1" x:Name="textBoxEmail" FontSize="18" VerticalAlignment="Center" IsEnabled="False">
                                 <TextBox.Template>
                                     <ControlTemplate TargetType="TextBox" >
                                         <ScrollViewer x:Name="PART_ContentHost"/>
@@ -302,7 +302,7 @@
                         </Viewbox>
 
                         <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3" Grid.Column="1" x:Name="DatePickerBorder" Margin="7" Background="white" MaxHeight="40">
-                            <DatePicker BorderThickness="0" x:Name="datePickerBirthdate" HorizontalAlignment="Right" VerticalAlignment="Center" Width="Auto" SelectedDateChanged="DatePicker_SelectedDateChanged" Language="uk-UA">
+                            <DatePicker BorderThickness="0" x:Name="datePickerBirthdate" HorizontalAlignment="Right" VerticalAlignment="Center" Width="Auto" SelectedDateChanged="DatePicker_SelectedDateChanged" IsEnabled="False" Language="uk-UA">
                                 <DatePicker.Resources>
                                     <Style TargetType="{x:Type DatePickerTextBox}">
                                         <Setter Property="Width" Value="{Binding ActualWidth, ElementName=DatePickerBorder}" />
@@ -341,7 +341,7 @@
                         </Viewbox>
 
                         <Border Grid.Column="1" BorderBrush="LightGray"  CornerRadius="3" x:Name="CurrencyBorder" Margin="7" Background="white">
-                            <ComboBox  Background="white" BorderThickness="0" HorizontalAlignment="Stretch" FontSize="18" VerticalAlignment="Center" Width="Auto" x:Name="comboBoxCurrency" IsEditable="True" IsReadOnly="True" Text="UAH" >
+                            <ComboBox  Background="white" BorderThickness="0" HorizontalAlignment="Stretch" FontSize="18" VerticalAlignment="Center" Width="Auto" x:Name="comboBoxCurrency" IsEnabled="False" IsEditable="True" IsReadOnly="True" Text="UAH" >
                                 <ComboBoxItem Content="USD" BorderThickness="0" />
                                 <ComboBoxItem Content="EUR" BorderThickness="0"/>
                                 <ComboBoxItem Content="UAH" BorderThickness="0"/>

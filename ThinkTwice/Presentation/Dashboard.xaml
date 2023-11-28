@@ -310,7 +310,7 @@
                         <RowDefinition Height="8*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="1">
-                        <DataGrid x:Name="dataGrid" VerticalAlignment="Bottom" AutoGenerateColumns="False" SelectionChanged="dataGrid_SelectionChanged" GridLinesVisibility="None" Background="White" BorderBrush="Transparent" RowBackground="Transparent" Margin="0,31,0,0" RowHeight="30" ColumnHeaderHeight="50"  Grid.Row="2" Grid.ColumnSpan="3">
+                        <DataGrid x:Name="dataGrid" VerticalAlignment="Bottom" AutoGenerateColumns="False" GridLinesVisibility="None" Background="White" BorderBrush="Transparent" RowBackground="Transparent" Margin="0,31,0,0" RowHeight="30" ColumnHeaderHeight="50"  Grid.Row="2">
                             <DataGrid.Resources>
                                 <Style TargetType="DataGridRowHeader">
                                     <Setter Property="Width" Value="0"/>

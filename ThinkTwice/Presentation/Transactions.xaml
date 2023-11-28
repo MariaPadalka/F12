@@ -204,7 +204,7 @@
             <!-- Second Part (3/5) -->
             <Grid Grid.Row="1">
 
-                <DataGrid x:Name="dataGrid" VerticalAlignment="Top" AutoGenerateColumns="False" SelectionChanged="dataGrid_SelectionChanged" GridLinesVisibility="None" Background="White" BorderBrush="Transparent" RowBackground="Transparent" Margin="37,31,0,0" RowHeight="30" ColumnHeaderHeight="50">
+                <DataGrid x:Name="dataGrid" VerticalAlignment="Top" AutoGenerateColumns="False" GridLinesVisibility="None" Background="White" BorderBrush="Transparent" RowBackground="Transparent" Margin="37,31,0,0" RowHeight="30" ColumnHeaderHeight="50">
                     <DataGrid.Resources>
                         <Style TargetType="DataGridRowHeader">
                             <Setter Property="Width" Value="0"/>
@@ -229,8 +229,8 @@
 
                     <DataGrid.Columns>
                         <!--change due to real data structure-->
-                        <DataGridTextColumn Header="Джерело" Binding="{Binding Title}" Width="2*"/>
-                        <DataGridTextColumn Header="Призначення" Binding="{Binding Title}" Width="2*"/>
+                        <DataGridTextColumn Header="Джерело" Binding="{Binding ToCategory}" Width="2*"/>
+                        <DataGridTextColumn Header="Призначення" Binding="{Binding FromCategory}" Width="2*"/>
                         <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" Width="3*"/>
                         <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="3*"/>
                         <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="2*">

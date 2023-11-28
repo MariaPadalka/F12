@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ThinkTwice_Context;
+using BLL;
+using Presentation.DTO;
 
 namespace Presentation
 {
@@ -21,27 +23,27 @@ namespace Presentation
     /// </summary>
     public partial class Transactions : Page
     {
+        private readonly TransactionService _transactionService = new TransactionService();
         public Transactions()
         {
             InitializeComponent();
             Loaded += YourWindow_Loaded;
+            /*InitializeData();*/
         }
 
         private void YourWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Transaction> defaultData = new List<Transaction>
+            List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser());
+            List<TransactionDTO> data = new List<TransactionDTO>();
+            foreach (Transaction transaction in defaultData)
             {
-                new Transaction { Title = "Income", Details = "Salary", Date = DateTime.Now.Date, Amount = 1000.00M, Planned = false },
-                new Transaction { Title = "Expense", Details = "Groceries", Date = DateTime.Now.Date, Amount = -50.00M, Planned = false },
-                new Transaction { Title = "Income", Details = "Scholarship", Date = DateTime.Now.Date, Amount = 800.00M, Planned = false },
-                new Transaction { Title = "Expense", Details = "Utilities", Date = DateTime.Now.Date, Amount = -120.00M, Planned = false },
-                new Transaction { Title = "Income", Details = "Salary", Date = DateTime.Now.Date, Amount = 1000.00M, Planned = false },
-                new Transaction { Title = "Expense", Details = "Clothes", Date = DateTime.Now.Date, Amount = -70.00M, Planned = false },
-            };
-
-            dataGrid.ItemsSource = defaultData;
+                if (transaction != null)
+                {
+                    data.Add(new TransactionDTO(transaction));
+                }
+            }
+            dataGrid.ItemsSource = data;
         }
-
 
         //    private void InitializeData()
         //    {
@@ -57,10 +59,7 @@ namespace Presentation
 
         //        transactionsListView.ItemsSource = defaultData;
         //    }
-        private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
-        }
 
         public void Dashboard_Click(object sender, RoutedEventArgs e)
         {
