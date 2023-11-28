@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ThinkTwice_Context;
+using BLL;
 
 namespace Presentation
 {
@@ -21,6 +22,7 @@ namespace Presentation
     /// </summary>
     public partial class Dashboard : Page
     {
+        private readonly TransactionService _transactionService = new TransactionService();
         public Dashboard()
         {
             InitializeComponent();
@@ -32,16 +34,14 @@ namespace Presentation
 
         private void YourWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Transaction> defaultData = new List<Transaction>
-            {
-                new Transaction { Title = "Income", Details = "Salary", Date = DateTime.Now.Date, Amount = 1000.00M, Planned = false },
-                new Transaction { Title = "Expense", Details = "Groceries", Date = DateTime.Now.Date, Amount = -50.00M, Planned = false },
-                new Transaction { Title = "Income", Details = "Scholarship", Date = DateTime.Now.Date, Amount = 800.00M, Planned = false },
-                new Transaction { Title = "Expense", Details = "Utilities", Date = DateTime.Now.Date, Amount = -120.00M, Planned = false },
-                new Transaction { Title = "Income", Details = "Salary", Date = DateTime.Now.Date, Amount = 1000.00M, Planned = false },
-                //new Transaction { Title = "Expense", Details = "Clothes", Date = DateTime.Now.Date, Amount = -70.00M, Planned = false },
-            };
-
+            var currency = GetCurrency(App.GetCurrentUser()?.Currency);
+            List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser());
+            var incomes = _transactionService.GetIncome(App.GetCurrentUser());
+            var expense = _transactionService.GetExpenses(App.GetCurrentUser());
+            incomeValue.Text = currency + incomes.ToString();
+            balanceValue.Text = currency + _transactionService.GetBalance(App.GetCurrentUser()).ToString();
+            expensesValue.Text = currency + expense.ToString();
+            savingsValue.Text = currency + (incomes - expense).ToString();
             dataGrid.ItemsSource = defaultData;
         }
 
@@ -61,6 +61,16 @@ namespace Presentation
             App.RemoveUser();
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Login.xaml", UriKind.Relative));
+        }
+        private string GetCurrency(string? currency)
+        {
+            switch (currency)
+            {
+                case "USD": return "$";
+                case "EUR": return "€";
+                case "UAH": return "₴";
+                default: return "₴";
+            }
         }
     }
 }

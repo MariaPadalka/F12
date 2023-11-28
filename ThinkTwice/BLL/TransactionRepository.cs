@@ -3,37 +3,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BLL
 {
-    internal class TransactionRepository
+    public class TransactionRepository
     {
         private readonly ThinkTwiceContext _context = new ThinkTwiceContext();
 
-        public void CreateTransaction(decimal Amount, DateTime? Date, string Title, string? Details, bool Planned)
+        public void CreateTransaction(Transaction transaction)
         {
-            var newTransaction = new Transaction
-            {
-                Amount = Amount,
-                Date = Date,
-                Title = Title,
-                Details = Details,
-                Planned = Planned
-            };
-            _context.Transactions.Add(newTransaction);
+            _context.Transactions.Add(transaction);
             _context.SaveChanges();
         }
-        public Transaction GetTransactionById(Guid transactionId)
+        public Transaction? GetTransactionById(Guid? transactionId)
         {
             return _context.Transactions.FirstOrDefault(c => c.Id == transactionId);
         }
-        public Transaction GetTransactionByName(Guid userId, string name)
+        public Transaction? GetTransactionByName(Guid userId, string name)
         {
             return _context.Transactions.FirstOrDefault(c => c.UserId == userId && c.Title == name);
         }
-
         public List<Transaction> GetTransactionsByUserId(Guid userId)
         {
             return _context.Transactions.Where(c => c.UserId == userId).ToList();
         }
-
         public List<Transaction> GetTransactionsByFromCategoryId(Guid userId, Guid fromCategoryId)
         {
             return _context.Transactions.Where(c => c.UserId == userId && c.FromCategory == fromCategoryId).ToList();
@@ -42,17 +32,16 @@ namespace BLL
         {
             return _context.Transactions.Where(c => c.UserId == userId && c.FromCategory == toCategoryId).ToList();
         }
-
-        public List<Transaction> GetExpensesForUser(Guid userId)
+        public List<Transaction> GetExpensesForUser(Guid? userId)
         {
             return _context.Transactions.Where(c => c.UserId == userId && c.Amount < 0).ToList();
         }
-        public List<Transaction> GetIncomesForUser(Guid userId)
+        public List<Transaction> GetIncomesForUser(Guid? userId)
         {
             return _context.Transactions.Where(c => c.UserId == userId && c.Amount > 0).ToList();
         }
 
-        public List<Transaction> GetPlannedTransactions(Guid userId)
+        public List<Transaction> GetPlannedTransactions(Guid? userId)
         {
             return _context.Transactions.Where(c => c.UserId == userId && c.Planned).ToList();
         }
@@ -63,7 +52,7 @@ namespace BLL
             _context.SaveChanges();
         }
 
-        public void Delete(Guid id)
+        public void Delete(Guid? id)
         {
             var category = _context.Transactions.Find(id);
             if (category != null)

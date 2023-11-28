@@ -19,7 +19,7 @@ namespace Presentation
     {
         public static UserDTO? currentUser { get; set; }
 
-        public UserDTO GetCurrentUser()
+        public static UserDTO? GetCurrentUser()
         {
             return currentUser;
         }
