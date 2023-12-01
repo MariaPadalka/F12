@@ -183,28 +183,102 @@
         <Grid Grid.Column="1" Background="White" Margin="1,0,-1,0" MinWidth="600">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
 
             <!-- First Part (2/5) -->
             <Grid Grid.Row="0">
-                <TextBlock Height="22" Margin="47,22,459,0" x:Name="textBlockHeading" Text="Транзакції" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold"/>
-                <Border Background="#DBB5B5" CornerRadius="7,7,0,0" Margin="51,66,320,-2">
-                    <Border Background="#121B2B" Width="53" Height="18" CornerRadius="7,7,7,7" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,11,5,0">
-                        <TextBlock Height="12"  Width="37" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="textBlockAdd" FontSize="11" Foreground="#F5F5F5" FontStretch="ExtraCondensed" FontFamily="Inter"><Run Language="uk-ua" Text="Додати"/></TextBlock>
-                    </Border>
-                </Border>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="4*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Viewbox Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="30" Height="44" Width="273" Margin="40,22,0,0" >
+                            <TextBlock Height="22" HorizontalAlignment="Center"  x:Name="textBlockHeading" Text="Транзакції" VerticalAlignment="Top" Width="161"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.ColumnSpan="3"/>
+                        </Viewbox>
+                    </Grid>
+
+                    <Grid Grid.Row="1" VerticalAlignment="Top">
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <!-- First column -->
+                                <ColumnDefinition Width="7*"/>
+                                <ColumnDefinition Width="8*"/>
+
+                                <!-- Second column -->
+                            </Grid.ColumnDefinitions>
+
+                            <Border Background="#DBB5B5" Margin="40, 0, 5, 5" Grid.Column="0" CornerRadius="10,10,0,0" VerticalAlignment="Stretch" MinHeight="120" MinWidth="238">
+
+                                <Grid VerticalAlignment="Stretch" MaxHeight="200" HorizontalAlignment="Stretch" Width="Auto">
+                                    <!--<Border Background="#121B2B" Width="53" Height="18" CornerRadius="7,7,7,7" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,11,5,0">
+                                        <TextBlock Height="12" Width="37" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="textBlockAdd" FontSize="11" Foreground="#F5F5F5" FontStretch="ExtraCondensed" FontFamily="Inter"><Run Language="uk-ua" Text="Додати"/></TextBlock>
+                                    </Border>-->
+
+                                    <Viewbox Stretch="Uniform" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,11,5,0" MinHeight="18" MaxHeight="25">
+                                        <Border Background="#121B2B" CornerRadius="7,7,7,7">
+                                            <TextBlock x:Name="textBlockAdd" HorizontalAlignment="Center" MaxHeight="15" VerticalAlignment="Center" FontSize="11" Foreground="#F5F5F5" FontStretch="ExtraCondensed" FontFamily="Inter"><Run Language="uk-ua" Text="Додати"/></TextBlock>
+                                        </Border>
+                                    </Viewbox>
+
+                                    
+
+
+                                    <Viewbox Stretch="Uniform" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10, 7, 100, 50" MaxHeight="30">
+                                        <TextBlock x:Name="textBlockNew" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="10" FontStretch="ExtraCondensed" FontWeight="Bold"><Run Language="uk-ua" Text="Нова транзакція"/></TextBlock>
+                                    </Viewbox>
+
+
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Grid>
 
 
 
-                <TextBlock Height="22" Width="115" Margin="63,76,444,0" x:Name="textBlockNew" VerticalAlignment="Top" FontSize="14" FontStretch="ExtraCondensed" FontWeight="Bold"><Run Language="uk-ua" Text="Нова транзакція"/></TextBlock>
+
+
+                    <!--<Grid Grid.Row="1" VerticalAlignment="Top">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                --><!-- First column --><!--
+                                <ColumnDefinition Width="7*"/>
+                                <ColumnDefinition Width="8*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Background="#DBB5B5" Margin="40, 0, 5, 5" Grid.Column="0" CornerRadius="10,10,0,0" VerticalAlignment="Stretch">
+                                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border Background="#121B2B" Width="53" Height="18" CornerRadius="7,7,7,7" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,11,5,0">
+                                        <TextBlock Height="12" Width="37" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="textBlockAdd" FontSize="11" Foreground="#F5F5F5" FontStretch="ExtraCondensed" FontFamily="Inter">
+                        <Run Language="uk-ua" Text="Додати"/>
+                                        </TextBlock>
+                                    </Border>
+
+                                    <Viewbox Stretch="Uniform" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10, 10, 0, 0">
+                                        <TextBlock Height="20" Width="Auto" x:Name="textBlockNew" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="14" FontStretch="ExtraCondensed" FontWeight="Bold">
+                        <Run Language="uk-ua" Text="Нова транзакція"/>
+                                        </TextBlock>
+                                    </Viewbox>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Grid>-->
+
+
+
+
+                </Grid>
+
+
             </Grid>
 
             <!-- Second Part (3/5) -->
             <Grid Grid.Row="1">
 
-                <DataGrid x:Name="dataGrid" VerticalAlignment="Top" AutoGenerateColumns="False" SelectionChanged="dataGrid_SelectionChanged" GridLinesVisibility="None" Background="White" BorderBrush="Transparent" RowBackground="Transparent" Margin="37,31,0,0" RowHeight="30" ColumnHeaderHeight="50">
+                <DataGrid x:Name="dataGrid" VerticalAlignment="Top" AutoGenerateColumns="False" SelectionChanged="dataGrid_SelectionChanged" GridLinesVisibility="None" Background="White" BorderBrush="Transparent" RowBackground="Transparent" Margin="37,0,0,0" RowHeight="30" ColumnHeaderHeight="50">
                     <DataGrid.Resources>
                         <Style TargetType="DataGridRowHeader">
                             <Setter Property="Width" Value="0"/>
