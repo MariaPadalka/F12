@@ -25,6 +25,7 @@ namespace BLL
                     user.Name = updatedUser.Name;
                     user.BirthDate = updatedUser.BirthDate;
                     user.Currency = updatedUser.Currency;
+                    user.Categories = updatedUser.Categories;
                     _userService.Update(user);
                     return updatedUser;
                 }
@@ -47,17 +48,29 @@ namespace BLL
                 else { return null; }
             } else { return null; }
         }
-        public List<Category>? GetUserCategories(UserDTO userDTO)
+        public IEnumerable<Category>? GetUserCategories(UserDTO? userDTO)
         {
             if (userDTO != null)
             {
                 var user = _userService.GetUserById(userDTO.Id);
                 if (user != null)
                 {
-                    return _categoryService.GetCategoriesByUserId(user.Id);
-                } else { return null; }
-            } else { return null; }
+                    List<Category>? userCategories = _categoryService.GetCategoriesByUserId(user.Id);
+                    List<Category>? generalCategories = _categoryService.GetGeneralCategories();
+                    IEnumerable<Category>? allCategories = userCategories.Concat(generalCategories).ToList();
+                    return allCategories;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return _categoryService.GetGeneralCategories();
+            }
         }
+
         public void RemoveCategory(UserDTO userDTO, Guid categoryId)
         {
             if (userDTO != null)
@@ -75,6 +88,15 @@ namespace BLL
                     }
                 }
             }
+        }
+        public bool UniqueEmail(string email)
+        {
+            if (email != null)
+            {
+                var user = _userService.GetUserByEmail(email);
+                return user == null;
+            }
+            return false;
         }
     }
 }

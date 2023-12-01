@@ -27,6 +27,10 @@ namespace BLL
         {
             return _context.Categories.Where(c => c.UserId == userId).ToList();
         }
+        public List<Category> GetGeneralCategories()
+        {
+            return _context.Categories.Where(c => c.IsGeneral == true).ToList();
+        }
         public Category GetCategoryByName(Guid? userId, string name)
         {
             return _context.Categories.FirstOrDefault(c => c.UserId == userId && c.Title == name);
@@ -46,7 +50,24 @@ namespace BLL
             var category = _context.Categories.Find(id);
             if (category != null)
             {
+                // Знайдемо всі транзакції, що містять цю категорію
+                var transactionsWithCategory = _context.Transactions
+                    .Where(t => t.FromCategory == category.Id || t.ToCategory == category.Id);
+
+                // Проходимося по всіх транзакціях і встановлюємо значення в null
+                foreach (var transaction in transactionsWithCategory)
+                {
+                    if (transaction.FromCategory == category.Id)
+                        transaction.FromCategory = null;
+
+                    if (transaction.ToCategory == category.Id)
+                        transaction.ToCategory = null;
+                }
+
+                // Видаляємо категорію
                 _context.Categories.Remove(category);
+
+                // Зберігаємо зміни в базі даних
                 _context.SaveChanges();
             }
         }
