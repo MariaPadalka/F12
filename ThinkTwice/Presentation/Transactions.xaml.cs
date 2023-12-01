@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ThinkTwice_Context;
+using BLL;
+using Presentation.DTO;
 
 namespace Presentation
 {
@@ -21,46 +23,43 @@ namespace Presentation
     /// </summary>
     public partial class Transactions : Page
     {
+        private readonly TransactionService _transactionService = new TransactionService();
         public Transactions()
         {
             InitializeComponent();
             Loaded += YourWindow_Loaded;
+            //InitializeData();
         }
 
         private void YourWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Transaction> defaultData = new List<Transaction>
+            List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser());
+            List<TransactionDTO> data = new List<TransactionDTO>();
+            foreach (Transaction transaction in defaultData)
             {
-                new Transaction { Title = "Income", Details = "Salary", Date = DateTime.Now.Date, Amount = 1000.00M, Planned = false },
-                new Transaction { Title = "Expense", Details = "Groceries", Date = DateTime.Now.Date, Amount = -50.00M, Planned = false },
-                new Transaction { Title = "Income", Details = "Scholarship", Date = DateTime.Now.Date, Amount = 800.00M, Planned = false },
-                new Transaction { Title = "Expense", Details = "Utilities", Date = DateTime.Now.Date, Amount = -120.00M, Planned = false },
-                new Transaction { Title = "Income", Details = "Salary", Date = DateTime.Now.Date, Amount = 1000.00M, Planned = false },
-                new Transaction { Title = "Expense", Details = "Clothes", Date = DateTime.Now.Date, Amount = -70.00M, Planned = false },
-            };
-
-            dataGrid.ItemsSource = defaultData;
+                if (transaction != null)
+                {
+                    data.Add(new TransactionDTO(transaction));
+                }
+            }
+            dataGrid.ItemsSource = data;
         }
 
-
-        //    private void InitializeData()
-        //    {
-        //        List<Transaction> defaultData = new List<Transaction>
+        //private void InitializeData()
         //{
-        //    new Transaction { Title = "Income", Details = "Salary", Date = DateTime.Now, Amount = 1000.00M, Planned = false },
-        //    new Transaction { Title = "Expense", Details = "Groceries", Date = DateTime.Now, Amount = -50.00M, Planned = false },
-        //    new Transaction { Title = "Income", Details = "Scholarship", Date = DateTime.Now, Amount = 800.00M, Planned = false },
-        //    new Transaction { Title = "Expense", Details = "Utilities", Date = DateTime.Now, Amount = -120.00M, Planned = false },
-        //    new Transaction { Title = "Income", Details = "Salary", Date = DateTime.Now, Amount = 1000.00M, Planned = false },
-        //    new Transaction { Title = "Expense", Details = "Clothes", Date = DateTime.Now, Amount = -70.00M, Planned = false },
+        //    List<Transaction> defaultData = new List<Transaction>
+        //{
+        //    new Transaction {Details = "Salary", Date = DateTime.Now, Amount = 1000.00M, Planned = false },
+        //    new Transaction {Details = "Groceries", Date = DateTime.Now, Amount = -50.00M, Planned = false },
+        //    new Transaction {Details = "Scholarship", Date = DateTime.Now, Amount = 800.00M, Planned = false },
+        //    new Transaction {Details = "Utilities", Date = DateTime.Now, Amount = -120.00M, Planned = false },
+        //    new Transaction {Details = "Salary", Date = DateTime.Now, Amount = 1000.00M, Planned = false },
+        //    new Transaction {Details = "Clothes", Date = DateTime.Now, Amount = -70.00M, Planned = false },
         //};
 
-        //        transactionsListView.ItemsSource = defaultData;
-        //    }
-        private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        //    dataGrid.ItemsSource = defaultData;
+        //}
 
-        }
 
         public void Dashboard_Click(object sender, RoutedEventArgs e)
         {
@@ -78,5 +77,65 @@ namespace Presentation
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Login.xaml", UriKind.Relative));
         }
+
+        private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (string.IsNullOrWhiteSpace(textBox.Text) || textBox.Text == "Джерело")
+            {
+                textBox.Text = string.Empty;
+            }
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.Text = "Джерело";
+            }
+        }
+
+
+
+        //private void PreviewMouseDownOutsideTextBox(object sender, MouseButtonEventArgs e)
+        //{
+        //    // Get the element that was clicked
+        //    FrameworkElement clickedElement = e.OriginalSource as FrameworkElement;
+
+        //    // Check if the clicked area is not within the TextBox
+        //    if (!IsMouseOverTextBox(clickedElement))
+        //    {
+        //        TextBox textBox = FindTextBox(clickedElement); // Find the TextBox dynamically
+        //        if (string.IsNullOrWhiteSpace(textBox.Text))
+        //        {
+        //            textBox.Text = "Your Text Here";
+        //        }
+        //    }
+        //}
+
+        //private bool IsMouseOverTextBox(FrameworkElement element)
+        //{
+        //    // Check if the element is a TextBox or is inside a TextBox
+        //    return element is TextBox || VisualTreeHelper.GetParent(element) is TextBox;
+        //}
+
+        //private TextBox FindTextBox(FrameworkElement element)
+        //{
+        //    // Find the closest parent of the specified element that is a TextBox
+        //    while (element != null && !(element is TextBox))
+        //    {
+        //        element = VisualTreeHelper.GetParent(element) as FrameworkElement;
+        //    }
+
+        //    return element as TextBox;
+        //}
+
+
     }
 }

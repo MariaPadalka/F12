@@ -17,8 +17,6 @@ namespace ThinkTwice_Context
 
         public DateTime? Date { get; set; }
 
-        public string Title { get; set; } = null!;
-
         public string? Details { get; set; }
 
         public bool Planned { get; set; }

@@ -142,7 +142,7 @@
                 </Grid>
 
             </Grid>
-            
+
 
             <Grid Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
@@ -177,95 +177,273 @@
         <!-- White container for the main content -->
         <Grid Grid.Column="1" Background="White" Margin="1,0,-1,0" MinWidth="600">
 
-            <Grid ShowGridLines="false" Margin="29,308,146,0">
-
+            <Grid ShowGridLines="false" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="6*"/>
+                </Grid.RowDefinitions>
                 <!--main panel-->
-                <TextBlock Height="22" HorizontalAlignment="Left" Margin="0,-286,0,0" x:Name="textBlockHeading" Text="Головна сторінка" VerticalAlignment="Top" Width="161"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.ColumnSpan="3"/>
-                <Grid Margin="0,-245,-45,0" MaxHeight="1000" VerticalAlignment="Top" Grid.ColumnSpan="3">
+                <Grid Grid.Row="0" ShowGridLines="false" Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="10*" />
+                    </Grid.ColumnDefinitions>
+                    <!--main panel-->
+                    <Viewbox Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="50" >
+                        <TextBlock Height="22" HorizontalAlignment="Left"  x:Name="textBlockHeading" Text="Головна сторінка" VerticalAlignment="Top" Width="161"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.ColumnSpan="3"/>
+                    </Viewbox>
+                </Grid>
+                <Grid Grid.Row="1" MaxHeight="1000" VerticalAlignment="Top" Margin="0,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition MaxWidth="200" Width="1*"/>
                         <ColumnDefinition MaxWidth="200" Width="1*"/>
                         <ColumnDefinition MaxWidth="200" Width="1*"/>
                         <ColumnDefinition MaxWidth="200" Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="0,62,0,0" x:Name="balance" Text="Баланс" VerticalAlignment="Top" Width="107"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="0"/>
-                    <Image x:Name="___icons_greenDollar" HorizontalAlignment="Left" Height="22" Margin="1,0,103,52" >
-                        <Image.Source>
-                            <BitmapImage UriSource="/icons/green-dollar.PNG" />
-                        </Image.Source>
-                    </Image>
-                    <TextBlock Height="22" HorizontalAlignment="Left" x:Name="balanceValue" Text="$3,596" VerticalAlignment="Center" Width="107"  FontSize="20" FontStretch="ExtraCondensed"  FontWeight="Bold" Grid.Column="0"/>
-                    <Image x:Name="___icons_blueDollar" HorizontalAlignment="Left" Height="22" Margin="1,0,103,52" RenderTransformOrigin="-3.669,-1.36" Grid.Column="1">
-                        <Image.Source>
-                            <BitmapImage UriSource="/icons/blue_dollar.PNG" />
-                        </Image.Source>
-                    </Image>
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,30,0,0" x:Name="incomeValue" Text="$421" VerticalAlignment="Top" Width="62"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="1"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="1,62,0,0" x:Name="expenses" Text="Витрати" Width="73"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="2"/>
-                    <Image x:Name="___icons_redDollar" HorizontalAlignment="Left" Height="22" Margin="1,0,103,52" RenderTransformOrigin="-3.669,-1.36" Grid.Column="2">
-                        <Image.Source>
-                            <BitmapImage UriSource="/icons/red-dollar.PNG" />
-                        </Image.Source>
-                    </Image>
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,30,0,0" x:Name="expensesValue" Text="$164" VerticalAlignment="Top" Width="62"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="2"/>
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Viewbox Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Uniform" Height="Auto" MaxHeight="60">
+                            <TextBlock Height="24" HorizontalAlignment="Left"  x:Name="balanceValue" Text="$3,596" VerticalAlignment="Bottom" Width="107" Padding="0,4,0,2" FontWeight="Bold"/>
+                        </Viewbox>
+                        <Viewbox Grid.Row="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="35">
+                            <TextBlock Height="22" HorizontalAlignment="Left" x:Name="balance" Text="Баланс" VerticalAlignment="Top" Width="107"/>
+                        </Viewbox>
+                        <Grid Grid.Row="0" Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="9*" />
+                            </Grid.ColumnDefinitions>
 
+                            <Image x:Name="___icons_greenDollar" HorizontalAlignment="Stretch" Grid.Column="0"  Height="Auto" MaxHeight="33"  VerticalAlignment="Stretch">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/icons/green-dollar.PNG" />
+                                </Image.Source>
+                            </Image>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Viewbox Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Uniform" Height="Auto" MaxHeight="60">
+                            <TextBlock Height="24" HorizontalAlignment="Left"  x:Name="incomeValue" Text="$421" VerticalAlignment="Bottom" Width="107" Padding="0,4,0,2" FontWeight="Bold"/>
+                        </Viewbox>
+                        <Viewbox Grid.Row="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="35">
+                            <TextBlock Height="22" HorizontalAlignment="Left" x:Name="income" Text="Дохід" VerticalAlignment="Top" Width="107"/>
+                        </Viewbox>
+                        <Grid Grid.Row="0" Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="9*" />
+                            </Grid.ColumnDefinitions>
 
-                    <Image x:Name="___icons_violetDollar" HorizontalAlignment="Left" Height="22" Margin="1,0,103,52" RenderTransformOrigin="-3.669,-1.36" Grid.Column="3">
-                        <Image.Source>
-                            <BitmapImage UriSource="/icons/violet-dollar.PNG" />
-                        </Image.Source>
-                    </Image>
-                    <TextBlock HorizontalAlignment="Left" Margin="1,62,0,0" x:Name="savings" Text="Збереження" Width="73"  FontSize="12" FontStretch="ExtraCondensed" RenderTransformOrigin="-0.686,0.982" Grid.Column="3" />
-                    <TextBlock Height="22" HorizontalAlignment="Left" Margin="1,30,0,0" x:Name="savingsValue" Text="$257" VerticalAlignment="Top" Width="62"  FontSize="20" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.Column="3"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="5,62,0,0" x:Name="income" Text="Дохід" Width="62"  FontSize="12" FontStretch="ExtraCondensed" Grid.Column="1" />
+                            <Image x:Name="___icons_blueDollar" HorizontalAlignment="Stretch" Grid.Column="0"  Height="Auto" MaxHeight="33"  VerticalAlignment="Stretch">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/icons/blue_dollar.PNG" />
+                                </Image.Source>
+                            </Image>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Viewbox Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Uniform" Height="Auto" MaxHeight="60">
+                            <TextBlock Height="24" HorizontalAlignment="Left"  x:Name="expensesValue" Text="$164" VerticalAlignment="Bottom" Width="107" Padding="0,4,0,2" FontWeight="Bold"/>
+                        </Viewbox>
+                        <Viewbox Grid.Row="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="35">
+                            <TextBlock Height="22" HorizontalAlignment="Left" x:Name="expenses" Text="Витрати" VerticalAlignment="Top" Width="107"/>
+                        </Viewbox>
+                        <Grid Grid.Row="0" Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="9*" />
+                            </Grid.ColumnDefinitions>
 
+                            <Image x:Name="___icons_redDollar" HorizontalAlignment="Stretch" Grid.Column="0"  Height="Auto" MaxHeight="33"  VerticalAlignment="Stretch">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/icons/red-dollar.PNG" />
+                                </Image.Source>
+                            </Image>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Column="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Viewbox Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Stretch="Uniform" Height="Auto" MaxHeight="60">
+                            <TextBlock Height="24" HorizontalAlignment="Left"  x:Name="savingsValue" Text="$257" VerticalAlignment="Bottom" Width="107" Padding="0,4,0,2" FontWeight="Bold"/>
+                        </Viewbox>
+                        <Viewbox Grid.Row="2"  HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="35">
+                            <TextBlock Height="22" HorizontalAlignment="Left" x:Name="savings" Text="Збереження" VerticalAlignment="Top" Width="107"/>
+                        </Viewbox>
+                        <Grid Grid.Row="0" Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="9*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image x:Name="___icons_violetDollar" HorizontalAlignment="Stretch" Grid.Column="0"  Height="Auto" MaxHeight="33"  VerticalAlignment="Stretch">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/icons/violet-dollar.PNG" />
+                                </Image.Source>
+                            </Image>
+                        </Grid>
+                    </Grid>
                 </Grid>
 
+                <Grid Grid.Row="3" VerticalAlignment="Bottom">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="8*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="1">
+                        <DataGrid x:Name="dataGrid" VerticalAlignment="Bottom" AutoGenerateColumns="False" GridLinesVisibility="None" Background="White" BorderBrush="Transparent" RowBackground="Transparent" Margin="0,31,0,0" RowHeight="30" ColumnHeaderHeight="50"  Grid.Row="2">
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridRowHeader">
+                                    <Setter Property="Width" Value="0"/>
+                                </Style>
+                            </DataGrid.Resources>
 
-                <!--graph-->
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Transparent"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="FontSize" Value="13"/>
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
 
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Setter Property="Foreground" Value="Gray"/>
+                                </Style>
+                            </DataGrid.RowStyle>
 
-                <!--transaction history-->
-                <Grid Grid.Row="2" VerticalAlignment="Bottom">
-                    <DataGrid x:Name="dataGrid" VerticalAlignment="Bottom" AutoGenerateColumns="False" SelectionChanged="dataGrid_SelectionChanged" GridLinesVisibility="None" Background="White" BorderBrush="Transparent" RowBackground="Transparent" Margin="0,31,0,0" RowHeight="30" ColumnHeaderHeight="50"  Grid.Row="2" Grid.ColumnSpan="3">
-                        <DataGrid.Resources>
-                            <Style TargetType="DataGridRowHeader">
-                                <Setter Property="Width" Value="0"/>
-                            </Style>
-                        </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <!--change due to real data structure-->
+                                <DataGridTextColumn Header="Категорія" Binding="{Binding Title}" Width="2*"/>
+                                <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" Width="3*"/>
+                                <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="3*"/>
+                                <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="2*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Foreground" Value="Black"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <!--<DataGrid x:Name="dataGrid" VerticalAlignment="Bottom" AutoGenerateColumns="False" GridLinesVisibility="None" 
+                              Background="White" BorderBrush="Transparent" RowBackground="Transparent" 
+                                  HorizontalAlignment="Stretch"
+                              RowHeight="30" ColumnHeaderHeight="50" Grid.Row="2" Grid.ColumnSpan="3">
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridRowHeader">
+                                    <Setter Property="Width" Value="0"/>
+                                </Style>
+                            </DataGrid.Resources>
 
-                        <DataGrid.ColumnHeaderStyle>
-                            <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="Foreground" Value="Black"/>
-                                <Setter Property="BorderBrush" Value="Transparent"/>
-                                <Setter Property="BorderThickness" Value="0"/>
-                                <Setter Property="FontSize" Value="13"/>
-                            </Style>
-                        </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="Transparent"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="FontSize" Value="13"/>
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
 
-                        <DataGrid.RowStyle>
-                            <Style TargetType="DataGridRow">
-                                <Setter Property="Foreground" Value="Gray"/>
-                            </Style>
-                        </DataGrid.RowStyle>
-
-                        <DataGrid.Columns>
-                            <!--change due to real data structure-->
-                            <DataGridTextColumn Header="Категорія" Binding="{Binding Title}" Width="2*"/>
-                            <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" Width="3*"/>
-                            <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="3*"/>
-                            <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="2*">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Foreground" Value="Black"/>
-                                        <Setter Property="FontWeight" Value="Bold"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <TextBlock Height="22" HorizontalAlignment="Left" x:Name="textBlockHeading_Copy" Text="Історія транзакцій" VerticalAlignment="Top" Width="161"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.ColumnSpan="3" Margin="0,2,0,0"/>
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Setter Property="Foreground" Value="Gray"/>
+                                </Style>
+                            </DataGrid.RowStyle>
+                            <DataGrid.Columns>
+                                --><!--change due to real data structure--><!--
+                                <DataGridTemplateColumn >
+                                    <DataGridTemplateColumn.Header>
+                                        <Viewbox HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="30">
+                                            <TextBlock Height="22" HorizontalAlignment="Center" x:Name="title" Text="Назва" VerticalAlignment="Top" Width="107" FontSize="16"/>
+                                        </Viewbox>
+                                    </DataGridTemplateColumn.Header>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Viewbox HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="25">
+                                                <TextBlock Height="20" Text="{Binding Title}" VerticalAlignment="Top" FontSize="14"/>
+                                            </Viewbox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Width="3*">
+                                    <DataGridTemplateColumn.Header>
+                                        <Viewbox HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="30">
+                                            <TextBlock Height="22" HorizontalAlignment="Center" x:Name="details" Text="Деталі" VerticalAlignment="Top" Width="107" FontSize="16"/>
+                                        </Viewbox>
+                                    </DataGridTemplateColumn.Header>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Viewbox HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="25">
+                                                <TextBlock Height="20" Text="{Binding Details}" VerticalAlignment="Top" FontSize="14"/>
+                                            </Viewbox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Width="3*">
+                                    <DataGridTemplateColumn.Header>
+                                        <Viewbox HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="30">
+                                            <TextBlock Height="22" HorizontalAlignment="Center" x:Name="date" Text="Дата" VerticalAlignment="Top" Width="107" FontSize="16"/>
+                                        </Viewbox>
+                                    </DataGridTemplateColumn.Header>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Viewbox HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="25">
+                                                <TextBlock Height="20" Text="{Binding Date}" VerticalAlignment="Top" FontSize="14"/>
+                                            </Viewbox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Width="2*">
+                                    <DataGridTemplateColumn.Header>
+                                        <Viewbox HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="30">
+                                            <TextBlock Height="22" HorizontalAlignment="Center" x:Name="amount" Text="Сума" VerticalAlignment="Top" Width="107" FontSize="16"/>
+                                        </Viewbox>
+                                    </DataGridTemplateColumn.Header>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Viewbox HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="25">
+                                                <TextBlock Height="20" Text="{Binding Amount}" VerticalAlignment="Top" FontSize="14"/>
+                                            </Viewbox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>-->
+                    </Grid>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="11*" />
+                        </Grid.ColumnDefinitions>
+                        <!--main panel-->
+                        <Viewbox Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" MaxHeight="40">
+                            <TextBlock Height="22" HorizontalAlignment="Left"  x:Name="textBlockHeading_Copy" Text="Історія транзакцій" VerticalAlignment="Top" Width="161"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.ColumnSpan="3"/>
+                        </Viewbox>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
