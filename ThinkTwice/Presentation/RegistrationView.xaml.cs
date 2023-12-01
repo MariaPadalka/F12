@@ -169,7 +169,7 @@ namespace Presentation
             {
                 firstNameError.Text = "Ім'я повинне мати від 2 до 18 символів.";                
             }
-            else if (!Regex.IsMatch(firstName, "^(?:[A-Za-z]+|[А-ЩЬЮЯҐЄІЇа-щьюяґєії']+)$"))
+            else if (!Regex.IsMatch(firstName, "^(?:[A-Za-z-]+|[А-ЩЬЮЯҐЄІЇа-щьюяґєії'-]+)$"))
             {
                 firstNameError.Text = "Введіть коректне ім'я.";
             }
@@ -191,7 +191,7 @@ namespace Presentation
             {
                 lastNameError.Text = "Прізвище повинне мати від 2 до 18 символів.";
             }
-            else if (!Regex.IsMatch(lastName, "^(?:[A-Za-z]+|[А-ЩЬЮЯҐЄІЇа-щьюяґєії']+)$"))
+            else if (!Regex.IsMatch(lastName, "^(?:[A-Za-z-]+|[А-ЩЬЮЯҐЄІЇа-щьюяґєії'-]+)$"))
             {
                 lastNameError.Text = "Введіть коректне прізвище.";
             }
@@ -224,9 +224,11 @@ namespace Presentation
 
             if (selectedDate.HasValue)
             {
-                if (selectedDate > DateTime.Now)
+                DateTime twelveYearsAgo = DateTime.Now.AddYears(-12);
+
+                if (selectedDate > twelveYearsAgo)
                 {
-                    dateError.Text = "Дата народження не може бути у майбутньому.";
+                    dateError.Text = "Користувач повинен бути старше 12 років.";
                 }
                 else
                 {
