@@ -7,7 +7,8 @@
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Statistics">
+      Title="Statistics"
+      Loaded="YourWindow_Loaded">
 
 
     <Grid>
@@ -219,7 +220,7 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="1">
-                                <Image x:Name="___icons_left" Height="Auto" MaxHeight="18" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                <Image x:Name="___icons_left" Height="Auto" MaxHeight="18" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="PreviousWeek">
                                     <Image.Source>
                                         <BitmapImage UriSource="/icons/left-chevron.png"/>
                                     </Image.Source>
@@ -232,14 +233,14 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="1">
-                                <Image x:Name="___icons_right" Height="Auto" MaxHeight="18" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image x:Name="___icons_right" Height="Auto" MaxHeight="18" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="NextWeek">
                                     <Image.Source>
                                         <BitmapImage UriSource="/icons/right-chevron.png"/>
                                     </Image.Source>
                                 </Image>
                             </Grid>
                         </Grid>
-                        <lvc:CartesianChart Grid.Column="1" x:Name="x" Series="{Binding SeriesCollection}" LegendLocation="Top">
+                        <lvc:CartesianChart Grid.Column="1" x:Name="x" Series="{Binding Series_Collection}" LegendLocation="Top">
                             <lvc:CartesianChart.AxisX>
                                 <lvc:Axis Title="" Labels="{Binding Labels}" LabelsRotation="0" HorizontalAlignment="Center"/>
                             </lvc:CartesianChart.AxisX>
