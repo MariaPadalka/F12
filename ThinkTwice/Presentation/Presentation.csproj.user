@@ -19,12 +19,18 @@
     <Compile Update="Settings.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Statistics.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ThinkTwiceHome.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Settings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Statistics.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Transactions.xaml">

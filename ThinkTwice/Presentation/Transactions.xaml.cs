@@ -71,6 +71,11 @@ namespace Presentation
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Settings.xaml", UriKind.Relative));
         }
+        public void Statistics_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Statistics.xaml", UriKind.Relative));
+        }
         public void Logout(object sender, RoutedEventArgs e)
         {
             App.RemoveUser();
