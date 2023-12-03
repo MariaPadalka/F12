@@ -121,6 +121,7 @@ namespace Presentation
                 decimal amount = decimal.Parse(amountTextBox.Text);
                 string details = detailsTextBox.Text;
                 bool planned = checkboxIsPlanned.IsChecked.HasValue && checkboxIsPlanned.IsChecked.Value;
+                
                 DateTime? date = new DateTime();
 
 
@@ -136,19 +137,35 @@ namespace Presentation
                     amount *= -1;
                 }
 
-
                 _transactionService.AddTransaction(App.GetCurrentUser(), category_to, category_from, amount, date, details, planned);
 
-                List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser());
-                List<TransactionDTO> data = new List<TransactionDTO>();
-                foreach (Transaction transaction in defaultData)
+
+                if (planned)
                 {
-                    if (transaction != null)
+                    List<Transaction>? plannedData = _transactionService.GetTransactions(App.GetCurrentUser()).Where(c => (c.Date > DateTime.Now.Date && c.Planned == true)).ToList();
+                    List<TransactionDTO> rows = new List<TransactionDTO>();
+                    foreach (Transaction transaction in plannedData)
                     {
-                        data.Add(new TransactionDTO(transaction));
+                        if (transaction != null)
+                        {
+                            rows.Add(new TransactionDTO(transaction));
+                        }
                     }
+                    dataGridPlannedTransactions.ItemsSource = rows;
                 }
-                dataGrid.ItemsSource = data;
+                else
+                {
+                    List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser()).Where(c => c.Date < DateTime.Now.Date || (c.Date == DateTime.Now.Date && c.Planned == false)).ToList();
+                    List<TransactionDTO> data = new List<TransactionDTO>();
+                    foreach (Transaction transaction in defaultData)
+                    {
+                        if (transaction != null)
+                        {
+                            data.Add(new TransactionDTO(transaction));
+                        }
+                    }
+                    dataGrid.ItemsSource = data;
+                }
 
                 sourceComboBox.SelectedIndex = -1;
                 destinationComboBox.SelectedIndex = -1;
@@ -251,27 +268,6 @@ namespace Presentation
 
         }
 
-
-
-
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            if (textBox.Text == "Джерело")
-            {
-                textBox.Text = string.Empty;
-            }
-        }
-
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            if (string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                textBox.Text = "Джерело";
-            }
-        }
-
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             DatePickerBorder.Visibility = Visibility.Visible;
@@ -284,54 +280,86 @@ namespace Presentation
 
 
 
-        private int currentPageIndex = 0; // Add this variable to keep track of the current page
 
-        private void PreviousTransactionsButton_Click(object sender, RoutedEventArgs e)
+        // Допоміжний метод для отримання ScrollViewer для DataGrid
+        private ScrollViewer GetScrollViewer(DependencyObject depObj)
         {
-            if (currentPageIndex > 0)
+            if (depObj is ScrollViewer viewer)
+                return viewer;
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
             {
-                currentPageIndex--;
-                UpdateDataGrid();
+                var child = VisualTreeHelper.GetChild(depObj, i);
+                var result = GetScrollViewer(child);
+                if (result != null)
+                    return result;
+            }
+
+            return null;
+        }
+
+
+        private void DataGridPlannedScrollBackward_Click(object sender, RoutedEventArgs e)
+        {
+            var scrollViewer = GetScrollViewer(dataGridPlannedTransactions);
+
+            double jumpSize = Math.Floor(scrollViewer.ViewportHeight);
+
+            scrollViewer.ScrollToVerticalOffset(Math.Max(0, scrollViewer.VerticalOffset - jumpSize));
+        }
+
+        private void DataGridPlannedScrollForward_Click(object sender, RoutedEventArgs e)
+        {
+            var scrollViewer = GetScrollViewer(dataGridPlannedTransactions);
+
+            double jumpSize = Math.Floor(scrollViewer.ViewportHeight);
+
+            scrollViewer.ScrollToVerticalOffset(Math.Min(scrollViewer.ScrollableHeight, scrollViewer.VerticalOffset + jumpSize));
+        }
+
+        private void DataGridPlannedTransactions_Loaded(object sender, RoutedEventArgs e)
+        {
+            ScrollViewer scrollViewer = GetScrollViewer(dataGridPlannedTransactions);
+            if (scrollViewer != null)
+            {
+                scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
             }
         }
 
-        private void NextTransactionsButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Assuming you have the total number of pages in totalPages
-            int totalPages = CalculateTotalPages();
 
-            if (currentPageIndex < totalPages - 1)
+
+        private void DataGridGeneralScrollBackward_Click(object sender, RoutedEventArgs e)
+        {
+            var scrollViewer = GetScrollViewer(dataGrid);
+
+            double jumpSize = Math.Floor(scrollViewer.ViewportHeight);
+
+            scrollViewer.ScrollToVerticalOffset(Math.Max(0, scrollViewer.VerticalOffset - jumpSize));
+        }
+
+        private void DataGridGeneralScrollForward_Click(object sender, RoutedEventArgs e)
+        {
+            var scrollViewer = GetScrollViewer(dataGrid);
+
+            double jumpSize = Math.Floor(scrollViewer.ViewportHeight);
+
+            scrollViewer.ScrollToVerticalOffset(Math.Min(scrollViewer.ScrollableHeight, scrollViewer.VerticalOffset + jumpSize));
+        }
+
+        private void DataGridGeneralTransactions_Loaded(object sender, RoutedEventArgs e)
+        {
+            ScrollViewer scrollViewer = GetScrollViewer(dataGrid);
+            if (scrollViewer != null)
             {
-                currentPageIndex++;
-                UpdateDataGrid();
+                scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
             }
         }
 
-        private int CalculateTotalPages()
+        private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            // Add your logic to calculate the total number of pages based on your data
-            // For example, if you want to display 10 items per page:
-            int itemsPerPage = 10;
-            int totalItems = dataGridPlannedTransactions.Items.Count;
-            return (int)Math.Ceiling((double)totalItems / itemsPerPage);
-        }
-
-        private void UpdateDataGrid()
-        {
-            // Update your DataGrid based on the currentPageIndex
-            // For example, if you want to display 10 items per page:
-            int itemsPerPage = 10;
-            int startIndex = currentPageIndex * itemsPerPage;
-            int endIndex = Math.Min((currentPageIndex + 1) * itemsPerPage, dataGridPlannedTransactions.Items.Count);
-
-            List<TransactionDTO> displayedData = new List<TransactionDTO>();
-
-            for (int i = startIndex; i < endIndex; i++)
-            {
-                displayedData.Add((TransactionDTO)dataGridPlannedTransactions.Items[i]);
-            }
-
-            dataGridPlannedTransactions.ItemsSource = displayedData;
+            e.Handled = true; // Заборонити обробку скролінгу миші
         }
 
         private void dataGridPlannedTransactions_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -345,6 +373,11 @@ namespace Presentation
         }
 
         private void dataGrid_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Run_DragOver(object sender, DragEventArgs e)
         {
 
         }

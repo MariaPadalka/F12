@@ -36,10 +36,10 @@ namespace Presentation
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            //string email = textBoxEmail.Text;
-            //string password = passwordBox1.Password;
-            string email = "olenka@lnu.edu.ua";
-            string password = "123Oo345";
+            string email = textBoxEmail.Text;
+            string password = passwordBox1.Password;
+            //string email = "olenka@lnu.edu.ua";
+            //string password = "123Oo345";
             AuthenticationService authenticationService = new AuthenticationService();
 
             if (!IsEmailValid(email))
