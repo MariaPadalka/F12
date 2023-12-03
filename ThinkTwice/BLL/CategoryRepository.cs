@@ -33,8 +33,8 @@ namespace BLL
         }
         public Category GetCategoryByName(Guid? userId, string name)
         {
-            return _context.Categories.FirstOrDefault(c => c.UserId == userId && c.Title == name);
-        }
+            return _context.Categories.FirstOrDefault(c => (c.UserId == userId || c.IsGeneral == true) && c.Title == name);
+        } 
         public List<Category> GetCategoriesByType(Guid? userId, string type)
         {
             return _context.Categories.Where(c => c.UserId == userId && c.Type == type).ToList();

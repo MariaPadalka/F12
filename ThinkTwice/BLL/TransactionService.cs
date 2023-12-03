@@ -48,7 +48,7 @@ namespace BLL
             }
             else { return null; }
         }
-        public void AddTransaction(UserDTO? userDTO, Guid? category_to, Guid? category_from, decimal Amount, DateTime? Date, string Title, string? Details, bool Planned)
+        public void AddTransaction(UserDTO? userDTO, Guid? category_to, Guid? category_from, decimal Amount, DateTime? Date, string? Details, bool Planned)
         {
             if (userDTO != null && category_from != null && category_to != null)
             {

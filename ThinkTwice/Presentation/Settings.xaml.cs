@@ -142,7 +142,6 @@ namespace Presentation
             error_mes = textBoxFirstName_Error();
             if(error_mes == "") {
                 error_mes = textBoxLastName_Error();
-
             } 
             
             if(error_mes == "")
