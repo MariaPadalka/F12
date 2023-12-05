@@ -17,7 +17,7 @@ namespace Presentation.DTO
             Id = t.Id;
             UserId = t.UserId;
             Amount = t.Amount;
-            Date = t.Date;
+            Date = t.Date?.ToString("yyyy-MM-dd");
             Details = t.Details;
             Planned = t.Planned;
             FromCategory = _categoryRepository.GetCategoryById(t.FromCategory).Title;
@@ -33,7 +33,7 @@ namespace Presentation.DTO
 
         public decimal Amount { get; set; }
 
-        public DateTime? Date { get; set; }
+        public String? Date { get; set; }
 
         public string? Details { get; set; }
 

@@ -42,7 +42,7 @@ namespace Presentation
 
         private void YourWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser()).Where(c => c.Date < DateTime.Now.Date || (c.Date == DateTime.Now.Date && c.Planned == false)).ToList();
+            List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser())?.Where(c => c.Date < DateTime.Now.Date || (c.Date == DateTime.Now.Date && c.Planned == false)).ToList();
             List<TransactionDTO> data = new List<TransactionDTO>();
             foreach (Transaction transaction in defaultData)
             {
@@ -55,7 +55,7 @@ namespace Presentation
 
 
             
-            List<Transaction>? plannedData = _transactionService.GetTransactions(App.GetCurrentUser()).Where(c => (c.Date > DateTime.Now.Date && c.Planned == true)).ToList();
+            List<Transaction>? plannedData = _transactionService.GetTransactions(App.GetCurrentUser())?.Where(c => (c.Date > DateTime.Now.Date && c.Planned == true)).ToList();
             List<TransactionDTO> rows = new List<TransactionDTO>();
             foreach (Transaction transaction in plannedData)
             {
@@ -148,7 +148,7 @@ namespace Presentation
 
                 if (planned)
                 {
-                    List<Transaction>? plannedData = _transactionService.GetTransactions(App.GetCurrentUser()).Where(c => (c.Date > DateTime.Now.Date && c.Planned == true)).ToList();
+                    List<Transaction>? plannedData = _transactionService.GetTransactions(App.GetCurrentUser())?.Where(c => (c.Date > DateTime.Now.Date && c.Planned == true)).ToList();
                     List<TransactionDTO> rows = new List<TransactionDTO>();
                     foreach (Transaction transaction in plannedData)
                     {
@@ -161,7 +161,7 @@ namespace Presentation
                 }
                 else
                 {
-                    List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser()).Where(c => c.Date < DateTime.Now.Date || (c.Date == DateTime.Now.Date && c.Planned == false)).ToList();
+                    List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser())?.Where(c => c.Date < DateTime.Now.Date || (c.Date?.Date == DateTime.Now.Date && c.Planned == false)).ToList();
                     List<TransactionDTO> data = new List<TransactionDTO>();
                     foreach (Transaction transaction in defaultData)
                     {

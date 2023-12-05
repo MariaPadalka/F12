@@ -476,10 +476,34 @@
                                         </DataGrid.RowStyle>
 
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Джерело" Binding="{Binding FromCategory}" Width="2*"/>
-                                            <DataGridTextColumn Header="Призначення" Binding="{Binding ToCategory}" Width="2.5*"/>
-                                            <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" Width="2*"/>
-                                            <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="1.5*"/>
+                                            <DataGridTemplateColumn Header="Джерело" IsReadOnly="True" Width="2*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding FromCategory}" TextTrimming="CharacterEllipsis"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Header="Призначення" IsReadOnly="True" Width="2.5*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding ToCategory}" TextTrimming="CharacterEllipsis"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Header="Деталі" IsReadOnly="True" Width="2*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Details}" TextTrimming="CharacterEllipsis"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Header="Дата" IsReadOnly="True" Width="1.5*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Date}" TextTrimming="CharacterEllipsis"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
                                             <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="1.5*">
                                                 <DataGridTextColumn.ElementStyle>
                                                     <Style TargetType="{x:Type TextBlock}">
@@ -580,11 +604,35 @@
                         </DataGrid.RowStyle>
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Джерело" Binding="{Binding FromCategory}" Width="*"/>
-                            <DataGridTextColumn Header="Призначення" Binding="{Binding ToCategory}" Width="*"/>
-                            <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" Width="*"/>
-                            <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="*"/>
-                            <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="*">
+                            <DataGridTemplateColumn Header="Джерело" IsReadOnly="True" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding FromCategory}" TextTrimming="CharacterEllipsis"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Призначення" IsReadOnly="True" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ToCategory}" TextTrimming="CharacterEllipsis"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Деталі" IsReadOnly="True" Width="1.5*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Details}" TextTrimming="CharacterEllipsis"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Дата" IsReadOnly="True" Width="0.5*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Date}" TextTrimming="CharacterEllipsis"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="*" IsReadOnly="True" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Foreground" Value="Black"/>

@@ -88,24 +88,71 @@ namespace DB_Setup
         static Guid[] FillCategoryTable(SqlConnection connection, int numberOfCategories)
         {
             var faker = new Faker();
-            Guid[] categoryIds = new Guid[numberOfCategories];
+            Guid[] categoryIds = new Guid[7];
 
             using (SqlCommand command = new SqlCommand("INSERT INTO Categories (UserId, Title, IsGeneral, PercentageAmount, Type) " +
                 "OUTPUT INSERTED.Id VALUES (@UserId, @Title, @IsGeneral, @PercentageAmount, @Type)", connection))
             {
-                for (int i = 0; i < numberOfCategories; i++)
-                {
-                    command.Parameters.Clear();
-                    command.Parameters.AddWithValue("@UserId", DBNull.Value); // UserId = null
-                    command.Parameters.AddWithValue("@Title", faker.Commerce.Department());
-                    command.Parameters.AddWithValue("@IsGeneral", faker.Random.Bool() ? 1 : 0);
-                    command.Parameters.AddWithValue("@PercentageAmount", faker.Random.Decimal(0, 100));
-                    command.Parameters.AddWithValue("@Type", ((TransType)faker.Random.Number(0,2)).ToString());
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@UserId", DBNull.Value); // UserId = null
+                command.Parameters.AddWithValue("@Title", "Їжа");
+                command.Parameters.AddWithValue("@IsGeneral", 1);
+                command.Parameters.AddWithValue("@PercentageAmount", 0);
+                command.Parameters.AddWithValue("@Type", (TransType)1);
 
-                    categoryIds[i] = (Guid)command.ExecuteScalar();
-                }
+                categoryIds[0] = (Guid)command.ExecuteScalar();
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@UserId", DBNull.Value); // UserId = null
+                command.Parameters.AddWithValue("@Title", "Одяг");
+                command.Parameters.AddWithValue("@IsGeneral", 1);
+                command.Parameters.AddWithValue("@PercentageAmount", 0);
+                command.Parameters.AddWithValue("@Type", (TransType)1);
+
+                categoryIds[1] = (Guid)command.ExecuteScalar();
+                
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@UserId", DBNull.Value); // UserId = null
+                command.Parameters.AddWithValue("@Title", "Комунальні послуги");
+                command.Parameters.AddWithValue("@IsGeneral", 1);
+                command.Parameters.AddWithValue("@PercentageAmount", 0);
+                command.Parameters.AddWithValue("@Type", (TransType)1);
+
+                categoryIds[2] = (Guid)command.ExecuteScalar();
+                
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@UserId", DBNull.Value); // UserId = null
+                command.Parameters.AddWithValue("@Title", "Зарплата");
+                command.Parameters.AddWithValue("@IsGeneral", 1);
+                command.Parameters.AddWithValue("@PercentageAmount", 0);
+                command.Parameters.AddWithValue("@Type", (TransType)0);
+
+                categoryIds[3] = (Guid)command.ExecuteScalar();
+                
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@UserId", DBNull.Value); // UserId = null
+                command.Parameters.AddWithValue("@Title", "Стипендія");
+                command.Parameters.AddWithValue("@IsGeneral", 1);
+                command.Parameters.AddWithValue("@PercentageAmount", 0);
+                command.Parameters.AddWithValue("@Type", (TransType)0);
+
+                categoryIds[4] = (Guid)command.ExecuteScalar();
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@UserId", DBNull.Value); // UserId = null
+                command.Parameters.AddWithValue("@Title", "Готівка");
+                command.Parameters.AddWithValue("@IsGeneral", 1);
+                command.Parameters.AddWithValue("@PercentageAmount", 0);
+                command.Parameters.AddWithValue("@Type", (TransType)2);
+
+                categoryIds[5] = (Guid)command.ExecuteScalar();
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@UserId", DBNull.Value); // UserId = null
+                command.Parameters.AddWithValue("@Title", "Картка");
+                command.Parameters.AddWithValue("@IsGeneral", 1);
+                command.Parameters.AddWithValue("@PercentageAmount", 0);
+                command.Parameters.AddWithValue("@Type", (TransType)2);
+
+                categoryIds[6] = (Guid)command.ExecuteScalar();
             }
-
             return categoryIds;
         }
 

@@ -363,10 +363,27 @@
                             </DataGrid.RowStyle>
 
                             <DataGrid.Columns>
-                                <!--change due to real data structure-->
-                                <DataGridTextColumn Header="Категорія" Binding="{Binding ToCategory}" Width="2*"/>
-                                <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" Width="3*"/>
-                                <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="3*"/>
+                                <DataGridTemplateColumn Header="Призначення" IsReadOnly="True" Width="2*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ToCategory}" TextTrimming="CharacterEllipsis"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Деталі" IsReadOnly="True" Width="3*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Details}" TextTrimming="CharacterEllipsis"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Дата" IsReadOnly="True" Width="3*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Date}" TextTrimming="CharacterEllipsis"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="2*">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
