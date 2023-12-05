@@ -33,7 +33,13 @@ namespace Presentation
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
         }
-
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Submit_Click(sender, e);
+            }
+        }
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
             string email = textBoxEmail.Text;

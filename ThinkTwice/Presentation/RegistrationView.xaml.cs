@@ -44,6 +44,13 @@ namespace Presentation
             passwordBox1.Password = "";
             passwordBoxConfirm.Password = "";
         }
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Submit_Click(sender, e);
+            }
+        }
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
             string email = textBoxEmail.Text;
