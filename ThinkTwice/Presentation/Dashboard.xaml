@@ -364,7 +364,7 @@
 
                             <DataGrid.Columns>
                                 <!--change due to real data structure-->
-                                <DataGridTextColumn Header="Категорія" Binding="{Binding Title}" Width="2*"/>
+                                <DataGridTextColumn Header="Категорія" Binding="{Binding ToCategory}" Width="2*"/>
                                 <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" Width="3*"/>
                                 <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="3*"/>
                                 <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="2*">

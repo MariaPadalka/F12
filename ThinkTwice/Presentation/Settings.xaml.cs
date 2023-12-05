@@ -22,6 +22,7 @@ using BLL.DTO;
 using System.Reflection.Metadata;
 using System.Collections.ObjectModel;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Presentation
 {
@@ -40,6 +41,29 @@ namespace Presentation
             /*InitializeData();*/
         }
 
+
+        private void OpenCreateCategoryWindow(object sender, MouseButtonEventArgs e)
+        {
+            var border = sender as Border;
+            if (border?.Tag is Guid categoryId && categoryId == new Guid("1122F421-1716-410A-A1F2-334C3DC17096"))
+            {
+                var createCategoryWindow = new CreateCategoryWindow();
+                createCategoryWindow.ShowDialog();
+            }
+            
+
+           
+        }
+        private Category emptyCategory()
+        {
+            Category empty = new Category();
+            empty.Title = "Додати категорію";
+            empty.IsGeneral = true;
+            empty.Id = new Guid("1122F421-1716-410A-A1F2-334C3DC17096");
+
+            return empty;
+        }
+
         private void YourWindow_Loaded(object sender, RoutedEventArgs e)
         {
             textBoxName.Text = App.GetCurrentUser()?.Name;
@@ -50,6 +74,8 @@ namespace Presentation
 
             categories = new ObservableCollection<Category>(_settingsService.GetUserCategories(App.GetCurrentUser()));
             categories = new ObservableCollection<Category>(categories.OrderByDescending(category => category.UserId));
+            Category empty = emptyCategory();
+            categories.Add(empty);
             itemsControl.ItemsSource = categories;
         }
 
@@ -96,6 +122,8 @@ namespace Presentation
         {
             categories.Remove(category);
             categoriesToDelete.Add(category);
+            Category empty = emptyCategory();
+            categories.Add(empty);
             itemsControl.ItemsSource = categories;
 
         }

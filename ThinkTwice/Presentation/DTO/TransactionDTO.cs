@@ -35,8 +35,6 @@ namespace Presentation.DTO
 
         public DateTime? Date { get; set; }
 
-        public string Title { get; set; } = null!;
-
         public string? Details { get; set; }
 
         public bool Planned { get; set; }

@@ -17,6 +17,7 @@ using BLL;
 using LiveCharts;
 using LiveCharts.Wpf;
 using System.Globalization;
+using Presentation.DTO;
 
 namespace Presentation
 {
@@ -39,13 +40,19 @@ namespace Presentation
         {
             var currency = GetCurrency(App.GetCurrentUser()?.Currency);
             List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser()).Where(i => i.Planned == false).ToList();
+            List<TransactionDTO>? transactionDTOs = new List<TransactionDTO>();
+            foreach (var transaction in defaultData)
+            {
+                transactionDTOs.Add(new TransactionDTO(transaction));
+            }
+
             var incomes = _transactionService.GetIncome(App.GetCurrentUser());
             var expense = _transactionService.GetExpenses(App.GetCurrentUser());
             incomeValue.Text = currency + incomes.ToString();
             balanceValue.Text = currency + _transactionService.GetBalance(App.GetCurrentUser()).ToString();
             expensesValue.Text = currency + expense.ToString();
             savingsValue.Text = currency + (incomes - expense).ToString();
-            dataGrid.ItemsSource = defaultData;
+            dataGrid.ItemsSource = transactionDTOs;
         }
 
         public void Transactions_Click(object sender, RoutedEventArgs e)

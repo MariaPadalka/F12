@@ -7,14 +7,15 @@ namespace BLL
     {
         private readonly ThinkTwiceContext _context = new ThinkTwiceContext();
 
-        public void CreateCategory(string Title, bool IsGeneral, decimal PercentageAmount, string Type)
+        public void CreateCategory(string Title, bool IsGeneral, decimal PercentageAmount, string Type, Guid? userId)
         {
             var newCategory = new Category
             {
                 Title = Title,
                 IsGeneral = IsGeneral,
                 PercentageAmount = PercentageAmount,
-                Type = Type
+                Type = Type,
+                UserId = userId
             };
             _context.Categories.Add(newCategory);
             _context.SaveChanges();
