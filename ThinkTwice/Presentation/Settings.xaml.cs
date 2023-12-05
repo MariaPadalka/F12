@@ -31,8 +31,9 @@ namespace Presentation
     /// </summary>
     public partial class Settings : Page
     {
+        private readonly string EmptyID ="1122F421-1716-410A-A1F2-334C3DC17096";
         private readonly SettingsService _settingsService = new SettingsService();
-        private ObservableCollection<Category> categories;
+        public ObservableCollection<Category> categories;
         private ObservableCollection<Category> categoriesToDelete= new ObservableCollection<Category>();
         public Settings()
         {
@@ -45,23 +46,53 @@ namespace Presentation
         private void OpenCreateCategoryWindow(object sender, MouseButtonEventArgs e)
         {
             var border = sender as Border;
-            if (border?.Tag is Guid categoryId && categoryId == new Guid("1122F421-1716-410A-A1F2-334C3DC17096"))
+            if (border?.Tag is Guid categoryId && categoryId == new Guid(EmptyID))
             {
-                var createCategoryWindow = new CreateCategoryWindow();
+                var createCategoryWindow = new CreateCategoryWindow(this);
                 createCategoryWindow.ShowDialog();
             }
             
 
            
         }
+        public void updateItems()
+        {
+            categories = new ObservableCollection<Category>(_settingsService.GetUserCategories(App.GetCurrentUser()));
+            categories = new ObservableCollection<Category>(categories.OrderByDescending(category => category.UserId));
+            itemsControl.ItemsSource = categories;
+        }
         private Category emptyCategory()
         {
             Category empty = new Category();
             empty.Title = "Додати категорію";
             empty.IsGeneral = true;
-            empty.Id = new Guid("1122F421-1716-410A-A1F2-334C3DC17096");
+            empty.Id = new Guid(EmptyID);
 
             return empty;
+        }
+        public void AddEmptyCategory()
+        {
+            // Перевірка, чи вже є категорія з таким ID
+            if (categories.Any(category => category.Id == new Guid(EmptyID)))
+            {
+                // Категорія вже існує, нічого не робимо
+                return;
+            }
+
+            Category empty = emptyCategory();
+            categories.Add(empty);
+            itemsControl.ItemsSource = categories;
+        }
+
+        private void RemoveEmptyCategory()
+        {
+            Category categoryToRemove = categories.FirstOrDefault(category => category.Id == new Guid(EmptyID));
+
+            if (categoryToRemove != null)
+            {
+                categories.Remove(categoryToRemove);
+                itemsControl.ItemsSource = categories;
+            }
         }
 
         private void YourWindow_Loaded(object sender, RoutedEventArgs e)
@@ -72,11 +103,7 @@ namespace Presentation
             datePickerBirthdate.Text = App.GetCurrentUser()?.BirthDate.ToString();
             textBoxCurrency.Text = App.GetCurrentUser()?.Currency;
 
-            categories = new ObservableCollection<Category>(_settingsService.GetUserCategories(App.GetCurrentUser()));
-            categories = new ObservableCollection<Category>(categories.OrderByDescending(category => category.UserId));
-            Category empty = emptyCategory();
-            categories.Add(empty);
-            itemsControl.ItemsSource = categories;
+            updateItems();
         }
 
         public void Transactions_Click(object sender, RoutedEventArgs e)
@@ -108,7 +135,7 @@ namespace Presentation
             textBoxSurname.IsEnabled = true;
             textBoxEmail.IsEnabled = true;
             datePickerBirthdate.IsEnabled = true;
-
+            AddEmptyCategory();
         }
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
@@ -122,10 +149,7 @@ namespace Presentation
         {
             categories.Remove(category);
             categoriesToDelete.Add(category);
-            Category empty = emptyCategory();
-            categories.Add(empty);
             itemsControl.ItemsSource = categories;
-
         }
 
         private void SaveClick(object sender, RoutedEventArgs e)
@@ -167,6 +191,7 @@ namespace Presentation
                 textBoxSurname.IsEnabled = false;
                 textBoxEmail.IsEnabled = false;
                 datePickerBirthdate.IsEnabled = false;
+                RemoveEmptyCategory();
             }
         }
         private bool AllFieldsValid()
@@ -328,6 +353,43 @@ namespace Presentation
             throw new NotImplementedException();
         }
     }
+    public class GuidToBackgroundConverter : IValueConverter
+    {
+        private readonly string EmptyID = "1122F421-1716-410A-A1F2-334C3DC17096";
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is Guid id && id == new Guid(EmptyID))
+            {
+                return new SolidColorBrush(Color.FromRgb(64, 102, 125));
+            }
 
+            // Повернути інший колір, якщо id не відповідає вашому умові
+            return new SolidColorBrush(Color.FromRgb(207, 217, 227));
+        }//;
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class GuidToForegroundConverter : IValueConverter
+    {
+                private readonly string EmptyID = "1122F421-1716-410A-A1F2-334C3DC17096";
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is Guid id && id == new Guid(EmptyID))
+            {
+                return Brushes.White;
+            }
+
+            // Повернути інший колір, якщо id не відповідає вашому умові
+            return Brushes.Black;
+        }//;
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 }
