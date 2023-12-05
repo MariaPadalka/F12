@@ -38,7 +38,7 @@ namespace Presentation
         private void YourWindow_Loaded(object sender, RoutedEventArgs e)
         {
             var currency = GetCurrency(App.GetCurrentUser()?.Currency);
-            List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser());
+            List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser()).Where(i => i.Planned == false).ToList();
             var incomes = _transactionService.GetIncome(App.GetCurrentUser());
             var expense = _transactionService.GetExpenses(App.GetCurrentUser());
             incomeValue.Text = currency + incomes.ToString();
@@ -86,7 +86,8 @@ namespace Presentation
 
         private void PaintGraphic(object sender, RoutedEventArgs e)
         {
-            var transactions = _transactionService.GetTransactionsInTimePeriod(App.GetCurrentUser(), DateTime.Now.AddDays(-7), null);
+            var date = (DateTime.Now.AddDays(-7), DateTime.Now);
+            var transactions = _transactionService.GetTransactionsInTimePeriod(App.GetCurrentUser(), DateTime.Now.AddDays(-7), DateTime.Now);
             if (transactions != null)
             {
                 var groupedTransactions = transactions
@@ -97,38 +98,54 @@ namespace Presentation
                         Transactions = group.ToList()
                     }).Reverse()
                     .ToList();
-                var expenses_ = new ChartValues<decimal>();
-                var incomes_ = new ChartValues<decimal>();
-                var balance_ = new ChartValues<decimal>();
-                foreach (var group in groupedTransactions)
+                var expenses = new ChartValues<decimal>(new decimal[7]);
+                var incomes = new ChartValues<decimal>(new decimal[7]);
+                var balance = new ChartValues<decimal>(new decimal[7]);
+                var j = 0;
+                List<DateTime?> datesInRange = new List<DateTime?>();
+                if (date.Item2 == null)
+                {
+                    date.Item2 = DateTime.Now;
+                }
+
+                for (DateTime? date_ = date.Item1.AddDays(1); date_ <= date.Item2; date_ = date_?.AddDays(1))
+                {
+                    datesInRange.Add(date_);
+                }
+                foreach (var date_ in datesInRange)
                 {
                     decimal totalExpenses = 0;
                     decimal totalIncomes = 0;
                     decimal totalBalance = 0;
-
-                    foreach (var transaction in group.Transactions)
+                    var group = groupedTransactions.FirstOrDefault(i => i.Date?.DayOfYear == date_?.DayOfYear);
+                    if (group != null)
                     {
-                        var category = _categoryRepository.GetCategoryById(transaction.ToCategory);
-
-                        if (category != null)
+                        foreach (var transaction in group.Transactions)
                         {
-                            if (category.Type == "Витрати")
+                            var category = _categoryRepository.GetCategoryById(transaction.ToCategory);
+
+                            if (category != null)
                             {
-                                totalExpenses += transaction.Amount;
+                                if (category.Type == "Витрати")
+                                {
+                                    totalExpenses += transaction.Amount;
+                                }
+                                else if (category.Type == "Дохід")
+                                {
+                                    totalIncomes += transaction.Amount;
+                                }
+                                else if (category.Type == "Баланс")
+                                {
+                                    totalBalance += transaction.Amount;
+                                }
                             }
-                            else if (category.Type == "Дохід")
-                            {
-                                totalIncomes += transaction.Amount;
-                            }
-                            else if (category.Type == "Баланс")
-                            {
-                                totalBalance += transaction.Amount;
-                            }
+
                         }
                     }
-                    expenses_.Add(totalExpenses);
-                    incomes_.Add(totalIncomes);
-                    balance_.Add(totalBalance);
+                    expenses[j] = totalExpenses;
+                    incomes[j] = totalIncomes;
+                    balance[j] = totalBalance;
+                    j += 1;
                 }
 
                 SeriesCollection = new SeriesCollection
@@ -136,7 +153,7 @@ namespace Presentation
                     new LineSeries
                     {
                         Title = "Доходи",
-                        Values = incomes_,
+                        Values = incomes,
                         PointGeometry = null,
                         Fill = new SolidColorBrush(System.Windows.Media.Colors.Transparent), // Set fill color to transparent
                         Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0x90, 0xD7, 0xB9)),
@@ -147,7 +164,7 @@ namespace Presentation
                 SeriesCollection.Add(new LineSeries
                 {
                     Title = "Баланс",
-                    Values = balance_,
+                    Values = balance,
                     PointGeometry = null,
                     Fill = new SolidColorBrush(System.Windows.Media.Colors.Transparent), // Set fill color to transparent
                     Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0xBD, 0xD4, 0xF1)),
@@ -157,19 +174,23 @@ namespace Presentation
                 SeriesCollection.Add(new LineSeries
                 {
                     Title = "Витрати",
-                    Values = expenses_,
+                    Values = expenses,
                     PointGeometry = null,
                     Fill = new SolidColorBrush(System.Windows.Media.Colors.Transparent), // Set fill color to transparent
                     Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0xFF, 0xB6, 0xAE)),
                     StrokeThickness = 2
                 });
-                CultureInfo ukrainianCulture = new CultureInfo("uk-UA");
+
+
                 int currentDayOfWeek = (int)DateTime.Now.DayOfWeek;
-                var days = groupedTransactions.Select(i => i.Date?.ToString("dd MMMM", ukrainianCulture));
+             
+                
+                CultureInfo ukrainianCulture = new CultureInfo("uk-UA");
+                var daysNum = datesInRange.Select(i => i?.ToString("dd MMMM"));
                 Labels = new string[7];
                 for (int i = 0; i < 7; i++)
                 {
-                    Labels[i] = days.ElementAt(i);
+                    Labels[i] = daysNum.ElementAt(i);
                 }
                 Formatter = value => value.ToString("N");
             }
