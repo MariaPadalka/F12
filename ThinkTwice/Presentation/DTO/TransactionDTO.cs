@@ -18,7 +18,6 @@ namespace Presentation.DTO
             UserId = t.UserId;
             Amount = t.Amount;
             Date = t.Date;
-            Title = t.Title;
             Details = t.Details;
             Planned = t.Planned;
             FromCategory = _categoryRepository.GetCategoryById(t.FromCategory).Title;

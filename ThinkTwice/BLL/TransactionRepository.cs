@@ -16,10 +16,6 @@ namespace BLL
         {
             return _context.Transactions.FirstOrDefault(c => c.Id == transactionId);
         }
-        public Transaction? GetTransactionByName(Guid userId, string name)
-        {
-            return _context.Transactions.FirstOrDefault(c => c.UserId == userId && c.Title == name);
-        }
         public List<Transaction> GetTransactionsByUserId(Guid userId)
         {
             return _context.Transactions.Where(c => c.UserId == userId).ToList();

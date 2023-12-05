@@ -48,7 +48,7 @@ namespace BLL
             }
             else { return null; }
         }
-        public void AddTransaction(UserDTO? userDTO, Guid? category_to, Guid? category_from, decimal Amount, DateTime? Date, string Title, string? Details, bool Planned)
+        public void AddTransaction(UserDTO? userDTO, Guid? category_to, Guid? category_from, decimal Amount, DateTime? Date, string? Details, bool Planned)
         {
             if (userDTO != null && category_from != null && category_to != null)
             {
@@ -64,7 +64,6 @@ namespace BLL
                         ToCategory = category_to,
                         Amount = Amount,
                         Date = Date,
-                        Title = Title,
                         Details = Details,
                         Planned = Planned
                     };
@@ -88,7 +87,6 @@ namespace BLL
                         transaction.ToCategory = category_to;
                         transaction.Amount = Amount;
                         transaction.Date = Date;
-                        transaction.Title = Title;
                         transaction.Details = Details;
                         transaction.Planned = Planned;
                         _transactionRepository.Update(transaction);

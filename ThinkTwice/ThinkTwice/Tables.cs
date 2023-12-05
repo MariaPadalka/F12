@@ -113,8 +113,8 @@ namespace DB_Setup
         static void FillTransactionsTable(SqlConnection connection, Guid[] userIds, Guid[] categoryIds, int minTransactions, int maxTransactions)
         {
             var faker = new Faker();
-            using (SqlCommand command = new SqlCommand("INSERT INTO Transactions (UserId, From_category, To_category, Amount, Date, Title, Details, Planned) " +
-                "VALUES (@UserId, @From_category, @To_category, @Amount, @Date, @Title, @Details, @Planned)", connection))
+            using (SqlCommand command = new SqlCommand("INSERT INTO Transactions (UserId, From_category, To_category, Amount, Date, Details, Planned) " +
+                "VALUES (@UserId, @From_category, @To_category, @Amount, @Date, @Details, @Planned)", connection))
             {
                 for (int i = 0; i < userIds.Length; i++)
                 {
@@ -126,7 +126,6 @@ namespace DB_Setup
                         command.Parameters.AddWithValue("@To_category", faker.PickRandom(categoryIds));
                         command.Parameters.AddWithValue("@Amount", faker.Random.Decimal(1, 1000));
                         command.Parameters.AddWithValue("@Date", faker.Date.Past());
-                        command.Parameters.AddWithValue("@Title", faker.Commerce.ProductName());
                         command.Parameters.AddWithValue("@Details", faker.Lorem.Sentence());
                         command.Parameters.AddWithValue("@Planned", faker.Random.Bool() ? 1 : 0);
 

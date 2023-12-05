@@ -11,15 +11,9 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
-            <!-- Blue container for the menu -->
             <ColumnDefinition Width="7*"/>
-            <!-- White container for the main content -->
         </Grid.ColumnDefinitions>
 
-        <!-- Blue container for the menu -->
-
-        <!-- White container for the main content -->
-        <!-- Blue container for the menu -->
         <Grid Background="#121B28" MinWidth="185">
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*" />
@@ -141,11 +135,9 @@
                             <Viewbox Grid.Column="1" Margin="0,0,5,0" Stretch="Uniform" MaxHeight="24" HorizontalAlignment="Left">
                                 <TextBlock Text="Налаштування" Foreground="#A0A4A9" FontWeight="SemiBold"/>
                             </Viewbox>
-
                         </Grid>
                     </Border>
                 </Grid>
-
             </Grid>
 
 
@@ -155,6 +147,7 @@
                     <ColumnDefinition Width="12*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
+
                 <Border Grid.Column="1" Background="#121B28" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="Auto" Height="Auto" MouseLeftButtonDown="Logout">
                     <Grid  Width="Auto">
                         <Grid.ColumnDefinitions>
@@ -171,82 +164,465 @@
                         <Viewbox Grid.Column="1" Margin="0,0,5,0" Stretch="Uniform" MaxHeight="24" HorizontalAlignment="Left">
                             <TextBlock Text="Вийти" Foreground="#A0A4A9" FontWeight="SemiBold"/>
                         </Viewbox>
-
                     </Grid>
                 </Border>
             </Grid>
-
-
         </Grid>
 
-        <!-- White container for the main content -->
         <Grid Grid.Column="1" Background="White" Margin="1,0,-1,0" MinWidth="600">
+            <Grid Margin="20, 20, 40, 20">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="3*"/>
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
 
-            <!-- First Part (2/5) -->
-            <Grid Grid.Row="0">
-                <TextBlock Height="22" Margin="47,22,459,0" x:Name="textBlockHeading" Text="Транзакції" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold"/>
-                <Border Background="#DBB5B5" CornerRadius="7,7,0,0" Margin="51,66,320,-2">
-                    <Border Background="#121B2B" Width="53" Height="18" CornerRadius="7,7,7,7" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,11,5,0">
-                        <TextBlock Height="12"  Width="37" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="textBlockAdd" FontSize="11" Foreground="#F5F5F5" FontStretch="ExtraCondensed" FontFamily="Inter"><Run Language="uk-ua" Text="Додати"/></TextBlock>
-                    </Border>
-                </Border>
-
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="0.3*"/>
+                    </Grid.RowDefinitions>
 
 
-                <TextBlock Height="22" Width="115" Margin="63,76,444,0" x:Name="textBlockNew" VerticalAlignment="Top" FontSize="14" FontStretch="ExtraCondensed" FontWeight="Bold"><Run Language="uk-ua" Text="Нова транзакція"/></TextBlock>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="10*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Viewbox Grid.Column="0"  HorizontalAlignment="Left"  VerticalAlignment="Top" Stretch="Uniform" MaxHeight="50" >
+                            <TextBlock x:Name="textBlockHeading" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" FontSize="18" Text="Транзакції" FontStretch="ExtraCondensed" FontWeight="Bold" Grid.ColumnSpan="3"/>
+                        </Viewbox>
+
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="7*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="8*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <Border Background="#DBB5B5" CornerRadius="10,10,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="20*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="2*"/>
+                                            <RowDefinition Height="10*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="5*"/>
+                                                <ColumnDefinition Width="3.5*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid Grid.Column="0">
+                                                <Viewbox Stretch="Uniform" VerticalAlignment="Top" HorizontalAlignment="Left" MaxHeight="30">
+                                                    <TextBlock x:Name="textBlockNew" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="10" FontStretch="ExtraCondensed" FontWeight="Bold"><Run Language="uk-ua" Text="Нова транзакція"/></TextBlock>
+                                                </Viewbox>
+                                            </Grid>
+
+                                            <Grid Grid.Column="2">
+                                                <Button x:Name="createTransactionButton"
+                                                        Background="#121B2B"
+                                                        BorderBrush="Transparent"
+                                                        BorderThickness="0"
+                                                        Padding="5,3,5,3"
+                                                        MaxHeight="35"
+                                                        Click="CreateTransactionButton_Click">
+                                                    <Viewbox Stretch="Uniform">
+                                                        <TextBlock x:Name="textBlockAdd" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Foreground="#F5F5F5" FontStretch="ExtraCondensed" FontFamily="Inter" Padding="2,2,2,2"><Run Language="uk-ua" Text="Додати"/></TextBlock>
+                                                    </Viewbox>
+                                                    <Button.Resources>
+                                                        <Style TargetType="{x:Type Border}">
+                                                            <Setter Property="CornerRadius" Value="3"/>
+                                                        </Style>
+                                                    </Button.Resources>
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+
+
+                                        <Grid Grid.Row="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="8.5*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid Grid.Column="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="1.5*"/>
+                                                    <RowDefinition Height="4*"/>
+                                                    <RowDefinition Height="1.5*"/>
+                                                    <RowDefinition Height="6*"/>
+                                                    <RowDefinition Height="1*"/>
+                                                    <RowDefinition Height="4*"/>
+                                                </Grid.RowDefinitions>
+
+                                                <Grid Grid.Row="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="5*"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="5*"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Grid x:Name="parentGrid" Grid.Column="0">
+                                                        <ComboBox x:Name="sourceComboBox"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalContentAlignment="Center"
+                                                                  HorizontalContentAlignment="Center"
+                                                                  
+                                                                  Width="{Binding ActualWidth, ElementName=parentGrid}"
+                                                                  Height="{Binding ActualHeight, ElementName=parentGrid}"
+                                                                   />
+                                                    </Grid>
+
+                                                    
+                                                    <Grid Grid.Column="2" >
+                                                        <ComboBox x:Name="destinationComboBox"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalContentAlignment="Center"
+                                                                  HorizontalContentAlignment="Center"
+                                                                  Width="{Binding ActualWidth, ElementName=parentGrid}"
+                                                                  Height="{Binding ActualHeight, ElementName=parentGrid}"
+                                                                   />
+                                                    </Grid>
+                                                </Grid>
+
+                                                <Grid Grid.Row="3">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="7*"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="5*"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Grid Grid.Column="0">
+                                                        <TextBox  x:Name="detailsTextBox"
+                                                            TextAlignment="Center"
+                                                            VerticalContentAlignment="Center"
+                                                            VerticalAlignment="Stretch" 
+                                                            HorizontalAlignment="Stretch" 
+                                                            Background="#F9F9F9"
+                                                            Padding="5" 
+                                                            TextWrapping="Wrap"
+                                                            MaxWidth="300"  
+                                                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                                            ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                                            <TextBox.Resources>
+                                                                <Style TargetType="{x:Type Border}">
+                                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                                </Style>
+                                                            </TextBox.Resources>
+                                                        </TextBox>
+                                                    </Grid>
+
+                                                    <Grid Grid.Column="2">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="2*"/>
+                                                            <RowDefinition Height="13*"/>
+                                                            <RowDefinition Height="3*"/>
+                                                        </Grid.RowDefinitions>
+
+                                                        <Grid Grid.Row="1">
+                                                            <TextBox  x:Name="amountTextBox"  
+                                                                TextAlignment="Center"
+                                                                VerticalContentAlignment="Center"
+                                                                VerticalAlignment="Stretch" 
+                                                                HorizontalAlignment="Stretch" 
+                                                                Background="#F9F9F9"
+                                                                MaxLength="10"                                                                        
+                                                                FontWeight="Bold">
+
+                                                                <TextBox.Resources>
+                                                                    <Style TargetType="{x:Type Border}">
+                                                                        <Setter Property="CornerRadius" Value="5"/>
+                                                                    </Style>
+                                                                </TextBox.Resources>
+                                                            </TextBox>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                                
+
+                                                <Grid Grid.Row="5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="7*"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="5*"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Grid Grid.Column="0">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="5*"/>
+                                                                <ColumnDefinition Width="3*"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <Grid Grid.Column="0">
+                                                                <Viewbox>
+                                                                    <CheckBox x:Name="checkboxIsPlanned" Content="Запланувати" VerticalContentAlignment="Top" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                                                                </Viewbox>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Grid>
+
+
+                                                    <Grid Grid.Column="2">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="8*"/>
+                                                            <RowDefinition Height="1*"/>
+                                                        </Grid.RowDefinitions>
+
+                                                        <Grid Grid.Row="0">
+                                                            <Border  CornerRadius="3" x:Name="DatePickerBorder" Background="#F9F9F9" MaxHeight="40">
+                                                                <DatePicker BorderThickness="0" x:Name="datePickerPlannedDate" HorizontalAlignment="Stretch" VerticalAlignment="Center" Language="uk-UA">
+                                                                    <DatePicker.Resources>
+                                                                        <Style TargetType="{x:Type DatePickerTextBox}">
+                                                                            <Setter Property="Width" Value="Auto" />
+                                                                            <Setter Property="Height" Value="Auto" />
+                                                                            <Setter Property="Template">
+                                                                                <Setter.Value>
+                                                                                    <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
+                                                                                        <Viewbox Stretch="Uniform">
+                                                                                            <StackPanel>
+                                                                                                <TextBlock Text="{TemplateBinding Text}" FontSize="18" Margin="5,0,0,0"/>
+                                                                                                <TextBox x:Name="PART_TextBox" HorizontalAlignment="Left" Width="Auto" Style="{x:Null}">
+                                                                                                    <TextBox.Template>
+                                                                                                        <ControlTemplate TargetType="TextBox">
+                                                                                                            <Border Background="Transparent"/>
+                                                                                                        </ControlTemplate>
+                                                                                                    </TextBox.Template>
+                                                                                                </TextBox>
+                                                                                            </StackPanel>
+                                                                                        </Viewbox>
+                                                                                    </ControlTemplate>
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                        </Style>
+                                                                    </DatePicker.Resources>
+                                                                </DatePicker>
+                                                            </Border>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <Grid Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="10*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Viewbox Stretch="Uniform" VerticalAlignment="Top" HorizontalAlignment="Left" MaxHeight="30">
+                                    <TextBlock x:Name="textPlannedTransactions" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="10" FontStretch="ExtraCondensed" FontWeight="Bold"><Run Language="uk-ua" Text="Заплановані транзакції"/></TextBlock>
+                                </Viewbox>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="10*"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="2.5*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <DataGrid Grid.Row="0" x:Name="dataGridPlannedTransactions" VerticalAlignment="Top"
+                                                            AutoGenerateColumns="False" GridLinesVisibility="None" Background="White"
+                                                            BorderBrush="Transparent" RowBackground="Transparent" RowHeight="30"
+                                                            ColumnHeaderHeight="30" Grid.ColumnSpan="2"
+                                                            ScrollViewer.CanContentScroll="False" Loaded="DataGridPlannedTransactions_Loaded"
+                                                            PreviewMouseWheel="DataGrid_PreviewMouseWheel">
+                                        <DataGrid.Resources>
+                                            <Style TargetType="DataGridRowHeader">
+                                                <Setter Property="Width" Value="0"/>
+                                            </Style>
+                                        </DataGrid.Resources>
+
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                                <Setter Property="FontSize" Value="12"/>
+                                            </Style>
+                                        </DataGrid.ColumnHeaderStyle>
+
+                                        <DataGrid.RowStyle>
+                                            <Style TargetType="DataGridRow">
+                                                <Setter Property="Foreground" Value="Gray"/>
+                                            </Style>
+                                        </DataGrid.RowStyle>
+
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Джерело" Binding="{Binding FromCategory}" Width="2*"/>
+                                            <DataGridTextColumn Header="Призначення" Binding="{Binding ToCategory}" Width="2.5*"/>
+                                            <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" Width="2*"/>
+                                            <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="1.5*"/>
+                                            <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="1.5*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                    <Grid Grid.Row="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="16*"/>
+                                            <ColumnDefinition Width="8*"/>
+                                            <ColumnDefinition Width="8*"/>
+                                            <ColumnDefinition Width="8*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="13*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Grid Grid.Column="1">
+                                            <Viewbox>
+                                                <Button Width="Auto" Content="⮜" Background="Transparent" BorderThickness="0" Click="DataGridPlannedScrollBackward_Click"/>
+                                            </Viewbox>
+                                        </Grid>
+
+                                        <Grid Grid.Column="2">
+                                            <Viewbox>
+                                                <TextBlock x:Name="pointsPlannedTransactions" FontSize="10" FontStretch="ExtraCondensed" FontWeight="Bold" Height="20" Width="15" RenderTransformOrigin="0.473,0.473"><Run Language="uk-ua" Text="....."/></TextBlock>
+                                            </Viewbox>
+                                        </Grid>
+
+                                        <Grid Grid.Column="3">
+                                            <Viewbox>
+                                                <Button Content="⮞" Background="Transparent" BorderThickness="0" Click="DataGridPlannedScrollForward_Click"/>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="7*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="8*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <TextBlock Grid.Column="1" x:Name ="errormessage" FontSize="15" VerticalAlignment="Center" OpacityMask="Crimson" Foreground="#FFE5572C" TextAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>
+
+                        <Grid Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="96*"/>
+                                <ColumnDefinition Width="193*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="1" Margin="0,20,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="1.5*"/>
+                    </Grid.RowDefinitions>
+                    
+                        <DataGrid Grid.Row="0" x:Name="dataGrid" VerticalAlignment="Top" 
+                                  AutoGenerateColumns="False"  GridLinesVisibility="None" Background="White" 
+                                  BorderBrush="Transparent" RowBackground="Transparent" Margin="37,0,0,0" 
+                                  RowHeight="30" ColumnHeaderHeight="50" Grid.ColumnSpan="2" 
+                                  SelectionChanged="dataGrid_SelectionChanged_2"
+                                  ScrollViewer.CanContentScroll="False" Loaded="DataGridGeneralTransactions_Loaded"
+                                  PreviewMouseWheel="DataGrid_PreviewMouseWheel">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridRowHeader">
+                                <Setter Property="Width" Value="0"/>
+                            </Style>
+                        </DataGrid.Resources>
+
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="FontSize" Value="13"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Style>
+                        </DataGrid.RowStyle>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Джерело" Binding="{Binding FromCategory}" Width="*"/>
+                            <DataGridTextColumn Header="Призначення" Binding="{Binding ToCategory}" Width="*"/>
+                            <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" Width="*"/>
+                            <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="*"/>
+                            <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Foreground" Value="Black"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="16*"/>
+                            <ColumnDefinition Width="8*"/>
+                            <ColumnDefinition Width="8*"/>
+                            <ColumnDefinition Width="8*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="13*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="1">
+                            <Viewbox>
+                                <Button Width="Auto" Content="⮜" Background="Transparent" BorderThickness="0" Click="DataGridGeneralScrollBackward_Click"/>
+                            </Viewbox>
+                        </Grid>
+
+                        <Grid Grid.Column="2">
+                            <Viewbox>
+                                <TextBlock x:Name="pointsGeneralTransactions" FontSize="10" FontStretch="ExtraCondensed" FontWeight="Bold" Height="20" Width="15" RenderTransformOrigin="0.473,0.473"><Run Language="uk-ua" Text="....."/></TextBlock>
+                            </Viewbox>
+                        </Grid>
+
+                        <Grid Grid.Column="3">
+                            <Viewbox>
+                                <Button Content="⮞" Background="Transparent" BorderThickness="0" Click="DataGridGeneralScrollForward_Click"/>
+                            </Viewbox>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Grid>
-
-            <!-- Second Part (3/5) -->
-            <Grid Grid.Row="1">
-
-                <DataGrid x:Name="dataGrid" VerticalAlignment="Top" AutoGenerateColumns="False" GridLinesVisibility="None" Background="White" BorderBrush="Transparent" RowBackground="Transparent" Margin="37,31,0,0" RowHeight="30" ColumnHeaderHeight="50">
-                    <DataGrid.Resources>
-                        <Style TargetType="DataGridRowHeader">
-                            <Setter Property="Width" Value="0"/>
-                        </Style>
-                    </DataGrid.Resources>
-
-                    <DataGrid.ColumnHeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="BorderBrush" Value="Transparent"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="FontSize" Value="13"/>
-                        </Style>
-                    </DataGrid.ColumnHeaderStyle>
-
-                    <DataGrid.RowStyle>
-                        <Style TargetType="DataGridRow">
-                            <Setter Property="Foreground" Value="Gray"/>
-                        </Style>
-                    </DataGrid.RowStyle>
-
-                    <DataGrid.Columns>
-                        <!--change due to real data structure-->
-                        <DataGridTextColumn Header="Джерело" Binding="{Binding ToCategory}" Width="2*"/>
-                        <DataGridTextColumn Header="Призначення" Binding="{Binding FromCategory}" Width="2*"/>
-                        <DataGridTextColumn Header="Деталі" Binding="{Binding Details}" Width="3*"/>
-                        <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="3*"/>
-                        <DataGridTextColumn Header="Сума" Binding="{Binding Amount}" Width="2*">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Foreground" Value="Black"/>
-                                    <Setter Property="FontWeight" Value="Bold"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-
-            </Grid>
-
         </Grid>
-
     </Grid>
 </Page>
