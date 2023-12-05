@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation"
         mc:Ignorable="d"
-        Title="Нова категорія" Height="320" Width="370" ResizeMode="NoResize"
+        Title="Нова категорія" SizeToContent="Height" Height="Auto" MaxHeight="320" Width="370" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid>
-
+    
         <StackPanel Margin="20,20,20,20" Grid.ColumnSpan="2">
             <TextBlock Text="Назва:" FontSize="14" Margin="2"/>
             <Border Margin="0,0,0,10" BorderBrush="LightGray" BorderThickness="1" CornerRadius="3" Height="23" HorizontalAlignment="Left" Width="310" Grid.ColumnSpan="2" >
@@ -17,26 +17,27 @@
 
             <TextBlock Text="Тип:" FontSize="14" Margin="2"/>
             <Border Margin="0,0,0,10" BorderBrush="LightGray" BorderThickness="1" CornerRadius="3" Height="25" HorizontalAlignment="Left" Width="309" Grid.ColumnSpan="2" >
-                <ComboBox x:Name="TypeComboBox" FontSize="14" BorderThickness="0" Height="23" Width="305" Text="Витрати" Margin="0,0,-1,0" >
+                <ComboBox x:Name="TypeComboBox" FontSize="14" IsEditable="True" IsReadOnly="True" BorderThickness="0" Height="23" Width="305" Text="Дохід" Margin="0,0,-1,0" Background="White" SelectionChanged="TypeComboBox_SelectionChanged">
                     <ComboBoxItem Content="Дохід" BorderThickness="0"/>
                     <ComboBoxItem Content="Витрати" BorderThickness="0"/>
                     <ComboBoxItem Content="Баланс" BorderThickness="0"/>
                 </ComboBox>
             </Border>
 
-            <TextBlock  Text="Відсоток від загального типу фінансів:" FontSize="14" Margin="2"/>
-            <Border Margin="0,0,0,10" BorderBrush="LightGray" BorderThickness="1" CornerRadius="3" Height="23" HorizontalAlignment="Left" Width="310" Grid.ColumnSpan="2" >
-                <TextBox FontSize="14" x:Name="percentageTextBox" Text="{Binding Percentage, UpdateSourceTrigger=PropertyChanged}" BorderBrush="Transparent" BorderThickness="0" Margin="0,0,9,0" TextChanged="ValidatePercentage"/>
+            <TextBlock x:Name="PercentageTextBlock" Visibility="Collapsed" Text="Відсоток від загального типу фінансів:" FontSize="14" Margin="2"/>
+            <Border Margin="0,0,0,10" x:Name="percentageBorder" BorderBrush="LightGray" BorderThickness="1" CornerRadius="3" Height="23" HorizontalAlignment="Left" Width="310" Grid.ColumnSpan="2" Visibility="Collapsed">
+                <TextBox FontSize="14" x:Name="percentageTextBox" Text="{Binding Percentage, UpdateSourceTrigger=PropertyChanged}" BorderBrush="Transparent" BorderThickness="0" Margin="0,0,9,0" TextChanged="ValidatePercentage" Visibility="Collapsed"/>
             </Border>
 
 
-            
-            <TextBlock Height="20" HorizontalAlignment="Center"  x:Name ="errormessage" VerticalAlignment="Top" Width="250"  OpacityMask="Crimson" Foreground="#FFE5572C" TextAlignment="Center" />
+
+            <TextBlock Height="20" HorizontalAlignment="Center"  x:Name ="errormessage" VerticalAlignment="Top" Width="300"  OpacityMask="Crimson" Foreground="#FFE5572C" TextAlignment="Center" />
 
             <Button 
+                Width="270"
                 Content="Створити"
                 Click="CreateCategory"
-                Margin="13"
+                Margin="13 , 5, 13, 5"
                 Height="34"
                 FontSize="15"
                 BorderBrush="White"
