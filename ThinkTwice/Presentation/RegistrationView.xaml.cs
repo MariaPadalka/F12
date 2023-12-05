@@ -1,103 +1,108 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using BLL;
-
-namespace Presentation
+﻿namespace Presentation
 {
+    using System;
+    using System.Text.RegularExpressions;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Navigation;
+    using BLL;
+
     public partial class RegistrationView : Page
     {
-        RegistrationService reg_serv = new RegistrationService();
+        private RegistrationService registrationService = new RegistrationService();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RegistrationView"/> class.
+        /// </summary>
         public RegistrationView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
-        private void Login_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new Uri("Login.xaml", UriKind.Relative));
-        }
-        private void GoToDashboard(object sender, RoutedEventArgs e)
-        {
-            NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
-        }
-        public void Reset()
-        {
-            textBoxFirstName.Text = "";
-            textBoxLastName.Text = "";
-            textBoxEmail.Text = "";
-            passwordBox1.Password = "";
-            passwordBoxConfirm.Password = "";
-        }
-        private void TextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                Submit_Click(sender, e);
-            }
-        }
-        private void Submit_Click(object sender, RoutedEventArgs e)
-        {
-            string email = textBoxEmail.Text;
-            string password = passwordBox1.Password;
-            string first_name = textBoxFirstName.Text;
-            string last_name = textBoxLastName.Text;
-            DateTime? date = datePickerBirthdate.SelectedDate;
-            string currency = comboBoxCurrency.Text;
-            bool all_fields_present = email != "" && password != "" && first_name != "" && last_name != "" && date.HasValue && currency != "";;
 
-            if (!all_fields_present || passwordError.Text != "" || confirmPassError.Text != "" || firstNameError.Text != "" || lastNameError.Text != "" || emailError.Text != "" || dateError.Text != "")
-            {
-                errormessage.Text = "Будь ласка, введіть коректні дані у всіх полях.";
-            }
-            else
-            {
-                var user = reg_serv.Register(email, password, first_name, last_name, date, currency);
-                if (user != null)
-                {
-                    errormessage.Text = "Ви успішно зареєструвались.";
-                    App.SetCurrentUser(user);
-                    GoToDashboard(sender, e);
-                }
-                else
-                {
-                    errormessage.Text = "Ця пошта вже комусь належить.";
-                }
-            }
-        }
         public static bool IsEmailValid(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
+            {
                 return false;
+            }
 
             string emailPattern = @"^[a-zA-Z0-9._%+-]{3,20}@[a-zA-Z0-9.-]{2,20}\.[a-zA-Z]{2,10}$";
 
             return Regex.IsMatch(email, emailPattern);
         }
+
         public static bool IsPasswordValid(string password)
         {
             if (string.IsNullOrWhiteSpace(password))
+            {
                 return false;
+            }
 
             string passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}$";
 
             return Regex.IsMatch(password, passwordPattern);
         }
+
+        public void Reset()
+        {
+            this.textBoxFirstName.Text = string.Empty;
+            this.textBoxLastName.Text = string.Empty;
+            this.textBoxEmail.Text = string.Empty;
+            this.passwordBox1.Password = string.Empty;
+            this.passwordBoxConfirm.Password = string.Empty;
+        }
+
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Login.xaml", UriKind.Relative));
+        }
+
+        private void GoToDashboard(object sender, RoutedEventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                this.Submit_Click(sender, e);
+            }
+        }
+
+        private void Submit_Click(object sender, RoutedEventArgs e)
+        {
+            string email = this.textBoxEmail.Text;
+            string password = this.passwordBox1.Password;
+            string first_name = this.textBoxFirstName.Text;
+            string last_name = this.textBoxLastName.Text;
+            DateTime? date = this.datePickerBirthdate.SelectedDate;
+            string currency = this.comboBoxCurrency.Text;
+            bool all_fields_present = email != string.Empty && password != string.Empty && first_name != string.Empty && last_name != string.Empty && date.HasValue && currency != string.Empty;
+
+            if (!all_fields_present || this.passwordError.Text != string.Empty || this.confirmPassError.Text != string.Empty || this.firstNameError.Text != string.Empty || this.lastNameError.Text != string.Empty || this.emailError.Text != string.Empty || this.dateError.Text != string.Empty)
+            {
+                this.errormessage.Text = "Будь ласка, введіть коректні дані у всіх полях.";
+            }
+            else
+            {
+                var user = this.registrationService.Register(email, password, first_name, last_name, date, currency);
+                if (user != null)
+                {
+                    this.errormessage.Text = "Ви успішно зареєструвались.";
+                    App.SetCurrentUser(user);
+                    this.GoToDashboard(sender, e);
+                }
+                else
+                {
+                    this.errormessage.Text = "Ця пошта вже комусь належить.";
+                }
+            }
+        }
+
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             PasswordBox passwordBox = (PasswordBox)sender;
@@ -105,129 +110,144 @@ namespace Presentation
 
             if (IsPasswordValid(password))
             {
-                passwordError.Text = "";
+                this.passwordError.Text = string.Empty;
             }
             else if (password.Length < 8 || password.Length > 20)
             {
-                passwordError.Text = "Пароль повинен мати від 8 до 20 символів.";                
+                this.passwordError.Text = "Пароль повинен мати від 8 до 20 символів.";
             }
             else
             {
-                passwordError.Text = "Пароль має містити комбінацію цифр та літер різних регістрів.        ";
+                this.passwordError.Text = "Пароль має містити комбінацію цифр та літер різних регістрів.        ";
             }
-            errormessage.Text = "";
+
+            this.errormessage.Text = string.Empty;
         }
-        private void textBoxPassword_TextChanged(object sender, TextChangedEventArgs e)
+
+        private void TextBoxPassword_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string password = textBoxPassword.Text;
+            string password = this.textBoxPassword.Text;
 
             if (IsPasswordValid(password))
             {
-                passwordError.Text = "";
+                this.passwordError.Text = string.Empty;
             }
             else if (password.Length < 8 || password.Length > 20)
             {
-                passwordError.Text = "Пароль повинен мати від 8 до 20 символів.";
+                this.passwordError.Text = "Пароль повинен мати від 8 до 20 символів.";
             }
             else
             {
-                passwordError.Text = "Пароль має містити комбінацію цифр та літер різних регістрів.        ";
+                this.passwordError.Text = "Пароль має містити комбінацію цифр та літер різних регістрів.        ";
             }
-            errormessage.Text = "";
+
+            this.errormessage.Text = string.Empty;
         }
+
         private void PasswordConfirmBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             PasswordBox passwordBox = (PasswordBox)sender;
             string password = passwordBox.Password;
 
-            if (password != passwordBox1.Password)
+            if (password != this.passwordBox1.Password)
             {
-                confirmPassError.Text = "Паролі не співпадають.";
+                this.confirmPassError.Text = "Паролі не співпадають.";
             }
             else
             {
-                confirmPassError.Text = "";
+                this.confirmPassError.Text = string.Empty;
             }
-            errormessage.Text = "";
-        }
-        private void textBoxConfirmPassword_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string password = textBoxConfirmPassword.Text;
 
-            if (password != passwordBox1.Password)
+            this.errormessage.Text = string.Empty;
+        }
+
+        private void TextBoxConfirmPassword_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string password = this.textBoxConfirmPassword.Text;
+
+            if (password != this.passwordBox1.Password)
             {
-                confirmPassError.Text = "Паролі не співпадають.";
+                this.confirmPassError.Text = "Паролі не співпадають.";
             }
             else
             {
-                confirmPassError.Text = "";
+                this.confirmPassError.Text = string.Empty;
             }
-            errormessage.Text = "";
+
+            this.errormessage.Text = string.Empty;
         }
-        private void textBoxFirstName_TextChanged(object sender, TextChangedEventArgs e)
+
+        private void TextBoxFirstName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string firstName = textBoxFirstName.Text;
+            string firstName = this.textBoxFirstName.Text;
 
             if (string.IsNullOrEmpty(firstName))
             {
-                firstNameError.Text = "Введіть ім'я.";  
-            } 
+                this.firstNameError.Text = "Введіть ім'я.";
+            }
             else if (firstName.Length < 2 || firstName.Length > 18)
             {
-                firstNameError.Text = "Ім'я повинне мати від 2 до 18 символів.";                
+                this.firstNameError.Text = "Ім'я повинне мати від 2 до 18 символів.";
             }
             else if (!Regex.IsMatch(firstName, "^(?:[A-Za-z-]+|[А-ЩЬЮЯҐЄІЇа-щьюяґєії'-]+)$"))
             {
-                firstNameError.Text = "Введіть коректне ім'я.";
+                this.firstNameError.Text = "Введіть коректне ім'я.";
             }
             else
             {
-                firstNameError.Text = "";
+                this.firstNameError.Text = string.Empty;
             }
-            errormessage.Text = "";
+
+            this.errormessage.Text = string.Empty;
         }
-        private void textBoxLastName_TextChanged(object sender, TextChangedEventArgs e)
+
+        private void TextBoxLastName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string lastName = textBoxLastName.Text;
+            string lastName = this.textBoxLastName.Text;
 
             if (string.IsNullOrEmpty(lastName))
             {
-                lastNameError.Text = "Введіть прізвище.";
+                this.lastNameError.Text = "Введіть прізвище.";
             }
             else if (lastName.Length < 2 || lastName.Length > 18)
             {
-                lastNameError.Text = "Прізвище повинне мати від 2 до 18 символів.";
+                this.lastNameError.Text = "Прізвище повинне мати від 2 до 18 символів.";
             }
             else if (!Regex.IsMatch(lastName, "^(?:[A-Za-z-]+|[А-ЩЬЮЯҐЄІЇа-щьюяґєії'-]+)$"))
             {
-                lastNameError.Text = "Введіть коректне прізвище.";
+                this.lastNameError.Text = "Введіть коректне прізвище.";
             }
             else
             {
-                lastNameError.Text = "";
+                this.lastNameError.Text = string.Empty;
             }
-            errormessage.Text = "";
+
+            this.errormessage.Text = string.Empty;
         }
-        private void textBoxEmail_TextChanged(object sender, TextChangedEventArgs e)
+
+        private void TextBoxEmail_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string email = textBoxEmail.Text;
+            string email = this.textBoxEmail.Text;
 
             if (string.IsNullOrEmpty(email))
             {
-                emailError.Text = "Введіть електронну пошту.";  
+                this.emailError.Text = "Введіть електронну пошту.";
             }
             else if (!IsEmailValid(email))
             {
-                emailError.Text = "Введіть коректну електронну пошту.";
+                this.emailError.Text = "Введіть коректну електронну пошту.";
             }
-            else{
-                emailError.Text = "";
+            else
+            {
+                this.emailError.Text = string.Empty;
             }
-            errormessage.Text = "";
+
+            this.errormessage.Text = string.Empty;
         }
+
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            DateTime? selectedDate = datePickerBirthdate.SelectedDate;
+            DateTime? selectedDate = this.datePickerBirthdate.SelectedDate;
 
             if (selectedDate.HasValue)
             {
@@ -235,50 +255,53 @@ namespace Presentation
 
                 if (selectedDate > twelveYearsAgo)
                 {
-                    dateError.Text = "Користувач повинен бути старше 12 років.";
+                    this.dateError.Text = "Користувач повинен бути старше 12 років.";
                 }
                 else
                 {
-                    dateError.Text = "";
+                    this.dateError.Text = string.Empty;
                 }
             }
             else
             {
-                dateError.Text = "Введіть коректну дату народження.";
+                this.dateError.Text = "Введіть коректну дату народження.";
             }
-            errormessage.Text = "";
+
+            this.errormessage.Text = string.Empty;
         }
+
         private void ShowPassword_Checked(object sender, RoutedEventArgs e)
         {
-            passwordBox1.Visibility = Visibility.Collapsed; 
-            textBoxPassword.Visibility = Visibility.Visible;
-            textBoxPassword.Text = passwordBox1.Password;
-            toggleButtonShowPassword.IsChecked = true;
+            this.passwordBox1.Visibility = Visibility.Collapsed;
+            this.textBoxPassword.Visibility = Visibility.Visible;
+            this.textBoxPassword.Text = this.passwordBox1.Password;
+            this.toggleButtonShowPassword.IsChecked = true;
         }
 
         private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
         {
-            passwordBox1.Visibility = Visibility.Visible;
-            textBoxPassword.Visibility = Visibility.Collapsed;
-            passwordBox1.Password = textBoxPassword.Text;
-            textBoxPassword.Text = string.Empty;
-            toggleButtonShowPassword.IsChecked = false;
+            this.passwordBox1.Visibility = Visibility.Visible;
+            this.textBoxPassword.Visibility = Visibility.Collapsed;
+            this.passwordBox1.Password = this.textBoxPassword.Text;
+            this.textBoxPassword.Text = string.Empty;
+            this.toggleButtonShowPassword.IsChecked = false;
         }
+
         private void ShowConfirmPassword_Checked(object sender, RoutedEventArgs e)
         {
-            passwordBoxConfirm.Visibility = Visibility.Collapsed;
-            textBoxConfirmPassword.Visibility = Visibility.Visible;
-            textBoxConfirmPassword.Text = passwordBoxConfirm.Password;
-            toggleButtonShowConfirmPassword.IsChecked = true;
+            this.passwordBoxConfirm.Visibility = Visibility.Collapsed;
+            this.textBoxConfirmPassword.Visibility = Visibility.Visible;
+            this.textBoxConfirmPassword.Text = this.passwordBoxConfirm.Password;
+            this.toggleButtonShowConfirmPassword.IsChecked = true;
         }
 
         private void ShowConfirmPassword_Unchecked(object sender, RoutedEventArgs e)
         {
-            passwordBoxConfirm.Visibility = Visibility.Visible;
-            textBoxConfirmPassword.Visibility = Visibility.Collapsed;
-            passwordBoxConfirm.Password = textBoxConfirmPassword.Text;
-            textBoxConfirmPassword.Text = string.Empty;
-            toggleButtonShowConfirmPassword.IsChecked = false;
+            this.passwordBoxConfirm.Visibility = Visibility.Visible;
+            this.textBoxConfirmPassword.Visibility = Visibility.Collapsed;
+            this.passwordBoxConfirm.Password = this.textBoxConfirmPassword.Text;
+            this.textBoxConfirmPassword.Text = string.Empty;
+            this.toggleButtonShowConfirmPassword.IsChecked = false;
         }
     }
 }

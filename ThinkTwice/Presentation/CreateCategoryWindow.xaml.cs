@@ -1,48 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using ThinkTwice_Context;
-using BLL;
-
-namespace Presentation
+﻿namespace Presentation
 {
+    using System.Windows;
+    using System.Windows.Controls;
+    using BLL;
+
     /// <summary>
-    /// Interaction logic for CreateCategoryWindow.xaml
+    /// Interaction logic for CreateCategoryWindow.xaml.
     /// </summary>
     public partial class CreateCategoryWindow : Window
     {
         private CategoryRepository categoryRepository = new CategoryRepository();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateCategoryWindow"/> class.
+        /// </summary>
         public CreateCategoryWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
+
         private void CreateCategory(object sender, RoutedEventArgs e)
         {
-            string title = titleTextBox.Text.Trim();
-            string percentage = percentageTextBox.Text.Trim();
-            string type = TypeComboBox.Text.Trim();
+            string title = this.titleTextBox.Text.Trim();
+            string percentage = this.percentageTextBox.Text.Trim();
+            string type = this.TypeComboBox.Text.Trim();
 
-            if (errormessage.Text == "")
+            if (this.errormessage.Text == string.Empty)
             {
                 decimal.TryParse(percentage, out decimal dec_percentage);
-              
-                categoryRepository.CreateCategory(title, false, dec_percentage, type, App.GetCurrentUser()?.Id);
-                //тут треба закрити вікно
+
+                this.categoryRepository.CreateCategory(title, false, dec_percentage, type, App.GetCurrentUser()?.Id);
 
                 this.Close();
             }
-
         }
+
         private void ValidatePercentage(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -50,17 +42,16 @@ namespace Presentation
 
             if (!decimal.TryParse(percentage, out decimal result))
             {
-                errormessage.Text = "Некоректний формат відсотку.";
+                this.errormessage.Text = "Некоректний формат відсотку.";
             }
             else if (result < 1 || result > 100)
             {
-                errormessage.Text = "Відсоток повинен бути від 1 до 100";
+                this.errormessage.Text = "Відсоток повинен бути від 1 до 100";
             }
             else
             {
-                errormessage.Text = ""; // Очищаємо повідомлення про помилки, якщо все валідно
+                this.errormessage.Text = string.Empty; // Очищаємо повідомлення про помилки, якщо все валідно
             }
         }
-
     }
 }

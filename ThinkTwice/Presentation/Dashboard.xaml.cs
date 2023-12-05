@@ -1,61 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ThinkTwice_Context;
-using BLL;
-using LiveCharts;
-using LiveCharts.Wpf;
-using System.Globalization;
-using Presentation.DTO;
+﻿// <copyright file="Dashboard.xaml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Presentation
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media;
+    using System.Windows.Navigation;
+    using BLL;
+    using LiveCharts;
+    using LiveCharts.Wpf;
+    using Presentation.DTO;
+    using ThinkTwice_Context;
+
     /// <summary>
-    /// Interaction logic for Dashboard.xaml
+    /// Interaction logic for Dashboard.xaml.
     /// </summary>
     public partial class Dashboard : Page
     {
-        private readonly TransactionService _transactionService = new TransactionService();
-        private readonly CategoryRepository _categoryRepository = new CategoryRepository();
+        private readonly TransactionService transactionService = new TransactionService();
+        private readonly CategoryRepository categoryRepository = new CategoryRepository();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Dashboard"/> class.
+        /// </summary>
         public Dashboard()
         {
-            InitializeComponent();
-            Loaded += YourWindow_Loaded;
-            Loaded += PaintGraphic;
-            /*InitializeData();*/
+            this.InitializeComponent();
+            this.Loaded += this.YourWindow_Loaded;
+            this.Loaded += this.PaintGraphic;
         }
 
-        private void YourWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            var currency = GetCurrency(App.GetCurrentUser()?.Currency);
-            List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser()).Where(i => i.Planned == false).ToList();
-            List<TransactionDTO>? transactionDTOs = new List<TransactionDTO>();
-            foreach (var transaction in defaultData)
-            {
-                transactionDTOs.Add(new TransactionDTO(transaction));
-            }
+        public SeriesCollection? SeriesCollection { get; set; }
 
-            var incomes = _transactionService.GetIncome(App.GetCurrentUser());
-            var expense = _transactionService.GetExpenses(App.GetCurrentUser());
-            incomeValue.Text = currency + incomes.ToString();
-            balanceValue.Text = currency + _transactionService.GetBalance(App.GetCurrentUser()).ToString();
-            expensesValue.Text = currency + expense.ToString();
-            savingsValue.Text = currency + (incomes - expense).ToString();
-            dataGrid.ItemsSource = transactionDTOs;
-        }
+        public string[] Labels { get; set; }
 
-        public void Transactions_Click(object sender, RoutedEventArgs e)
+        public Func<double, string>? Formatter { get; set; }
+
+        public void TransactionsClick(object sender, RoutedEventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Transactions.xaml", UriKind.Relative));
@@ -80,6 +67,25 @@ namespace Presentation
             ns.Navigate(new Uri("Login.xaml", UriKind.Relative));
         }
 
+        private void YourWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            var currency = this.GetCurrency(App.GetCurrentUser()?.Currency);
+            List<Transaction>? defaultData = this.transactionService.GetTransactions(App.GetCurrentUser())?.Where(i => i.Planned == false).ToList();
+            List<TransactionDTO>? transactionDTOs = new List<TransactionDTO>();
+            foreach (var transaction in defaultData)
+            {
+                transactionDTOs.Add(new TransactionDTO(transaction));
+            }
+
+            var incomes = this.transactionService.GetIncome(App.GetCurrentUser());
+            var expense = this.transactionService.GetExpenses(App.GetCurrentUser());
+            this.incomeValue.Text = currency + incomes.ToString();
+            this.balanceValue.Text = currency + this.transactionService.GetBalance(App.GetCurrentUser()).ToString();
+            this.expensesValue.Text = currency + expense.ToString();
+            this.savingsValue.Text = currency + (incomes - expense).ToString();
+            this.dataGrid.ItemsSource = transactionDTOs;
+        }
+
         private string GetCurrency(string? currency)
         {
             switch (currency)
@@ -94,7 +100,7 @@ namespace Presentation
         private void PaintGraphic(object sender, RoutedEventArgs e)
         {
             var date = (DateTime.Now.AddDays(-7), DateTime.Now);
-            var transactions = _transactionService.GetTransactionsInTimePeriod(App.GetCurrentUser(), DateTime.Now.AddDays(-7), DateTime.Now);
+            var transactions = this.transactionService.GetTransactionsInTimePeriod(App.GetCurrentUser(), DateTime.Now.AddDays(-7), DateTime.Now);
             if (transactions != null)
             {
                 var groupedTransactions = transactions
@@ -102,7 +108,7 @@ namespace Presentation
                     .Select(group => new
                     {
                         Date = group.Key,
-                        Transactions = group.ToList()
+                        Transactions = group.ToList(),
                     }).Reverse()
                     .ToList();
                 var expenses = new ChartValues<decimal>(new decimal[7]);
@@ -110,15 +116,11 @@ namespace Presentation
                 var balance = new ChartValues<decimal>(new decimal[7]);
                 var j = 0;
                 List<DateTime?> datesInRange = new List<DateTime?>();
-                if (date.Item2 == null)
-                {
-                    date.Item2 = DateTime.Now;
-                }
-
                 for (DateTime? date_ = date.Item1.AddDays(1); date_ <= date.Item2; date_ = date_?.AddDays(1))
                 {
                     datesInRange.Add(date_);
                 }
+
                 foreach (var date_ in datesInRange)
                 {
                     decimal totalExpenses = 0;
@@ -129,7 +131,7 @@ namespace Presentation
                     {
                         foreach (var transaction in group.Transactions)
                         {
-                            var category = _categoryRepository.GetCategoryById(transaction.ToCategory);
+                            var category = this.categoryRepository.GetCategoryById(transaction.ToCategory);
 
                             if (category != null)
                             {
@@ -146,68 +148,61 @@ namespace Presentation
                                     totalBalance += transaction.Amount;
                                 }
                             }
-
                         }
                     }
+
                     expenses[j] = totalExpenses;
                     incomes[j] = totalIncomes;
                     balance[j] = totalBalance;
                     j += 1;
                 }
 
-                SeriesCollection = new SeriesCollection
+                this.SeriesCollection = new SeriesCollection
                 {
                     new LineSeries
                     {
                         Title = "Доходи",
                         Values = incomes,
                         PointGeometry = null,
-                        Fill = new SolidColorBrush(System.Windows.Media.Colors.Transparent), // Set fill color to transparent
+                        Fill = new SolidColorBrush(System.Windows.Media.Colors.Transparent),
                         Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0x90, 0xD7, 0xB9)),
-                        StrokeThickness = 2
-                    }
+                        StrokeThickness = 2,
+                    },
                 };
 
-                SeriesCollection.Add(new LineSeries
+                this.SeriesCollection.Add(new LineSeries
                 {
                     Title = "Баланс",
                     Values = balance,
                     PointGeometry = null,
-                    Fill = new SolidColorBrush(System.Windows.Media.Colors.Transparent), // Set fill color to transparent
+                    Fill = new SolidColorBrush(System.Windows.Media.Colors.Transparent),
                     Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0xBD, 0xD4, 0xF1)),
-                    StrokeThickness = 2
+                    StrokeThickness = 2,
                 });
 
-                SeriesCollection.Add(new LineSeries
+                this.SeriesCollection.Add(new LineSeries
                 {
                     Title = "Витрати",
                     Values = expenses,
                     PointGeometry = null,
-                    Fill = new SolidColorBrush(System.Windows.Media.Colors.Transparent), // Set fill color to transparent
+                    Fill = new SolidColorBrush(System.Windows.Media.Colors.Transparent),
                     Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0xFF, 0xB6, 0xAE)),
-                    StrokeThickness = 2
+                    StrokeThickness = 2,
                 });
 
-
                 int currentDayOfWeek = (int)DateTime.Now.DayOfWeek;
-             
-                
                 CultureInfo ukrainianCulture = new CultureInfo("uk-UA");
                 var daysNum = datesInRange.Select(i => i?.ToString("dd MMMM"));
-                Labels = new string[7];
+                this.Labels = new string[7];
                 for (int i = 0; i < 7; i++)
                 {
-                    Labels[i] = daysNum.ElementAt(i);
+                    this.Labels[i] = daysNum.ElementAt(i);
                 }
-                Formatter = value => value.ToString("N");
+
+                this.Formatter = value => value.ToString("N");
             }
-            x.DataContext = this;
+
+            this.x.DataContext = this;
         }
-
-        public SeriesCollection? SeriesCollection { get; set; }
-
-        public string[]? Labels { get; set; }
-
-        public Func<double, string>? Formatter { get; set; }
     }
 }

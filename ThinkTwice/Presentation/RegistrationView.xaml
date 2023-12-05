@@ -59,7 +59,7 @@
             <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3" Height="23" HorizontalAlignment="Left" Margin="229,364,0,0"  VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" />
 
 
-            <TextBox Height="23" HorizontalAlignment="Left" Margin="229,124,0,0" x:Name="textBoxFirstName" VerticalAlignment="Top" Width="222" TextChanged="textBoxFirstName_TextChanged" Grid.ColumnSpan="2" KeyDown="TextBox_KeyDown">
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="229,124,0,0" x:Name="textBoxFirstName" VerticalAlignment="Top" Width="222" TextChanged="TextBoxFirstName_TextChanged" Grid.ColumnSpan="2" KeyDown="TextBox_KeyDown">
                 <TextBox.Template>
                     <ControlTemplate TargetType="TextBox">
                         <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">
@@ -70,7 +70,7 @@
             </TextBox>
             <TextBlock x:Name="firstNameError" Foreground="Red" Margin="229,151,93,0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
 
-            <TextBox Height="23" HorizontalAlignment="Left" Margin="229,172,0,0" x:Name="textBoxLastName" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" TextChanged="textBoxLastName_TextChanged" KeyDown="TextBox_KeyDown">
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="229,172,0,0" x:Name="textBoxLastName" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" TextChanged="TextBoxLastName_TextChanged" KeyDown="TextBox_KeyDown">
                 <TextBox.Template>
                     <ControlTemplate TargetType="TextBox">
                         <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">
@@ -81,7 +81,7 @@
             </TextBox>
             <TextBlock x:Name="lastNameError" Foreground="Red" Margin="229,200,93,0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
 
-            <TextBox Height="22" HorizontalAlignment="Left" Margin="229,222,0,0" x:Name="textBoxEmail" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" TextChanged="textBoxEmail_TextChanged" KeyDown="TextBox_KeyDown">
+            <TextBox Height="22" HorizontalAlignment="Left" Margin="229,222,0,0" x:Name="textBoxEmail" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" TextChanged="TextBoxEmail_TextChanged" KeyDown="TextBox_KeyDown">
                 <TextBox.Template>
                     <ControlTemplate TargetType="TextBox">
                         <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">
@@ -92,7 +92,7 @@
             </TextBox>
             <TextBlock x:Name="emailError" Foreground="Red" Margin="229,252,126,0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
 
-            <TextBox Height="23" HorizontalAlignment="Left" x:Name="textBoxPassword"  VerticalAlignment="Top" Visibility="Collapsed" Width="222" Grid.ColumnSpan="2" Margin="228,271,0,0" TextChanged="textBoxPassword_TextChanged" KeyDown="TextBox_KeyDown">
+            <TextBox Height="23" HorizontalAlignment="Left" x:Name="textBoxPassword"  VerticalAlignment="Top" Visibility="Collapsed" Width="222" Grid.ColumnSpan="2" Margin="228,271,0,0" TextChanged="TextBoxPassword_TextChanged" KeyDown="TextBox_KeyDown">
                 <TextBox.Template>
                     <ControlTemplate TargetType="TextBox">
                         <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">
@@ -118,7 +118,7 @@
             </ToggleButton>
             <TextBlock x:Name="passwordError" Foreground="Red" Margin="113,294,156,0" VerticalAlignment="Top" Grid.ColumnSpan="2" TextAlignment="Right"/>
 
-            <TextBox Height="23" HorizontalAlignment="Left" Margin="229,317,0,0" VerticalAlignment="Top" Width="222" x:Name="textBoxConfirmPassword" Visibility="Collapsed" Grid.ColumnSpan="2" TextChanged="textBoxConfirmPassword_TextChanged" KeyDown="TextBox_KeyDown">
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="229,317,0,0" VerticalAlignment="Top" Width="222" x:Name="textBoxConfirmPassword" Visibility="Collapsed" Grid.ColumnSpan="2" TextChanged="TextBoxConfirmPassword_TextChanged" KeyDown="TextBox_KeyDown">
                 <TextBox.Template>
                     <ControlTemplate TargetType="TextBox">
                         <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">

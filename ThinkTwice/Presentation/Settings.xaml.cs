@@ -1,46 +1,77 @@
-﻿using BLL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ThinkTwice_Context;
-using BLL;
-using DAL;
-using System.Globalization;
-using System.Text.RegularExpressions;
-using BLL.DTO;
-using System.Reflection.Metadata;
-using System.Collections.ObjectModel;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-namespace Presentation
+﻿namespace Presentation
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Globalization;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Navigation;
+    using BLL;
+    using BLL.DTO;
+    using Microsoft.IdentityModel.Tokens;
+    using ThinkTwice_Context;
+
     /// <summary>
-    /// Interaction logic for Dashboard.xaml
+    /// Interaction logic for Dashboard.xaml.
     /// </summary>
     public partial class Settings : Page
     {
-        private readonly SettingsService _settingsService = new SettingsService();
+        private readonly SettingsService settingsService = new SettingsService();
         private ObservableCollection<Category> categories;
-        private ObservableCollection<Category> categoriesToDelete= new ObservableCollection<Category>();
+        private ObservableCollection<Category> categoriesToDelete = new ObservableCollection<Category>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Settings"/> class.
+        /// </summary>
         public Settings()
         {
-            InitializeComponent();
-            Loaded += YourWindow_Loaded;
+            this.InitializeComponent();
+            this.Loaded += this.YourWindow_Loaded;
             /*InitializeData();*/
         }
 
+        public static bool IsEmailValid(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return false;
+            }
+
+            string emailPattern = @"^[a-zA-Z0-9._%+-]{3,20}@[a-zA-Z0-9.-]{2,20}\.[a-zA-Z]{2,10}$";
+
+            return Regex.IsMatch(email, emailPattern);
+        }
+
+        public void TransactionsClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Transactions.xaml", UriKind.Relative));
+        }
+
+        public void Dashboard_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
+        }
+
+        public void Statistics_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Statistics.xaml", UriKind.Relative));
+        }
+
+        public void Logout(object sender, RoutedEventArgs e)
+        {
+            App.RemoveUser();
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new Uri("Login.xaml", UriKind.Relative));
+        }
 
         private void OpenCreateCategoryWindow(object sender, MouseButtonEventArgs e)
         {
@@ -50,11 +81,9 @@ namespace Presentation
                 var createCategoryWindow = new CreateCategoryWindow();
                 createCategoryWindow.ShowDialog();
             }
-            
-
-           
         }
-        private Category emptyCategory()
+
+        private Category EmptyCategory()
         {
             Category empty = new Category();
             empty.Title = "Додати категорію";
@@ -66,84 +95,63 @@ namespace Presentation
 
         private void YourWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            textBoxName.Text = App.GetCurrentUser()?.Name;
-            textBoxSurname.Text = App.GetCurrentUser()?.Surname;
-            textBoxEmail.Text = App.GetCurrentUser()?.Email;
-            datePickerBirthdate.Text = App.GetCurrentUser()?.BirthDate.ToString();
-            textBoxCurrency.Text = App.GetCurrentUser()?.Currency;
+            this.textBoxName.Text = App.GetCurrentUser()?.Name;
+            this.textBoxSurname.Text = App.GetCurrentUser()?.Surname;
+            this.textBoxEmail.Text = App.GetCurrentUser()?.Email;
+            this.datePickerBirthdate.Text = App.GetCurrentUser()?.BirthDate.ToString();
+            this.textBoxCurrency.Text = App.GetCurrentUser()?.Currency;
 
-            categories = new ObservableCollection<Category>(_settingsService.GetUserCategories(App.GetCurrentUser()));
-            categories = new ObservableCollection<Category>(categories.OrderByDescending(category => category.UserId));
-            Category empty = emptyCategory();
-            categories.Add(empty);
-            itemsControl.ItemsSource = categories;
+            this.categories = new ObservableCollection<Category>(this.settingsService.GetUserCategories(App.GetCurrentUser()));
+            this.categories = new ObservableCollection<Category>(this.categories.OrderByDescending(category => category.UserId));
+            Category empty = this.EmptyCategory();
+            this.categories.Add(empty);
+            this.itemsControl.ItemsSource = this.categories;
         }
 
-        public void Transactions_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new Uri("Transactions.xaml", UriKind.Relative));
-        }
-        public void Dashboard_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
-        }
-        public void Statistics_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new Uri("Statistics.xaml", UriKind.Relative));
-        }
-        public void Logout(object sender, RoutedEventArgs e)
-        {
-            App.RemoveUser();
-            NavigationService ns = NavigationService.GetNavigationService(this);
-            ns.Navigate(new Uri("Login.xaml", UriKind.Relative));
-        }
         private void ChangeClick(object sender, RoutedEventArgs e)
         {
-            SaveButton.Visibility = Visibility.Visible;
-            ChangeButton.Visibility = Visibility.Collapsed;
-            textBoxName.IsEnabled = true;
-            textBoxSurname.IsEnabled = true;
-            textBoxEmail.IsEnabled = true;
-            datePickerBirthdate.IsEnabled = true;
-
+            this.SaveButton.Visibility = Visibility.Visible;
+            this.ChangeButton.Visibility = Visibility.Collapsed;
+            this.textBoxName.IsEnabled = true;
+            this.textBoxSurname.IsEnabled = true;
+            this.textBoxEmail.IsEnabled = true;
+            this.datePickerBirthdate.IsEnabled = true;
         }
+
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is FrameworkElement button && button.DataContext is Category category)
             {
-                DeleteCategory(category);
+                this.DeleteCategory(category);
             }
         }
 
         private void DeleteCategory(Category category)
         {
-            categories.Remove(category);
-            categoriesToDelete.Add(category);
-            Category empty = emptyCategory();
-            categories.Add(empty);
-            itemsControl.ItemsSource = categories;
-
+            this.categories.Remove(category);
+            this.categoriesToDelete.Add(category);
+            Category empty = this.EmptyCategory();
+            this.categories.Add(empty);
+            this.itemsControl.ItemsSource = this.categories;
         }
 
         private void SaveClick(object sender, RoutedEventArgs e)
         {
-            var allFieldsValid = AllFieldsValid();
+            var allFieldsValid = this.AllFieldsValid();
             if (allFieldsValid)
             {
-                string email = textBoxEmail.Text;
-                string first_name = textBoxName.Text;
-                string last_name = textBoxSurname.Text;
-                DateTime? date = datePickerBirthdate.SelectedDate;
-                ICollection<Category> new_categories = (ICollection<Category>)categories;
+                string email = this.textBoxEmail.Text;
+                string first_name = this.textBoxName.Text;
+                string last_name = this.textBoxSurname.Text;
+                DateTime? date = this.datePickerBirthdate.SelectedDate;
+                ICollection<Category> new_categories = (ICollection<Category>)this.categories;
 
-                if (categories != null)
+                if (this.categories != null)
                 {
                     new_categories = new_categories.Where(category => category.UserId != null).ToList();
                 }
-                UserDTO user = App.GetCurrentUser();
+
+                UserDTO? user = App.GetCurrentUser();
                 user.Name = first_name;
                 user.Surname = last_name;
                 user.Email = email;
@@ -151,53 +159,55 @@ namespace Presentation
                 user.Categories = new_categories;
 
                 App.SetCurrentUser(user);
-                _settingsService.UpdateUser(user);
+                this.settingsService.UpdateUser(user);
 
-                if (!categoriesToDelete.IsNullOrEmpty())
+                if (!this.categoriesToDelete.IsNullOrEmpty())
                 {
                     foreach (var category in categoriesToDelete)
                     {
-                        _settingsService.RemoveCategory(user, category.Id);
+                        this.settingsService.RemoveCategory(user, category.Id);
                     }
                 }
 
-                ChangeButton.Visibility = Visibility.Visible;
-                SaveButton.Visibility = Visibility.Collapsed;
-                textBoxName.IsEnabled = false;
-                textBoxSurname.IsEnabled = false;
-                textBoxEmail.IsEnabled = false;
-                datePickerBirthdate.IsEnabled = false;
+                this.ChangeButton.Visibility = Visibility.Visible;
+                this.SaveButton.Visibility = Visibility.Collapsed;
+                this.textBoxName.IsEnabled = false;
+                this.textBoxSurname.IsEnabled = false;
+                this.textBoxEmail.IsEnabled = false;
+                this.datePickerBirthdate.IsEnabled = false;
             }
         }
+
         private bool AllFieldsValid()
         {
-            string error_mes = "";
-            error_mes = textBoxFirstName_Error();
-            if(error_mes == "") {
-                error_mes = textBoxLastName_Error();
-            } 
-            
-            if(error_mes == "")
+            string error_mes = string.Empty;
+            error_mes = this.TextBoxFirstName_Error();
+            if (error_mes == string.Empty)
             {
-                error_mes = textBoxEmail_Error();
-            } 
-            
-            if(error_mes == "")
-            {
-                error_mes = DatePicker_SelectedDateError();
+                error_mes = this.TextBoxLastName_Error();
             }
 
-            errormessage.Text = error_mes;
-            return errormessage.Text == "";
+            if (error_mes == string.Empty)
+            {
+                error_mes = this.TextBoxEmail_Error();
+            }
+
+            if (error_mes == string.Empty)
+            {
+                error_mes = this.DatePicker_SelectedDateError();
+            }
+
+            this.errormessage.Text = error_mes;
+            return this.errormessage.Text == string.Empty;
         }
 
-        private string textBoxFirstName_Error()
+        private string TextBoxFirstName_Error()
         {
-            string firstName = textBoxName.Text;
+            string firstName = this.textBoxName.Text;
 
             if (string.IsNullOrEmpty(firstName))
             {
-                return"Введіть ім'я.";
+                return "Введіть ім'я.";
             }
             else if (firstName.Length < 2 || firstName.Length > 18)
             {
@@ -209,12 +219,13 @@ namespace Presentation
             }
             else
             {
-                return"";
+                return string.Empty;
             }
         }
-        private string textBoxLastName_Error()
+
+        private string TextBoxLastName_Error()
         {
-            string lastName = textBoxSurname.Text;
+            string lastName = this.textBoxSurname.Text;
 
             if (string.IsNullOrEmpty(lastName))
             {
@@ -230,21 +241,13 @@ namespace Presentation
             }
             else
             {
-                return "";
+                return string.Empty;
             }
         }
-        public static bool IsEmailValid(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-                return false;
 
-            string emailPattern = @"^[a-zA-Z0-9._%+-]{3,20}@[a-zA-Z0-9.-]{2,20}\.[a-zA-Z]{2,10}$";
-
-            return Regex.IsMatch(email, emailPattern);
-        }
-        private string textBoxEmail_Error()
+        private string TextBoxEmail_Error()
         {
-            string email = textBoxEmail.Text;
+            string email = this.textBoxEmail.Text;
 
             if (string.IsNullOrEmpty(email))
             {
@@ -253,19 +256,20 @@ namespace Presentation
             else if (!IsEmailValid(email))
             {
                 return "Введіть коректну електронну пошту.";
-            }else if (email != App.GetCurrentUser()?.Email && !_settingsService.UniqueEmail(email))
+            }
+            else if (email != App.GetCurrentUser()?.Email && !this.settingsService.UniqueEmail(email))
             {
                 return "Користувач з такою поштою вже існує";
             }
             else
             {
-                return "";
+                return string.Empty;
             }
         }
 
         private string DatePicker_SelectedDateError()
         {
-            DateTime? selectedDate = datePickerBirthdate.SelectedDate;
+            DateTime? selectedDate = this.datePickerBirthdate.SelectedDate;
 
             if (selectedDate.HasValue)
             {
@@ -277,7 +281,7 @@ namespace Presentation
                 }
                 else
                 {
-                    return "";
+                    return string.Empty;
                 }
             }
             else
@@ -285,7 +289,6 @@ namespace Presentation
                 return "Введіть коректну дату народження.";
             }
         }
-
     }
 
     public class NullToVisibilityConverter : IValueConverter
@@ -310,17 +313,17 @@ namespace Presentation
                 switch (categoryType)
                 {
                     case "Витрати":
-                        return Brushes.Red; // Колір для Витрат
+                        return Brushes.Red;
                     case "Дохід":
-                        return Brushes.Green; // Колір для Доходу
+                        return Brushes.Green;
                     case "Баланс":
-                        return Brushes.Blue; // Колір для Балансу
+                        return Brushes.Blue;
                     default:
-                        return Brushes.Gray; // Колір за замовчуванням
+                        return Brushes.Gray;
                 }
             }
 
-            return Brushes.Gray; // Колір за замовчуванням
+            return Brushes.Gray;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -328,6 +331,4 @@ namespace Presentation
             throw new NotImplementedException();
         }
     }
-
-
 }

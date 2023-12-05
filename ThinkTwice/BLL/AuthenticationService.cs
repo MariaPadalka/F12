@@ -1,15 +1,14 @@
-﻿using ThinkTwice_Context;
-using BLL.DTO;
-
-namespace BLL
+﻿namespace BLL
 {
+    using BLL.DTO;
+
     public class AuthenticationService
     {
-        private readonly UserRepository _userService = new UserRepository();
+        private readonly UserRepository userService = new UserRepository();
 
         public UserDTO? AuthenticateUser(string email, string password)
         {
-            var user = _userService.GetUserByEmail(email);
+            var user = this.userService.GetUserByEmail(email);
             if (user != null)
             {
                 UserDTO userDTO = new UserDTO(user);
@@ -17,11 +16,18 @@ namespace BLL
                 {
                     return userDTO;
                 }
-                else { return null; }
+                else
+                {
+                    return null;
+                }
             }
-            else { return null; }
+            else
+            {
+                return null;
+            }
         }
     }
+
     public class PasswordHasher
     {
         public static string HashPassword(string password)

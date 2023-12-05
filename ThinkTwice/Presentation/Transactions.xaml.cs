@@ -1,82 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ThinkTwice_Context;
-using BLL;
-using Presentation.DTO;
-using Microsoft.EntityFrameworkCore;
-using BLL.DTO;
-
-namespace Presentation
+﻿namespace Presentation
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Navigation;
+    using BLL;
+    using Presentation.DTO;
+    using ThinkTwice_Context;
+
     /// <summary>
-    /// Interaction logic for Dashboard.xaml
+    /// Interaction logic for Dashboard.xaml.
     /// </summary>
     public partial class Transactions : Page
     {
-        public readonly TransactionService _transactionService = new TransactionService();
-        public readonly CategoryRepository _categoryRepository = new CategoryRepository();
-        public readonly CategoryService _categoryService = new CategoryService();
+        private readonly TransactionService transactionService = new TransactionService();
+        private readonly CategoryRepository categoryRepository = new CategoryRepository();
+        private readonly CategoryService categoryService = new CategoryService();
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Transactions"/> class.
+        /// </summary>
         public Transactions()
         {
-            InitializeComponent();
-            Loaded += YourWindow_Loaded;
+            this.InitializeComponent();
+            this.Loaded += this.YourWindow_Loaded;
 
-            ComboBox_Source();
-            ComboBox_Destination();
-            DatePickerBorder.Visibility = Visibility.Collapsed;
+            this.ComboBox_Source();
+            this.ComboBox_Destination();
+            this.DatePickerBorder.Visibility = Visibility.Collapsed;
         }
 
-        private void YourWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser())?.Where(c => c.Date < DateTime.Now.Date || (c.Date == DateTime.Now.Date && c.Planned == false)).ToList();
-            List<TransactionDTO> data = new List<TransactionDTO>();
-            foreach (Transaction transaction in defaultData)
-            {
-                if (transaction != null)
-                {
-                    data.Add(new TransactionDTO(transaction));
-                }
-            }
-            dataGrid.ItemsSource = data;
-
-
-            
-            List<Transaction>? plannedData = _transactionService.GetTransactions(App.GetCurrentUser())?.Where(c => (c.Date > DateTime.Now.Date && c.Planned == true)).ToList();
-            List<TransactionDTO> rows = new List<TransactionDTO>();
-            foreach (Transaction transaction in plannedData)
-            {
-                if (transaction != null)
-                {
-                    rows.Add(new TransactionDTO(transaction));
-                }
-            }
-            dataGridPlannedTransactions.ItemsSource = rows;
-        }
-
-        public void Dashboard_Click(object sender, RoutedEventArgs e)
+        public void DashboardClick(object sender, RoutedEventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
         }
-        public void Settings_Click(object sender, RoutedEventArgs e)
+
+        public void SettingsClick(object sender, RoutedEventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Settings.xaml", UriKind.Relative));
         }
+
         public void Statistics_Click(object sender, RoutedEventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
@@ -90,65 +59,90 @@ namespace Presentation
             ns.Navigate(new Uri("Login.xaml", UriKind.Relative));
         }
 
-        private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         public void ComboBox_Source()
         {
-            List<string>? arr1 = _categoryService.GetCategoriesTitleByType(App.GetCurrentUser(), "Баланс");
-            List<string>? arr2 = _categoryService.GetCategoriesTitleByType(App.GetCurrentUser(), "Дохід");
+            List<string>? arr1 = this.categoryService.GetCategoriesTitleByType(App.GetCurrentUser(), "Баланс");
+            List<string>? arr2 = this.categoryService.GetCategoriesTitleByType(App.GetCurrentUser(), "Дохід");
 
             List<string> combinedList = new List<string>(arr1);
             combinedList.AddRange(arr2);
 
-            sourceComboBox.ItemsSource = combinedList;
+            this.sourceComboBox.ItemsSource = combinedList;
         }
 
         public void ComboBox_Destination()
         {
-            List<string>? arr1 = _categoryService.GetCategoriesTitleByType(App.GetCurrentUser(), "Баланс");
-            List<string>? arr2 = _categoryService.GetCategoriesTitleByType(App.GetCurrentUser(), "Витрати");
+            List<string>? arr1 = this.categoryService.GetCategoriesTitleByType(App.GetCurrentUser(), "Баланс");
+            List<string>? arr2 = this.categoryService.GetCategoriesTitleByType(App.GetCurrentUser(), "Витрати");
 
             List<string>? combinedList = new List<string>(arr1);
             combinedList.AddRange(arr2);
 
-            destinationComboBox.ItemsSource = combinedList;
+            this.destinationComboBox.ItemsSource = combinedList;
+        }
+
+        private void YourWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<Transaction>? defaultData = this.transactionService.GetTransactions(App.GetCurrentUser())?.Where(c => c.Date < DateTime.Now.Date || (c.Date == DateTime.Now.Date && c.Planned == false)).ToList();
+            List<TransactionDTO> data = new List<TransactionDTO>();
+            foreach (Transaction transaction in defaultData)
+            {
+                if (transaction != null)
+                {
+                    data.Add(new TransactionDTO(transaction));
+                }
+            }
+
+            this.dataGrid.ItemsSource = data;
+
+            List<Transaction>? plannedData = this.transactionService.GetTransactions(App.GetCurrentUser())?.Where(c => (c.Date > DateTime.Now.Date && c.Planned == true)).ToList();
+            List<TransactionDTO> rows = new List<TransactionDTO>();
+            foreach (Transaction transaction in plannedData)
+            {
+                if (transaction != null)
+                {
+                    rows.Add(new TransactionDTO(transaction));
+                }
+            }
+
+            this.dataGridPlannedTransactions.ItemsSource = rows;
         }
 
         private void CreateTransactionButton_Click(object sender, RoutedEventArgs e)
         {
-            var all_fields_valid = AllFieldsValid();
+            var all_fields_valid = this.AllFieldsValid();
             if (all_fields_valid)
             {
-                string category_from_title = (string)sourceComboBox.SelectedValue;
-                string category_to_title = (string)destinationComboBox.SelectedValue;
-                decimal amount = decimal.Parse(amountTextBox.Text);
-                string details = detailsTextBox.Text;
-                bool planned = checkboxIsPlanned.IsChecked.HasValue && checkboxIsPlanned.IsChecked.Value;
-                
-                DateTime? date = new DateTime();
+                string category_from_title = (string)this.sourceComboBox.SelectedValue;
+                string category_to_title = (string)this.destinationComboBox.SelectedValue;
+                decimal amount = decimal.Parse(this.amountTextBox.Text);
+                string details = this.detailsTextBox.Text;
+                bool planned = this.checkboxIsPlanned.IsChecked.HasValue && this.checkboxIsPlanned.IsChecked.Value;
 
+                DateTime? date = default(DateTime);
 
-                Guid? category_from = _categoryRepository.GetCategoryByName(App.GetCurrentUser().Id, category_from_title).Id;
-                Guid? category_to = _categoryRepository.GetCategoryByName(App.GetCurrentUser().Id, category_to_title).Id;
+                Guid? category_from = this.categoryRepository.GetCategoryByName(App.GetCurrentUser()?.Id, category_from_title)?.Id;
+                Guid? category_to = this.categoryRepository.GetCategoryByName(App.GetCurrentUser()?.Id, category_to_title)?.Id;
 
+                if (!planned)
+                {
+                    date = DateTime.Now;
+                }
+                else
+                {
+                    date = this.datePickerPlannedDate?.SelectedDate.Value;
+                }
 
-                if (!planned) { date = DateTime.Now; }
-                else { date = (DateTime)datePickerPlannedDate.SelectedDate.Value; }
-
-                if (( _categoryRepository.GetCategoryById(category_from).Type == "Баланс" || _categoryRepository.GetCategoryById(category_from).Type == "Дохід" ) && _categoryRepository.GetCategoryById(category_to).Type == "Витрати")
+                if ((this.categoryRepository.GetCategoryById(category_from)?.Type == "Баланс" || this.categoryRepository.GetCategoryById(category_from)?.Type == "Дохід") && this.categoryRepository.GetCategoryById(category_to)?.Type == "Витрати")
                 {
                     amount *= -1;
                 }
 
-                _transactionService.AddTransaction(App.GetCurrentUser(), category_to, category_from, amount, date, details, planned);
-
+                this.transactionService.AddTransaction(App.GetCurrentUser(), category_to, category_from, amount, date, details, planned);
 
                 if (planned)
                 {
-                    List<Transaction>? plannedData = _transactionService.GetTransactions(App.GetCurrentUser())?.Where(c => (c.Date > DateTime.Now.Date && c.Planned == true)).ToList();
+                    List<Transaction>? plannedData = this.transactionService.GetTransactions(App.GetCurrentUser())?.Where(c => (c.Date > DateTime.Now.Date && c.Planned == true)).ToList();
                     List<TransactionDTO> rows = new List<TransactionDTO>();
                     foreach (Transaction transaction in plannedData)
                     {
@@ -157,11 +151,12 @@ namespace Presentation
                             rows.Add(new TransactionDTO(transaction));
                         }
                     }
-                    dataGridPlannedTransactions.ItemsSource = rows;
+
+                    this.dataGridPlannedTransactions.ItemsSource = rows;
                 }
                 else
                 {
-                    List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser())?.Where(c => c.Date < DateTime.Now.Date || (c.Date?.Date == DateTime.Now.Date && c.Planned == false)).ToList();
+                    List<Transaction>? defaultData = this.transactionService.GetTransactions(App.GetCurrentUser())?.Where(c => c.Date < DateTime.Now.Date || (c.Date?.Date == DateTime.Now.Date && c.Planned == false)).ToList();
                     List<TransactionDTO> data = new List<TransactionDTO>();
                     foreach (Transaction transaction in defaultData)
                     {
@@ -170,57 +165,58 @@ namespace Presentation
                             data.Add(new TransactionDTO(transaction));
                         }
                     }
-                    dataGrid.ItemsSource = data;
+
+                    this.dataGrid.ItemsSource = data;
                 }
 
-                sourceComboBox.SelectedIndex = -1;
-                destinationComboBox.SelectedIndex = -1;
-                detailsTextBox.Text = string.Empty;
-                amountTextBox.Text = string.Empty;
-                datePickerPlannedDate.SelectedDate = null;
+                this.sourceComboBox.SelectedIndex = -1;
+                this.destinationComboBox.SelectedIndex = -1;
+                this.detailsTextBox.Text = string.Empty;
+                this.amountTextBox.Text = string.Empty;
+                this.datePickerPlannedDate.SelectedDate = null;
             }
-            
         }
 
         private bool AllFieldsValid()
         {
-            string error_mes = "";
-            error_mes = SourceComboBox_Error();
+            string error_mes = string.Empty;
+            error_mes = this.SourceComboBox_Error();
 
-            if (error_mes == "")
+            if (error_mes == string.Empty)
             {
-                error_mes = DestinationComboBox_Error();
+                error_mes = this.DestinationComboBox_Error();
             }
 
-            if (error_mes == "")
+            if (error_mes == string.Empty)
             {
-                error_mes = AmountTextBox_Error();
+                error_mes = this.AmountTextBox_Error();
             }
 
-            if (error_mes == "")
+            if (error_mes == string.Empty)
             {
-                error_mes = DatePickerPlannedDate_Error();
+                error_mes = this.DatePickerPlannedDate_Error();
             }
 
-            errormessage.Text = error_mes;
-            return errormessage.Text == "";
+            this.errormessage.Text = error_mes;
+            return this.errormessage.Text == string.Empty;
         }
+
         private string SourceComboBox_Error()
         {
-            string category_from_title = (string)sourceComboBox.SelectedValue;
-            
+            string category_from_title = (string)this.sourceComboBox.SelectedValue;
             if (string.IsNullOrEmpty(category_from_title))
             {
                 return "Оберіть джерело.";
             }
             else
             {
-                return "";
+                return string.Empty;
             }
         }
-        private string DestinationComboBox_Error() 
+
+        private string DestinationComboBox_Error()
         {
-            string category_to_title = (string)destinationComboBox.SelectedValue;
+            string category_to_title = (string)this.destinationComboBox.SelectedValue;
 
             if (string.IsNullOrEmpty(category_to_title))
             {
@@ -228,33 +224,35 @@ namespace Presentation
             }
             else
             {
-                return "";
+                return string.Empty;
             }
         }
+
         private string AmountTextBox_Error()
         {
-            if (string.IsNullOrWhiteSpace(amountTextBox.Text))
+            if (string.IsNullOrWhiteSpace(this.amountTextBox.Text))
             {
                 return "Введіть суму.";
             }
-            else if (!decimal.TryParse(amountTextBox.Text, out decimal result))
+            else if (!decimal.TryParse(this.amountTextBox.Text, out decimal result))
             {
                 return "Некоректний формат суми.";
             }
             else
             {
-                return "";
+                return string.Empty;
             }
         }
+
         private string DatePickerPlannedDate_Error()
         {
-            if (checkboxIsPlanned.IsChecked.HasValue && checkboxIsPlanned.IsChecked.Value)
+            if (this.checkboxIsPlanned.IsChecked.HasValue && this.checkboxIsPlanned.IsChecked.Value)
             {
-                if (string.IsNullOrWhiteSpace(datePickerPlannedDate.Text))
+                if (string.IsNullOrWhiteSpace(this.datePickerPlannedDate.Text))
                 {
                     return "Оберіть дату.";
                 }
-                else if (!DateTime.TryParse(datePickerPlannedDate.Text, out DateTime selectedDate))
+                else if (!DateTime.TryParse(this.datePickerPlannedDate.Text, out DateTime selectedDate))
                 {
                     return "Оберіть коректну дату";
                 }
@@ -264,50 +262,48 @@ namespace Presentation
                 }
                 else
                 {
-                    return "";
+                    return string.Empty;
                 }
             }
             else
             {
-                return "";
+                return string.Empty;
             }
-
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            DatePickerBorder.Visibility = Visibility.Visible;
+            this.DatePickerBorder.Visibility = Visibility.Visible;
         }
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            DatePickerBorder.Visibility = Visibility.Collapsed;
+            this.DatePickerBorder.Visibility = Visibility.Collapsed;
         }
 
-
-
-
-        // Допоміжний метод для отримання ScrollViewer для DataGrid
-        private ScrollViewer GetScrollViewer(DependencyObject depObj)
+        private ScrollViewer? GetScrollViewer(DependencyObject? depObj)
         {
             if (depObj is ScrollViewer viewer)
+            {
                 return viewer;
+            }
 
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
             {
                 var child = VisualTreeHelper.GetChild(depObj, i);
-                var result = GetScrollViewer(child);
+                var result = this.GetScrollViewer(child);
                 if (result != null)
+                {
                     return result;
+                }
             }
 
             return null;
         }
 
-
         private void DataGridPlannedScrollBackward_Click(object sender, RoutedEventArgs e)
         {
-            var scrollViewer = GetScrollViewer(dataGridPlannedTransactions);
+            var scrollViewer = this.GetScrollViewer(this.dataGridPlannedTransactions);
 
             double jumpSize = Math.Floor(scrollViewer.ViewportHeight);
 
@@ -316,7 +312,7 @@ namespace Presentation
 
         private void DataGridPlannedScrollForward_Click(object sender, RoutedEventArgs e)
         {
-            var scrollViewer = GetScrollViewer(dataGridPlannedTransactions);
+            var scrollViewer = this.GetScrollViewer(this.dataGridPlannedTransactions);
 
             double jumpSize = Math.Floor(scrollViewer.ViewportHeight);
 
@@ -325,7 +321,7 @@ namespace Presentation
 
         private void DataGridPlannedTransactions_Loaded(object sender, RoutedEventArgs e)
         {
-            ScrollViewer scrollViewer = GetScrollViewer(dataGridPlannedTransactions);
+            ScrollViewer? scrollViewer = this.GetScrollViewer(this.dataGridPlannedTransactions);
             if (scrollViewer != null)
             {
                 scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
@@ -333,11 +329,9 @@ namespace Presentation
             }
         }
 
-
-
         private void DataGridGeneralScrollBackward_Click(object sender, RoutedEventArgs e)
         {
-            var scrollViewer = GetScrollViewer(dataGrid);
+            var scrollViewer = this.GetScrollViewer(this.dataGrid);
 
             double jumpSize = Math.Floor(scrollViewer.ViewportHeight);
 
@@ -346,7 +340,7 @@ namespace Presentation
 
         private void DataGridGeneralScrollForward_Click(object sender, RoutedEventArgs e)
         {
-            var scrollViewer = GetScrollViewer(dataGrid);
+            var scrollViewer = this.GetScrollViewer(this.dataGrid);
 
             double jumpSize = Math.Floor(scrollViewer.ViewportHeight);
 
@@ -355,7 +349,7 @@ namespace Presentation
 
         private void DataGridGeneralTransactions_Loaded(object sender, RoutedEventArgs e)
         {
-            ScrollViewer scrollViewer = GetScrollViewer(dataGrid);
+            ScrollViewer? scrollViewer = this.GetScrollViewer(this.dataGrid);
             if (scrollViewer != null)
             {
                 scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
@@ -366,26 +360,6 @@ namespace Presentation
         private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             e.Handled = true; // Заборонити обробку скролінгу миші
-        }
-
-        private void dataGridPlannedTransactions_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void dataGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void dataGrid_SelectionChanged_2(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Run_DragOver(object sender, DragEventArgs e)
-        {
-
         }
     }
 }

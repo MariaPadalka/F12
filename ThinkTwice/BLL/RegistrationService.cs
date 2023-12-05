@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ThinkTwice_Context;
-using BLL.DTO;
-
-namespace BLL
+﻿namespace BLL
 {
+    using BLL.DTO;
+    using ThinkTwice_Context;
+
     public class RegistrationService
     {
-        private readonly UserRepository _userService = new UserRepository();
+        private readonly UserRepository userService = new UserRepository();
 
         public UserDTO? Register(string email, string password, string first_name, string last_name, DateTime? date, string currency)
         {
-            var user = _userService.GetUserByEmail(email);
+            var user = this.userService.GetUserByEmail(email);
             if (user == null)
             {
                 string hashedPassword = PasswordHasher.HashPassword(password);
@@ -24,12 +21,13 @@ namespace BLL
                     Name = first_name,
                     Surname = last_name,
                     BirthDate = date,
-                    Currency = currency
+                    Currency = currency,
                 };
-                _userService.Add(newUser);
+                this.userService.Add(newUser);
                 UserDTO userDTO = new UserDTO(newUser);
                 return userDTO;
             }
+
             return null;
         }
     }

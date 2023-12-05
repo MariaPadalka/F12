@@ -1,41 +1,42 @@
-﻿using ThinkTwice_Context;
-using Microsoft.EntityFrameworkCore;
-
-namespace BLL
+﻿namespace BLL
 {
+    using Microsoft.EntityFrameworkCore;
+    using ThinkTwice_Context;
+
     public class UserRepository
     {
-        private readonly ThinkTwiceContext _context = new ThinkTwiceContext();
+        private readonly ThinkTwiceContext context = new ThinkTwiceContext();
 
-        public User GetUserById(Guid userId)
+        public User? GetUserById(Guid userId)
         {
-            return _context.Users.FirstOrDefault(u => u.Id == userId);
+            return this.context.Users.FirstOrDefault(u => u.Id == userId);
         }
 
-        public User GetUserByEmail(string email)
+        public User? GetUserByEmail(string email)
         {
-            return _context.Users.FirstOrDefault(u => u.Email == email);
+            return this.context.Users.FirstOrDefault(u => u.Email == email);
         }
+
         public void Add(User user)
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            this.context.Users.Add(user);
+            this.context.SaveChanges();
         }
+
         public void Update(User user)
         {
-            _context.Entry(user).State = EntityState.Modified;
-            _context.SaveChanges();
+            this.context.Entry(user).State = EntityState.Modified;
+            this.context.SaveChanges();
         }
 
         public void Delete(Guid id)
         {
-            var user = _context.Users.Find(id);
+            var user = this.context.Users.Find(id);
             if (user != null)
             {
-                _context.Users.Remove(user);
-                _context.SaveChanges();
+                this.context.Users.Remove(user);
+                this.context.SaveChanges();
             }
         }
     }
-
 }
