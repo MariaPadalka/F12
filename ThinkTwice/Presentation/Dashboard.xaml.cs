@@ -38,7 +38,7 @@ namespace Presentation
         private void YourWindow_Loaded(object sender, RoutedEventArgs e)
         {
             var currency = GetCurrency(App.GetCurrentUser()?.Currency);
-            List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser()).Where(i => i.Planned == false).ToList();
+            List<Transaction>? defaultData = _transactionService.GetTransactions(App.GetCurrentUser())?.Where(i => i.Planned == false).ToList();
             var incomes = _transactionService.GetIncome(App.GetCurrentUser());
             var expense = _transactionService.GetExpenses(App.GetCurrentUser());
             incomeValue.Text = currency + incomes.ToString();
