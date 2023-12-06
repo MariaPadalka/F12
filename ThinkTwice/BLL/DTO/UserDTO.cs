@@ -1,14 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ThinkTwice_Context;
-
-namespace BLL.DTO
+﻿namespace BLL.DTO
 {
-    public partial class UserDTO
+    using ThinkTwice_Context;
+
+    public class UserDTO
     {
+        public UserDTO(User user)
+        {
+            this.Id = user.Id;
+            this.Email = user.Email;
+            this.Name = user.Name;
+            this.Surname = user.Surname;
+            this.BirthDate = user.BirthDate;
+            this.Currency = user.Currency;
+            this.Categories = user.Categories;
+            this.Transactions = user.Transactions;
+        }
+
         public Guid Id { get; set; }
 
         public string Email { get; set; } = null!;
@@ -24,16 +31,5 @@ namespace BLL.DTO
         public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 
         public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
-        public UserDTO(User user)
-        {
-            Id = user.Id;
-            Email = user.Email;
-            Name = user.Name;
-            Surname = user.Surname;
-            BirthDate = user.BirthDate;
-            Currency = user.Currency;
-            Categories = user.Categories;
-            Transactions = user.Transactions;
-        }
     }
 }

@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BLL.DTO;
-using ThinkTwice_Context;
-
-namespace BLL
+﻿namespace BLL
 {
+    using BLL.DTO;
+    using ThinkTwice_Context;
+
     public class SettingsService
     {
-        private readonly UserRepository _userService = new UserRepository();
-        private readonly CategoryRepository _categoryService = new CategoryRepository();
+        private readonly UserRepository userService = new UserRepository();
+        private readonly CategoryRepository categoryService = new CategoryRepository();
 
         public UserDTO? UpdateUser(UserDTO updatedUser)
         {
             if (updatedUser != null)
             {
-                var user = _userService.GetUserById(updatedUser.Id);
+                var user = this.userService.GetUserById(updatedUser.Id);
                 if (user != null)
                 {
                     user.Email = updatedUser.Email;
@@ -26,37 +21,52 @@ namespace BLL
                     user.BirthDate = updatedUser.BirthDate;
                     user.Currency = updatedUser.Currency;
                     user.Categories = updatedUser.Categories;
-                    _userService.Update(user);
+                    this.userService.Update(user);
                     return updatedUser;
                 }
-                else { return null; }
+                else
+                {
+                    return null;
+                }
             }
-            else { return null; }
+            else
+            {
+                return null;
+            }
         }
+
         public UserDTO? UpdatePassword(UserDTO userDTO, string password)
         {
             if (userDTO != null)
             {
-                var user = _userService.GetUserById(userDTO.Id);
+                var user = this.userService.GetUserById(userDTO.Id);
                 if (user != null)
                 {
                     string hashedPassword = PasswordHasher.HashPassword(password);
                     user.Password = hashedPassword;
-                    _userService.Update(user);
+                    this.userService.Update(user);
                     return userDTO;
                 }
-                else { return null; }
-            } else { return null; }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
+
         public IEnumerable<Category>? GetUserCategories(UserDTO? userDTO)
         {
             if (userDTO != null)
             {
-                var user = _userService.GetUserById(userDTO.Id);
+                var user = this.userService.GetUserById(userDTO.Id);
                 if (user != null)
                 {
-                    List<Category>? userCategories = _categoryService.GetCategoriesByUserId(user.Id);
-                    List<Category>? generalCategories = _categoryService.GetGeneralCategories();
+                    List<Category>? userCategories = this.categoryService.GetCategoriesByUserId(user.Id);
+                    List<Category>? generalCategories = this.categoryService.GetGeneralCategories();
                     IEnumerable<Category>? allCategories = userCategories.Concat(generalCategories).ToList();
                     return allCategories;
                 }
@@ -67,7 +77,7 @@ namespace BLL
             }
             else
             {
-                return _categoryService.GetGeneralCategories();
+                return this.categoryService.GetGeneralCategories();
             }
         }
 
@@ -75,27 +85,29 @@ namespace BLL
         {
             if (userDTO != null)
             {
-                var user = _userService.GetUserById(userDTO.Id);
+                var user = this.userService.GetUserById(userDTO.Id);
                 if (user != null)
                 {
-                    var category = _categoryService.GetCategoryById(categoryId);
+                    var category = this.categoryService.GetCategoryById(categoryId);
                     if (category != null)
                     {
                         if (category.UserId == userDTO.Id)
                         {
-                            _categoryService.Delete(categoryId);
+                            this.categoryService.Delete(categoryId);
                         }
                     }
                 }
             }
         }
+
         public bool UniqueEmail(string email)
         {
             if (email != null)
             {
-                var user = _userService.GetUserByEmail(email);
+                var user = this.userService.GetUserByEmail(email);
                 return user == null;
             }
+
             return false;
         }
     }

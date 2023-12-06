@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-
-namespace ThinkTwice_Context
+﻿namespace ThinkTwice_Context
 {
+    using Microsoft.EntityFrameworkCore;
 
     public partial class ThinkTwiceContext : DbContext
     {
@@ -80,7 +77,7 @@ namespace ThinkTwice_Context
                 entity.Property(e => e.Surname).HasMaxLength(50);
             });
 
-            OnModelCreatingPartial(modelBuilder);
+            this.OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

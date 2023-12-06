@@ -8,13 +8,12 @@
     using System.Text.RegularExpressions;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Data;
     using System.Windows.Input;
-    using System.Windows.Media;
     using System.Windows.Navigation;
     using BLL;
     using BLL.DTO;
     using Microsoft.IdentityModel.Tokens;
+    using Presentation.Converters;
     using ThinkTwice_Context;
 
     /// <summary>
@@ -22,19 +21,18 @@
     /// </summary>
     public partial class Settings : Page
     {
+        private readonly string emptyID = "1122F421-1716-410A-A1F2-334C3DC17096";
         private readonly SettingsService settingsService = new SettingsService();
-        private ObservableCollection<Category> categories;
+        private ObservableCollection<Category> categories = new ObservableCollection<Category>();
         private ObservableCollection<Category> categoriesToDelete = new ObservableCollection<Category>();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Settings"/> class.
-        /// </summary>
         public Settings()
         {
             this.InitializeComponent();
             this.Loaded += this.YourWindow_Loaded;
-            /*InitializeData();*/
         }
+
+        public ObservableCollection<Category> Categories { get => this.categories; set => this.categories = value; }
 
         public static bool IsEmailValid(string email)
         {
@@ -48,7 +46,27 @@
             return Regex.IsMatch(email, emailPattern);
         }
 
-        public void TransactionsClick(object sender, RoutedEventArgs e)
+        public void UpdateItems()
+        {
+            this.categories = new ObservableCollection<Category>(this.settingsService.GetUserCategories(App.GetCurrentUser()));
+            this.categories = new ObservableCollection<Category>(this.categories.OrderByDescending(category => category.UserId));
+            this.itemsControl.ItemsSource = this.categories;
+        }
+
+        public void AddEmptyCategory()
+        {
+            if (this.categories.Any(category => category.Id == new Guid(this.emptyID)))
+            {
+                // Категорія вже існує, нічого не робимо
+                return;
+            }
+
+            Category empty = this.EmptyCategory();
+            this.categories.Add(empty);
+            this.itemsControl.ItemsSource = this.categories;
+        }
+
+        public void Transactions_Click(object sender, RoutedEventArgs e)
         {
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Transactions.xaml", UriKind.Relative));
@@ -76,9 +94,9 @@
         private void OpenCreateCategoryWindow(object sender, MouseButtonEventArgs e)
         {
             var border = sender as Border;
-            if (border?.Tag is Guid categoryId && categoryId == new Guid("1122F421-1716-410A-A1F2-334C3DC17096"))
+            if (border?.Tag is Guid categoryId && categoryId == new Guid(this.emptyID))
             {
-                var createCategoryWindow = new CreateCategoryWindow();
+                var createCategoryWindow = new CreateCategoryWindow(this);
                 createCategoryWindow.ShowDialog();
             }
         }
@@ -88,9 +106,20 @@
             Category empty = new Category();
             empty.Title = "Додати категорію";
             empty.IsGeneral = true;
-            empty.Id = new Guid("1122F421-1716-410A-A1F2-334C3DC17096");
+            empty.Id = new Guid(this.emptyID);
 
             return empty;
+        }
+
+        private void RemoveEmptyCategory()
+        {
+            Category? categoryToRemove = this.categories.FirstOrDefault(category => category.Id == new Guid(this.emptyID));
+
+            if (categoryToRemove != null)
+            {
+                this.categories.Remove(categoryToRemove);
+                this.itemsControl.ItemsSource = this.categories;
+            }
         }
 
         private void YourWindow_Loaded(object sender, RoutedEventArgs e)
@@ -101,11 +130,7 @@
             this.datePickerBirthdate.Text = App.GetCurrentUser()?.BirthDate.ToString();
             this.textBoxCurrency.Text = App.GetCurrentUser()?.Currency;
 
-            this.categories = new ObservableCollection<Category>(this.settingsService.GetUserCategories(App.GetCurrentUser()));
-            this.categories = new ObservableCollection<Category>(this.categories.OrderByDescending(category => category.UserId));
-            Category empty = this.EmptyCategory();
-            this.categories.Add(empty);
-            this.itemsControl.ItemsSource = this.categories;
+            this.UpdateItems();
         }
 
         private void ChangeClick(object sender, RoutedEventArgs e)
@@ -116,6 +141,7 @@
             this.textBoxSurname.IsEnabled = true;
             this.textBoxEmail.IsEnabled = true;
             this.datePickerBirthdate.IsEnabled = true;
+            this.AddEmptyCategory();
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -130,8 +156,6 @@
         {
             this.categories.Remove(category);
             this.categoriesToDelete.Add(category);
-            Category empty = this.EmptyCategory();
-            this.categories.Add(empty);
             this.itemsControl.ItemsSource = this.categories;
         }
 
@@ -163,7 +187,7 @@
 
                 if (!this.categoriesToDelete.IsNullOrEmpty())
                 {
-                    foreach (var category in categoriesToDelete)
+                    foreach (var category in this.categoriesToDelete)
                     {
                         this.settingsService.RemoveCategory(user, category.Id);
                     }
@@ -175,6 +199,7 @@
                 this.textBoxSurname.IsEnabled = false;
                 this.textBoxEmail.IsEnabled = false;
                 this.datePickerBirthdate.IsEnabled = false;
+                this.RemoveEmptyCategory();
             }
         }
 
@@ -288,47 +313,6 @@
             {
                 return "Введіть коректну дату народження.";
             }
-        }
-    }
-
-    public class NullToVisibilityConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value != null ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class CategoryTypeToColorConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is string categoryType)
-            {
-                switch (categoryType)
-                {
-                    case "Витрати":
-                        return Brushes.Red;
-                    case "Дохід":
-                        return Brushes.Green;
-                    case "Баланс":
-                        return Brushes.Blue;
-                    default:
-                        return Brushes.Gray;
-                }
-            }
-
-            return Brushes.Gray;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
         }
     }
 }
