@@ -1,12 +1,12 @@
 ﻿namespace BLL
 {
     using BLL.DTO;
+    using ThinkTwice_Context;
 
     public class CategoryService
     {
-        private readonly CategoryRepository categoryRepository = new CategoryRepository();
-        private readonly TransactionRepository transactionRepository = new TransactionRepository();
-        private readonly UserRepository userRepository = new UserRepository();
+        public CategoryRepository categoryRepository = new CategoryRepository();
+        public UserRepository userRepository = new UserRepository();
 
         public List<string>? GetCategoriesTitleByType(UserDTO? userDTO, string type)
         {
@@ -27,7 +27,7 @@
             }
             else
             {
-                return this.categoryRepository.GetGeneralCategories().Select(c => c.Title).ToList();
+                return this.categoryRepository.GetGeneralCategories().Where(c => c.Type == type).Select(c => c.Title).ToList();
             }
         }
     }

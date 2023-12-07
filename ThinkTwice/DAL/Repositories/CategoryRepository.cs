@@ -1,7 +1,6 @@
-﻿namespace BLL
+﻿namespace ThinkTwice_Context
 {
     using Microsoft.EntityFrameworkCore;
-    using ThinkTwice_Context;
 
     public class CategoryRepository
     {
@@ -21,7 +20,7 @@
             this.context.SaveChanges();
         }
 
-        public Category? GetCategoryById(Guid? categoryId)
+        public virtual Category? GetCategoryById(Guid? categoryId)
         {
             return this.context.Categories.FirstOrDefault(c => c.Id == categoryId);
         }
@@ -31,7 +30,7 @@
             return this.context.Categories.Where(c => c.UserId == userId).ToList();
         }
 
-        public List<Category> GetGeneralCategories()
+        public virtual List<Category> GetGeneralCategories()
         {
             return this.context.Categories.Where(c => c.IsGeneral == true).ToList();
         }
@@ -41,7 +40,7 @@
             return this.context.Categories.FirstOrDefault(c => (c.UserId == userId || c.IsGeneral == true) && c.Title == name);
         }
 
-        public List<Category> GetCategoriesByType(Guid? userId, string type)
+        public virtual List<Category> GetCategoriesByType(Guid? userId, string type)
         {
             return this.context.Categories.Where(c => c.UserId == userId && c.Type == type).ToList();
         }

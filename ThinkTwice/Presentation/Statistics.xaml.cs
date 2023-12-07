@@ -11,6 +11,7 @@
     using BLL;
     using LiveCharts;
     using LiveCharts.Wpf;
+    using ThinkTwice_Context;
 
     /// <summary>
     /// Interaction logic for Statistics.xaml.

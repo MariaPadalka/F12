@@ -4,6 +4,7 @@
     using System.Windows;
     using System.Windows.Controls;
     using BLL;
+    using ThinkTwice_Context;
 
     /// <summary>
     /// Interaction logic for CreateCategoryWindow.xaml.

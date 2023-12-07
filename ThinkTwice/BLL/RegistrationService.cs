@@ -5,7 +5,7 @@
 
     public class RegistrationService
     {
-        private readonly UserRepository userService = new UserRepository();
+        public UserRepository userService = new UserRepository();
 
         public UserDTO? Register(string email, string password, string first_name, string last_name, DateTime? date, string currency)
         {

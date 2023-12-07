@@ -5,9 +5,9 @@
 
     public class TransactionService
     {
-        private readonly TransactionRepository transactionRepository = new TransactionRepository();
-        private readonly UserRepository userRepository = new UserRepository();
-        private readonly CategoryRepository categoryRepository = new CategoryRepository();
+        public TransactionRepository transactionRepository = new TransactionRepository();
+        public UserRepository userRepository = new UserRepository();
+        public CategoryRepository categoryRepository = new CategoryRepository();
 
         public List<Transaction>? GetTransactions(UserDTO? userDTO)
         {

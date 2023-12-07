@@ -1,10 +1,11 @@
 ﻿namespace BLL
 {
     using BLL.DTO;
+    using ThinkTwice_Context;
 
     public class AuthenticationService
     {
-        private readonly UserRepository userService = new UserRepository();
+        public UserRepository userService = new UserRepository();
 
         public UserDTO? AuthenticateUser(string email, string password)
         {
@@ -25,19 +26,6 @@
             {
                 return null;
             }
-        }
-    }
-
-    public class PasswordHasher
-    {
-        public static string HashPassword(string password)
-        {
-            return BCrypt.Net.BCrypt.HashPassword(password);
-        }
-
-        public static bool VerifyPassword(string hashedPassword, string candidatePassword)
-        {
-            return BCrypt.Net.BCrypt.Verify(candidatePassword, hashedPassword);
         }
     }
 }

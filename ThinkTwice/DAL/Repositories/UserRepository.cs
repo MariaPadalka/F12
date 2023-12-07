@@ -1,18 +1,17 @@
-﻿namespace BLL
+﻿namespace ThinkTwice_Context
 {
     using Microsoft.EntityFrameworkCore;
-    using ThinkTwice_Context;
 
     public class UserRepository
     {
         private readonly ThinkTwiceContext context = new ThinkTwiceContext();
 
-        public User? GetUserById(Guid userId)
+        public virtual User? GetUserById(Guid userId)
         {
             return this.context.Users.FirstOrDefault(u => u.Id == userId);
         }
 
-        public User? GetUserByEmail(string email)
+        public virtual User? GetUserByEmail(string email)
         {
             return this.context.Users.FirstOrDefault(u => u.Email == email);
         }
