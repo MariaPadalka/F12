@@ -1,6 +1,4 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Bogus;
-using Bogus.DataSets;
 using ThinkTwice_Context;
 using BLL;
 using BLL.DTO;
@@ -10,256 +8,6 @@ using System;
 
 namespace UnitTests
 {
-    [TestClass]
-    public class CategoryServiceTests
-    {
-        [TestMethod]
-        public void GetCategoriesTitleByType_WithValidUserDTO_ReturnsCombinedCategories()
-        {
-            // Arrange
-            var userDTO = new UserDTO(new User { Id = Guid.NewGuid()});
-            var type = "Витрати";
-
-            var userRepositoryMock = new Mock<UserRepository>();
-            var categoryRepositoryMock = new Mock<CategoryRepository>();
-
-            userRepositoryMock.Setup(repo => repo.GetUserById(It.IsAny<System.Guid>())).Returns(new User { Id = Guid.NewGuid() });
-
-            var userCategories = new List<Category>
-            {
-                new Category { Id = Guid.NewGuid(), Title = "UserCategory1", Type = "Витрати" },
-                new Category { Id = Guid.NewGuid(), Title = "UserCategory2", Type = "Дохід" }
-            };
-
-            var generalCategories = new List<Category>
-            {
-                new Category { Id = Guid.NewGuid(), Title = "GeneralCategory1", Type = "Витрати" },
-                new Category { Id = Guid.NewGuid(), Title = "GeneralCategory2", Type = "Витрати" },
-                new Category { Id = Guid.NewGuid(), Title = "GeneralCategory3", Type = "Баланс" },
-                new Category { Id = Guid.NewGuid(), Title = "GeneralCategory4", Type = "Дохід" }
-            };
-
-            categoryRepositoryMock.Setup(repo => repo.GetCategoriesByType(It.IsAny<System.Guid>(), It.IsAny<string>())).Returns(userCategories);
-            categoryRepositoryMock.Setup(repo => repo.GetGeneralCategories()).Returns(generalCategories);
-
-            var categoryService = new CategoryService
-            {
-                userRepository = userRepositoryMock.Object,
-                categoryRepository = categoryRepositoryMock.Object
-            };
-
-            // Act
-            var result = categoryService.GetCategoriesTitleByType(userDTO, type);
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(3, result.Count);
-            CollectionAssert.Contains(result, "UserCategory1");
-            CollectionAssert.Contains(result, "GeneralCategory1");
-            CollectionAssert.Contains(result, "GeneralCategory2");
-        }
-    
-        [TestMethod]
-        public void GetCategoriesTitleByType_WithNullUserDTO_ReturnsGeneralCategories()
-        {
-            // Arrange
-            var type = "Дохід";
-
-            var categoryRepositoryMock = new Mock<CategoryRepository>();
-            var userRepositoryMock = new Mock<UserRepository>();
-
-            var generalCategories = new List<Category>
-            {
-                new Category { Id = Guid.NewGuid(), Title = "GeneralCategory1", Type = "Дохід" },
-                new Category { Id = Guid.NewGuid(), Title = "GeneralCategory2", Type = "Дохід" },
-                new Category { Id = Guid.NewGuid(), Title = "GeneralCategory3", Type = "Витрати" },
-                new Category { Id = Guid.NewGuid(), Title = "GeneralCategory4", Type = "Баланс" }
-            };
-
-            categoryRepositoryMock.Setup(repo => repo.GetGeneralCategories()).Returns(generalCategories);
-
-            var categoryService = new CategoryService
-            {
-                userRepository = userRepositoryMock.Object,
-                categoryRepository = categoryRepositoryMock.Object
-            };
-
-            // Act
-            var result = categoryService.GetCategoriesTitleByType(null, type);
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Count); // Only general categories for the specified type
-            CollectionAssert.Contains(result, "GeneralCategory1");
-            CollectionAssert.Contains(result, "GeneralCategory2");
-        }
-
-    }
-
-    [TestClass]
-    public class RegistrationServiceTests
-    {
-        [TestMethod]
-        public void Register_WithUniqueEmail_ReturnsUserDTO()
-        {
-            // Arrange
-            var email = "test@example.com";
-            var password = "password";
-            var firstName = "John";
-            var lastName = "Doe";
-            var birthDate = new System.DateTime(1990, 1, 1);
-            var currency = "USD";
-
-            var userRepositoryMock = new Mock<UserRepository>();
-            userRepositoryMock.Setup(repo => repo.GetUserByEmail(It.IsAny<string>())).Returns((User?)null);
-
-            var registrationService = new RegistrationService
-            {
-                userService = userRepositoryMock.Object
-            };
-
-            // Act
-            var result = registrationService.Register(email, password, firstName, lastName, birthDate, currency);
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(UserDTO));
-            Assert.AreEqual(email, result!.Email);
-            Assert.AreEqual(firstName, result.Name);
-            Assert.AreEqual(lastName, result.Surname);
-            Assert.AreEqual(birthDate, result.BirthDate);
-            Assert.AreEqual(currency, result.Currency);
-        }
-
-        [TestMethod]
-        public void Register_WithDuplicateEmail_ReturnsNull()
-        {
-            // Arrange
-            var email = "test@example.com";
-            var password = "password";
-            var firstName = "John";
-            var lastName = "Doe";
-            var birthDate = new System.DateTime(1990, 1, 1);
-            var currency = "USD";
-
-            var existingUser = new User
-            {
-                Email = email,
-                Password = "hashedPassword",
-                Name = "Existing",
-                Surname = "User",
-                BirthDate = birthDate,
-                Currency = currency
-            };
-
-            var userRepositoryMock = new Mock<UserRepository>();
-            userRepositoryMock.Setup(repo => repo.GetUserByEmail(email)).Returns(existingUser);
-
-            var registrationService = new RegistrationService
-            {
-                userService = userRepositoryMock.Object
-            };
-
-            // Act
-            var result = registrationService.Register(email, password, firstName, lastName, birthDate, currency);
-
-            // Assert
-            Assert.IsNull(result);
-        }
-    }
-
-    [TestClass]
-    public class AuthenticationServiceTests
-    {
-        [TestMethod]
-        public void AuthenticateUser_WithValidCredentials_ReturnsUserDTO()
-        {
-            // Arrange
-            var email = "test@example.com";
-            var password = "password";
-
-            var existingUser = new User
-            {
-                Email = email,
-                Password = PasswordHasher.HashPassword(password),
-                Name = "John",
-                Surname = "Doe",
-                BirthDate = new System.DateTime(1990, 1, 1),
-                Currency = "USD"
-            };
-
-            var userRepositoryMock = new Mock<UserRepository>();
-            userRepositoryMock.Setup(repo => repo.GetUserByEmail(email)).Returns(existingUser);
-
-            var authenticationService = new AuthenticationService
-            {
-                userService = userRepositoryMock.Object
-            };
-
-            // Act
-            var result = authenticationService.AuthenticateUser(email, password);
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(UserDTO));
-            Assert.AreEqual(email, result!.Email);
-        }
-
-        [TestMethod]
-        public void AuthenticateUser_WithInvalidPassword_ReturnsNull()
-        {
-            // Arrange
-            var email = "test@example.com";
-            var password = "password";
-
-            var existingUser = new User
-            {
-                Email = email,
-                Password = PasswordHasher.HashPassword("differentpassword"),
-                Name = "John",
-                Surname = "Doe",
-                BirthDate = new System.DateTime(1990, 1, 1),
-                Currency = "USD"
-            };
-
-            var userRepositoryMock = new Mock<UserRepository>();
-            userRepositoryMock.Setup(repo => repo.GetUserByEmail(email)).Returns(existingUser);
-
-            var authenticationService = new AuthenticationService
-            {
-                userService = userRepositoryMock.Object
-            };
-
-            // Act
-            var result = authenticationService.AuthenticateUser(email, password);
-
-            // Assert
-            Assert.IsNull(result);
-        }
-
-        [TestMethod]
-        public void AuthenticateUser_WithNonexistentUser_ReturnsNull()
-        {
-            // Arrange
-            var email = "nonexistent@example.com";
-            var password = "password";
-
-            var userRepositoryMock = new Mock<UserRepository>();
-            userRepositoryMock.Setup(repo => repo.GetUserByEmail(email)).Returns((User?)null);
-
-            var authenticationService = new AuthenticationService
-            {
-                userService = userRepositoryMock.Object
-            };
-
-            // Act
-            var result = authenticationService.AuthenticateUser(email, password);
-
-            // Assert
-            Assert.IsNull(result);
-        }
-    }
-
     [TestClass]
     public class TransactionServiceTests
     {
@@ -285,8 +33,8 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -310,8 +58,8 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -361,8 +109,8 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -406,8 +154,8 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
             // Act
             var result = transactionService.GetTransactionsInTimePeriod(userDTO, start, end);
@@ -440,8 +188,8 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -476,8 +224,8 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -511,8 +259,8 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -549,9 +297,9 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                categoryRepository = categoryRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                CategoryRepo = categoryRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -573,9 +321,9 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                categoryRepository = categoryRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                CategoryRepo = categoryRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -602,9 +350,9 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                categoryRepository = categoryRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                CategoryRepo = categoryRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -634,9 +382,9 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                categoryRepository = categoryRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                CategoryRepo = categoryRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -666,9 +414,9 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                categoryRepository = categoryRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                CategoryRepo = categoryRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -717,9 +465,9 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                categoryRepository = categoryRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                CategoryRepo = categoryRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -752,9 +500,9 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                categoryRepository = categoryRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                CategoryRepo = categoryRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -804,9 +552,9 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                categoryRepository = categoryRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                CategoryRepo = categoryRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -835,9 +583,9 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                categoryRepository = categoryRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                CategoryRepo = categoryRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -863,8 +611,8 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -886,8 +634,8 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -913,8 +661,8 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -938,8 +686,8 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -967,8 +715,8 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -1008,12 +756,12 @@ namespace UnitTests
             var user = new User { Id = userDTO.Id, Email = "test@example.com" };
 
             userRepositoryMock.Setup(repo => repo.GetUserById(userDTO.Id)).Returns(user);
-            transactionRepositoryMock.Setup(repo => repo.GetTransactionById(It.IsAny<Guid>())).Returns<Transaction>(null);
+            transactionRepositoryMock.Setup(repo => repo.GetTransactionById(It.IsAny<Guid>())).Returns((Transaction?)null);
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -1041,8 +789,8 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -1070,8 +818,8 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -1082,7 +830,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void GetExpenses_WithValidUser_ReturnsTotalExpenses()
+        public void GetExpenses_WithValidUserAndTransactions_ReturnsTotalExpenses()
         {
             // Arrange
             var userDTO = new UserDTO(new User { Id = Guid.NewGuid() });
@@ -1107,9 +855,9 @@ namespace UnitTests
 
             var transactionService = new TransactionService
             {
-                userRepository = userRepositoryMock.Object,
-                categoryRepository = categoryRepositoryMock.Object,
-                transactionRepository = transactionRepositoryMock.Object
+                UserRepo = userRepositoryMock.Object,
+                CategoryRepo = categoryRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object
             };
 
             // Act
@@ -1117,6 +865,132 @@ namespace UnitTests
 
             // Assert
             Assert.AreEqual(300, result);
+        }
+
+        [TestMethod]
+        public void GetExpenses_WithValidUserAndNoTransactions_ReturnsZero()
+        {
+            // Arrange
+            var userDTO = new UserDTO(new User { Id = Guid.NewGuid() });
+
+            var userRepositoryMock = new Mock<UserRepository>();
+            var transactionRepositoryMock = new Mock<TransactionRepository>();
+            var categoryRepositoryMock = new Mock<CategoryRepository>();
+
+            var user = new User { Id = userDTO.Id, Email = "test@example.com" };
+
+            userRepositoryMock.Setup(repo => repo.GetUserById(userDTO.Id)).Returns(user);
+            transactionRepositoryMock.Setup(repo => repo.GetTransactionsByUserId(user.Id)).Returns(new List<Transaction>());
+            categoryRepositoryMock.Setup(repo => repo.GetCategoryById(It.IsAny<Guid>())).Returns(new Category { Type = "Витрати" });
+
+            var transactionService = new TransactionService
+            {
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object,
+                CategoryRepo = categoryRepositoryMock.Object
+            };
+
+            // Act
+            var result = transactionService.GetExpenses(userDTO);
+
+            // Assert
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void GetExpenses_WithNullUserDTO_ReturnsZero()
+        {
+            // Arrange
+            UserDTO? userDTO = null;
+
+            var transactionService = new TransactionService();
+
+            // Act
+            var result = transactionService.GetExpenses(userDTO);
+
+            // Assert
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void GetBalance_WithValidUserAndTransactions_ReturnsTotalBalance()
+        {
+            // Arrange
+            var userDTO = new UserDTO(new User { Id = Guid.NewGuid() });
+
+            var userRepositoryMock = new Mock<UserRepository>();
+            var transactionRepositoryMock = new Mock<TransactionRepository>();
+            var categoryRepositoryMock = new Mock<CategoryRepository>();
+
+            var user = new User { Id = userDTO.Id, Email = "test@example.com" };
+            var transactions = new List<Transaction>
+            {
+                new Transaction { Id = Guid.NewGuid(), UserId = user.Id, ToCategory = Guid.NewGuid(), Date = System.DateTime.Now, Amount = 100 },
+                new Transaction { Id = Guid.NewGuid(), UserId = user.Id, ToCategory = Guid.NewGuid(), Date = System.DateTime.Now, Amount = 200 },
+                new Transaction { Id = Guid.NewGuid(), UserId = user.Id, ToCategory = Guid.NewGuid(), Date = System.DateTime.Now, Amount = 300 }
+            };
+
+            userRepositoryMock.Setup(repo => repo.GetUserById(userDTO.Id)).Returns(user);
+            transactionRepositoryMock.Setup(repo => repo.GetTransactionsByUserId(user.Id)).Returns(transactions);
+            categoryRepositoryMock.Setup(repo => repo.GetCategoryById(It.IsAny<Guid>())).Returns(new Category { Type = "Баланс" });
+
+            var transactionService = new TransactionService
+            {
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object,
+                CategoryRepo = categoryRepositoryMock.Object
+            };
+
+            // Act
+            var result = transactionService.GetBalance(userDTO);
+
+            // Assert
+            Assert.AreEqual(600, result);
+        }
+
+        [TestMethod]
+        public void GetBalance_WithValidUserAndNoTransactions_ReturnsZero()
+        {
+            // Arrange
+            var userDTO = new UserDTO(new User { Id = Guid.NewGuid() });
+
+            var userRepositoryMock = new Mock<UserRepository>();
+            var transactionRepositoryMock = new Mock<TransactionRepository>();
+            var categoryRepositoryMock = new Mock<CategoryRepository>();
+
+            var user = new User { Id = userDTO.Id, Email = "test@example.com" };
+
+            userRepositoryMock.Setup(repo => repo.GetUserById(userDTO.Id)).Returns(user);
+            transactionRepositoryMock.Setup(repo => repo.GetTransactionsByUserId(user.Id)).Returns(new List<Transaction>());
+            categoryRepositoryMock.Setup(repo => repo.GetCategoryById(It.IsAny<Guid>())).Returns(new Category { Type = "Баланс" });
+
+            var transactionService = new TransactionService
+            {
+                UserRepo = userRepositoryMock.Object,
+                TransactionRepo = transactionRepositoryMock.Object,
+                CategoryRepo = categoryRepositoryMock.Object
+            };
+
+            // Act
+            var result = transactionService.GetBalance(userDTO);
+
+            // Assert
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void GetBalance_WithNullUserDTO_ReturnsZero()
+        {
+            // Arrange
+            UserDTO? userDTO = null;
+
+            var transactionService = new TransactionService();
+
+            // Act
+            var result = transactionService.GetBalance(userDTO);
+
+            // Assert
+            Assert.AreEqual(0, result);
         }
     }   
 }

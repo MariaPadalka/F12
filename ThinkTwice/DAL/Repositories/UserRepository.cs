@@ -22,7 +22,7 @@
             this.context.SaveChanges();
         }
 
-        public void Update(User user)
+        public virtual void Update(User user)
         {
             this.context.Entry(user).State = EntityState.Modified;
             this.context.SaveChanges();

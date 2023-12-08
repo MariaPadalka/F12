@@ -5,11 +5,11 @@
 
     public class AuthenticationService
     {
-        public UserRepository userService = new UserRepository();
+        public UserRepository UserRepo = new UserRepository();
 
         public UserDTO? AuthenticateUser(string email, string password)
         {
-            var user = this.userService.GetUserByEmail(email);
+            var user = this.UserRepo.GetUserByEmail(email);
             if (user != null)
             {
                 UserDTO userDTO = new UserDTO(user);

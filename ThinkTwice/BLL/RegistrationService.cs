@@ -5,11 +5,11 @@
 
     public class RegistrationService
     {
-        public UserRepository userService = new UserRepository();
+        public UserRepository UserRepo = new UserRepository();
 
         public UserDTO? Register(string email, string password, string first_name, string last_name, DateTime? date, string currency)
         {
-            var user = this.userService.GetUserByEmail(email);
+            var user = this.UserRepo.GetUserByEmail(email);
             if (user == null)
             {
                 string hashedPassword = PasswordHasher.HashPassword(password);
@@ -23,7 +23,7 @@
                     BirthDate = date,
                     Currency = currency,
                 };
-                this.userService.Add(newUser);
+                this.UserRepo.Add(newUser);
                 UserDTO userDTO = new UserDTO(newUser);
                 return userDTO;
             }

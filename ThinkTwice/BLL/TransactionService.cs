@@ -5,18 +5,18 @@
 
     public class TransactionService
     {
-        public TransactionRepository transactionRepository = new TransactionRepository();
-        public UserRepository userRepository = new UserRepository();
-        public CategoryRepository categoryRepository = new CategoryRepository();
+        public TransactionRepository TransactionRepo = new TransactionRepository();
+        public UserRepository UserRepo = new UserRepository();
+        public CategoryRepository CategoryRepo = new CategoryRepository();
 
         public List<Transaction>? GetTransactions(UserDTO? userDTO)
         {
             if (userDTO != null)
             {
-                var user = this.userRepository.GetUserById(userDTO.Id);
+                var user = this.UserRepo.GetUserById(userDTO.Id);
                 if (user != null)
                 {
-                    return this.transactionRepository.GetTransactionsByUserId(user.Id);
+                    return this.TransactionRepo.GetTransactionsByUserId(user.Id);
                 }
                 else
                 {
@@ -33,7 +33,7 @@
         {
             if (userDTO != null)
             {
-                var user = this.userRepository.GetUserById(userDTO.Id);
+                var user = this.UserRepo.GetUserById(userDTO.Id);
                 if (user != null)
                 {
                     if (end == null)
@@ -46,7 +46,7 @@
                         start = new DateTime(2000, 1, 1);
                     }
 
-                    return this.transactionRepository.GetTransactionsByUserId(user.Id).Where(i => i.Date >= start && i.Date <= end).ToList();
+                    return this.TransactionRepo.GetTransactionsByUserId(user.Id).Where(i => i.Date >= start && i.Date <= end).ToList();
                 }
                 else
                 {
@@ -63,9 +63,9 @@
         {
             if (userDTO != null && category_from != null && category_to != null)
             {
-                var user = this.userRepository.GetUserById(userDTO.Id);
-                var categoryTo = this.categoryRepository.GetCategoryById(category_to);
-                var categoryFrom = this.categoryRepository.GetCategoryById(category_from);
+                var user = this.UserRepo.GetUserById(userDTO.Id);
+                var categoryTo = this.CategoryRepo.GetCategoryById(category_to);
+                var categoryFrom = this.CategoryRepo.GetCategoryById(category_from);
                 if (user != null && categoryTo != null && categoryFrom != null)
                 {
                     var newTransaction = new Transaction
@@ -78,7 +78,7 @@
                         Details = details,
                         Planned = planned,
                     };
-                    this.transactionRepository.CreateTransaction(newTransaction);
+                    this.TransactionRepo.CreateTransaction(newTransaction);
                 }
             }
         }
@@ -87,10 +87,10 @@
         {
             if (userDTO != null && category_from != null && category_to != null && transactionId != null)
             {
-                var user = this.userRepository.GetUserById(userDTO.Id);
-                var categoryTo = this.categoryRepository.GetCategoryById(category_to);
-                var categoryFrom = this.categoryRepository.GetCategoryById(category_from);
-                var transaction = this.transactionRepository.GetTransactionById(transactionId);
+                var user = this.UserRepo.GetUserById(userDTO.Id);
+                var categoryTo = this.CategoryRepo.GetCategoryById(category_to);
+                var categoryFrom = this.CategoryRepo.GetCategoryById(category_from);
+                var transaction = this.TransactionRepo.GetTransactionById(transactionId);
                 if (user != null && categoryTo != null && categoryFrom != null && transaction != null)
                 {
                     if (transaction.UserId == user.Id)
@@ -101,7 +101,7 @@
                         transaction.Date = date;
                         transaction.Details = details;
                         transaction.Planned = planned;
-                        this.transactionRepository.Update(transaction);
+                        this.TransactionRepo.Update(transaction);
                     }
                 }
             }
@@ -111,10 +111,10 @@
         {
             if (userDTO != null && transactionId != null)
             {
-                var user = this.userRepository.GetUserById(userDTO.Id);
+                var user = this.UserRepo.GetUserById(userDTO.Id);
                 if (user != null)
                 {
-                    this.transactionRepository.Delete(transactionId);
+                    this.TransactionRepo.Delete(transactionId);
                 }
             }
         }
@@ -123,8 +123,8 @@
         {
             if (userDTO != null && transactionId != null)
             {
-                var user = this.userRepository.GetUserById(userDTO.Id);
-                var transaction = this.transactionRepository.GetTransactionById(transactionId);
+                var user = this.UserRepo.GetUserById(userDTO.Id);
+                var transaction = this.TransactionRepo.GetTransactionById(transactionId);
                 if (user != null && transaction != null)
                 {
                     if (transaction.UserId == user.Id)
@@ -151,11 +151,11 @@
         {
             if (userDTO != null)
             {
-                DateTime start = DateTime.Now.AddDays(-740);
+                DateTime start = DateTime.Now.AddDays(-30);
                 var transactions = this.GetTransactionsInTimePeriod(userDTO, start, null);
                 if (transactions != null)
                 {
-                    return transactions.Where(i => this.categoryRepository.GetCategoryById(i.ToCategory)?.Type == "Витрати").Sum(i => i.Amount);
+                    return transactions.Where(i => this.CategoryRepo.GetCategoryById(i.ToCategory)?.Type == "Витрати").Sum(i => i.Amount);
                 }
                 else
                 {
@@ -172,11 +172,11 @@
         {
             if (userDTO != null)
             {
-                DateTime start = DateTime.Now.AddDays(-740);
+                DateTime start = DateTime.Now.AddDays(-30);
                 var transactions = this.GetTransactionsInTimePeriod(userDTO, start, null);
                 if (transactions != null)
                 {
-                    return transactions.Where(i => this.categoryRepository.GetCategoryById(i.ToCategory)?.Type == "Дохід").Sum(i => i.Amount);
+                    return transactions.Where(i => this.CategoryRepo.GetCategoryById(i.ToCategory)?.Type == "Дохід").Sum(i => i.Amount);
                 }
                 else
                 {
@@ -196,7 +196,7 @@
                 var transactions = this.GetTransactionsInTimePeriod(userDTO, null, null);
                 if (transactions != null)
                 {
-                    return transactions.Where(i => this.categoryRepository.GetCategoryById(i.ToCategory)?.Type == "Баланс").Sum(i => i.Amount);
+                    return transactions.Where(i => this.CategoryRepo.GetCategoryById(i.ToCategory)?.Type == "Баланс").Sum(i => i.Amount);
                 }
                 else
                 {

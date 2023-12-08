@@ -75,7 +75,7 @@
                 command.Parameters.AddWithValue("@Title", "Їжа");
                 command.Parameters.AddWithValue("@IsGeneral", 1);
                 command.Parameters.AddWithValue("@PercentageAmount", 0);
-                command.Parameters.AddWithValue("@Type", (TransType)1);
+                command.Parameters.AddWithValue("@Type", TransType.Витрати.ToString());
 
                 categoryIds[0] = (Guid)command.ExecuteScalar();
                 command.Parameters.Clear();
@@ -83,7 +83,7 @@
                 command.Parameters.AddWithValue("@Title", "Одяг");
                 command.Parameters.AddWithValue("@IsGeneral", 1);
                 command.Parameters.AddWithValue("@PercentageAmount", 0);
-                command.Parameters.AddWithValue("@Type", (TransType)1);
+                command.Parameters.AddWithValue("@Type", TransType.Витрати.ToString());
 
                 categoryIds[1] = (Guid)command.ExecuteScalar();
 
@@ -92,7 +92,7 @@
                 command.Parameters.AddWithValue("@Title", "Комунальні послуги");
                 command.Parameters.AddWithValue("@IsGeneral", 1);
                 command.Parameters.AddWithValue("@PercentageAmount", 0);
-                command.Parameters.AddWithValue("@Type", (TransType)1);
+                command.Parameters.AddWithValue("@Type", TransType.Витрати.ToString());
 
                 categoryIds[2] = (Guid)command.ExecuteScalar();
 
@@ -101,7 +101,7 @@
                 command.Parameters.AddWithValue("@Title", "Зарплата");
                 command.Parameters.AddWithValue("@IsGeneral", 1);
                 command.Parameters.AddWithValue("@PercentageAmount", 0);
-                command.Parameters.AddWithValue("@Type", (TransType)0);
+                command.Parameters.AddWithValue("@Type", TransType.Дохід.ToString());
 
                 categoryIds[3] = (Guid)command.ExecuteScalar();
 
@@ -110,7 +110,7 @@
                 command.Parameters.AddWithValue("@Title", "Стипендія");
                 command.Parameters.AddWithValue("@IsGeneral", 1);
                 command.Parameters.AddWithValue("@PercentageAmount", 0);
-                command.Parameters.AddWithValue("@Type", (TransType)0);
+                command.Parameters.AddWithValue("@Type", TransType.Дохід.ToString());
 
                 categoryIds[4] = (Guid)command.ExecuteScalar();
                 command.Parameters.Clear();
@@ -118,7 +118,7 @@
                 command.Parameters.AddWithValue("@Title", "Готівка");
                 command.Parameters.AddWithValue("@IsGeneral", 1);
                 command.Parameters.AddWithValue("@PercentageAmount", 0);
-                command.Parameters.AddWithValue("@Type", (TransType)2);
+                command.Parameters.AddWithValue("@Type", TransType.Баланс.ToString());
 
                 categoryIds[5] = (Guid)command.ExecuteScalar();
                 command.Parameters.Clear();
@@ -126,7 +126,7 @@
                 command.Parameters.AddWithValue("@Title", "Картка");
                 command.Parameters.AddWithValue("@IsGeneral", 1);
                 command.Parameters.AddWithValue("@PercentageAmount", 0);
-                command.Parameters.AddWithValue("@Type", (TransType)2);
+                command.Parameters.AddWithValue("@Type", TransType.Баланс.ToString());
 
                 categoryIds[6] = (Guid)command.ExecuteScalar();
             }

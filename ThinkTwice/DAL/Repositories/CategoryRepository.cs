@@ -25,7 +25,7 @@
             return this.context.Categories.FirstOrDefault(c => c.Id == categoryId);
         }
 
-        public List<Category> GetCategoriesByUserId(Guid? userId)
+        public virtual List<Category> GetCategoriesByUserId(Guid? userId)
         {
             return this.context.Categories.Where(c => c.UserId == userId).ToList();
         }
@@ -51,7 +51,7 @@
             this.context.SaveChanges();
         }
 
-        public void Delete(Guid? id)
+        public virtual void Delete(Guid? id)
         {
             var category = this.context.Categories.Find(id);
             if (category != null)

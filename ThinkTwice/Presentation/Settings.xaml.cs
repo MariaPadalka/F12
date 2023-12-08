@@ -205,8 +205,7 @@
 
         private bool AllFieldsValid()
         {
-            string error_mes = string.Empty;
-            error_mes = this.TextBoxFirstName_Error();
+            string error_mes = this.TextBoxFirstName_Error();
             if (error_mes == string.Empty)
             {
                 error_mes = this.TextBoxLastName_Error();
