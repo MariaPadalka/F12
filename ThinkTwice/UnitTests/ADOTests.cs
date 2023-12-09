@@ -1,18 +1,78 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Data.SqlClient;
-using DB_Setup;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using DB_Setup;
 
 namespace UnitTests
 {
     [TestClass]
     public class ADOTests
     {
-        private string? connectionString = new ConfigurationBuilder()
+        private string? connectionString;
+
+        private readonly List<Guid>? testIds = new List<Guid>();
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            connectionString = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 .AddJsonFile("appsettings.json")
                 .Build().GetConnectionString("DefaultConnection");
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        DeleteTestData(connection, transaction);
+
+                        transaction.Commit();
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
+
+        private void DeleteTestData(SqlConnection connection, SqlTransaction transaction)
+        {
+            if (testIds == null || testIds.Count == 0)
+                return; // No test user IDs to delete
+
+            using (var command = connection.CreateCommand())
+            {
+                command.Transaction = transaction;
+                command.CommandText = $"DELETE FROM Transactions WHERE UserId IN ({string.Join(",", testIds.Select(id => $"'{id}'"))})";
+                command.ExecuteNonQuery();
+            }
+
+            using (var command = connection.CreateCommand())
+            {
+                command.Transaction = transaction;
+                command.CommandText = $"DELETE FROM Categories WHERE Id IN ({string.Join(",", testIds.Select(id => $"'{id}'"))})";
+                command.ExecuteNonQuery();
+            }
+
+            using (var command = connection.CreateCommand())
+            {
+                command.Transaction = transaction;
+                command.CommandText = $"DELETE FROM Users WHERE Id IN ({string.Join(",", testIds.Select(id => $"'{id}'"))})";
+                command.ExecuteNonQuery();
+            }
+        }
 
         [TestMethod]
         public void FillUsersTable_WithValidConnectionAndNumberOfUsers_FillsUsersTable()
@@ -23,14 +83,20 @@ namespace UnitTests
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
+                try
+                {
+                    // Act
+                    var userIds = Tables.FillUsersTable(connection, numberOfUsers);
 
-                // Act
-                var userIds = Tables.FillUsersTable(connection, numberOfUsers);
-
-                // Assert
-                Assert.IsNotNull(userIds);
-                Assert.AreEqual(numberOfUsers, userIds.Length);
-                connection.Close();
+                    // Assert
+                    Assert.IsNotNull(userIds);
+                    Assert.AreEqual(numberOfUsers, userIds.Length);
+                    testIds?.AddRange(userIds);
+                }
+                finally
+                {
+                    connection.Close();
+                }
             }
         }
 
@@ -61,6 +127,7 @@ namespace UnitTests
 
                 // Act
                 var categoryIds = Tables.FillCategoryTable(connection, 7);
+                testIds?.AddRange(categoryIds);
 
                 // Assert
                 Assert.AreEqual(7, categoryIds.Length);
@@ -100,9 +167,11 @@ namespace UnitTests
                 {
                     // Act
                     Tables.FillTransactionsTable(connection, userIds, categoryIds, 1, 1);
-
+                    
                     // Assert
                     Assert.IsTrue(true);
+                    testIds?.AddRange(userIds);
+                    testIds?.AddRange(categoryIds);
                 }
                 catch (Exception ex)
                 {
