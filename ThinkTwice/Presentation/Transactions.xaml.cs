@@ -245,6 +245,10 @@
             {
                 return "Некоректний формат суми.";
             }
+            else if (result < 0)
+            {
+                return "Сума повинна бути не менше 0.";
+            }
             else
             {
                 return string.Empty;
