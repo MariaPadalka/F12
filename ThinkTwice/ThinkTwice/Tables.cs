@@ -15,7 +15,6 @@
     public class Tables
     {
         private readonly int numberOfUsers = 3;
-        private int numberOfCategories = 7;
 
         public static void DisplayDataFromTable(SqlConnection connection, string tableName)
         {
@@ -63,42 +62,15 @@
             return userIds;
         }
 
-        public static Guid[] FillCategoryTable(SqlConnection connection, int numberOfCategories)
+        public static Guid[] FillCategoryTable(SqlConnection connection)
         {
             var faker = new Faker();
-            //Guid[] categoryIds = new Guid[7];
             Guid[] categoryIds = new Guid[4];
 
             using (SqlCommand command = new SqlCommand(
                 "INSERT INTO Categories (UserId, Title, IsGeneral, PercentageAmount, Type) " +
                 "OUTPUT INSERTED.Id VALUES (@UserId, @Title, @IsGeneral, @PercentageAmount, @Type)", connection))
             {
-                //command.Parameters.Clear();
-                //command.Parameters.AddWithValue("@UserId", DBNull.Value);
-                //command.Parameters.AddWithValue("@Title", "Їжа");
-                //command.Parameters.AddWithValue("@IsGeneral", 1);
-                //command.Parameters.AddWithValue("@PercentageAmount", 0);
-                //command.Parameters.AddWithValue("@Type", TransType.Витрати.ToString());
-
-                //categoryIds[0] = (Guid)command.ExecuteScalar();
-                //command.Parameters.Clear();
-                //command.Parameters.AddWithValue("@UserId", DBNull.Value);
-                //command.Parameters.AddWithValue("@Title", "Одяг");
-                //command.Parameters.AddWithValue("@IsGeneral", 1);
-                //command.Parameters.AddWithValue("@PercentageAmount", 0);
-                //command.Parameters.AddWithValue("@Type", TransType.Витрати.ToString());
-
-                //categoryIds[1] = (Guid)command.ExecuteScalar();
-
-                //command.Parameters.Clear();
-                //command.Parameters.AddWithValue("@UserId", DBNull.Value);
-                //command.Parameters.AddWithValue("@Title", "Комунальні послуги");
-                //command.Parameters.AddWithValue("@IsGeneral", 1);
-                //command.Parameters.AddWithValue("@PercentageAmount", 0);
-                //command.Parameters.AddWithValue("@Type", TransType.Витрати.ToString());
-
-                //categoryIds[2] = (Guid)command.ExecuteScalar();
-
                 command.Parameters.Clear();
                 command.Parameters.AddWithValue("@UserId", DBNull.Value);
                 command.Parameters.AddWithValue("@Title", "Зарплата");
@@ -180,7 +152,7 @@
 
                     Guid[] userIds = FillUsersTable(connection, this.numberOfUsers);
 
-                    Guid[] categoryIds = FillCategoryTable(connection, this.numberOfCategories);
+                    Guid[] categoryIds = FillCategoryTable(connection);
 
                     FillTransactionsTable(connection, userIds, categoryIds, 30, 50);
 

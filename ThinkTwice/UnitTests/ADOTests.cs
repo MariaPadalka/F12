@@ -126,11 +126,11 @@ namespace UnitTests
                 connection.Open();
 
                 // Act
-                var categoryIds = Tables.FillCategoryTable(connection, 7);
+                var categoryIds = Tables.FillCategoryTable(connection);
                 testIds?.AddRange(categoryIds);
 
                 // Assert
-                Assert.AreEqual(7, categoryIds.Length);
+                Assert.AreEqual(4, categoryIds.Length);
                 CollectionAssert.AllItemsAreUnique(categoryIds);
                 connection.Close();
             }
@@ -148,7 +148,7 @@ namespace UnitTests
                 Assert.AreEqual(System.Data.ConnectionState.Closed, connection.State);
 
                 // Act & Assert
-                Assert.ThrowsException<InvalidOperationException>(() => Tables.FillCategoryTable(connection, 3));
+                Assert.ThrowsException<InvalidOperationException>(() => Tables.FillCategoryTable(connection));
             }
         }
 
@@ -162,7 +162,7 @@ namespace UnitTests
                 connection.Open();
 
                 Guid[] userIds = Tables.FillUsersTable(connection, 1);
-                Guid[] categoryIds = Tables.FillCategoryTable(connection, 1);
+                Guid[] categoryIds = Tables.FillCategoryTable(connection);
                 try
                 {
                     // Act
