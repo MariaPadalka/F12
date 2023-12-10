@@ -118,6 +118,10 @@
                 {
                     this.errormessage.Text = "Категорія з такою назвою вже існує";
                 }
+                else
+                {
+                    this.errormessage.Text = "";
+                }
             }
             else
             {

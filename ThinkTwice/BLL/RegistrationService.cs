@@ -24,6 +24,7 @@
                     Currency = currency,
                 };
                 this.UserRepo.Add(newUser);
+                DB_Setup.Tables.AddUserCategories(newUser.Id);
                 UserDTO userDTO = new UserDTO(newUser);
                 return userDTO;
             }

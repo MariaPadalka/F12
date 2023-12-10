@@ -262,29 +262,126 @@ namespace Presentation
             return null;
         }
 
+        //public void PlannedPie()
+        //{
+        //    Func<ChartPoint, string> labelPoint = chartPoint =>
+        //        string.Format("{0:P}", chartPoint.Participation);
+
+        //    Dictionary<string, decimal>? categoryExpenses = this.GetCategoryPlannedExpenses(App.GetCurrentUser());
+        //    decimal sum_of_percents = categoryExpenses.Values.Sum();
+        //    if (categoryExpenses != null)
+        //    {
+        //        this.plannedPieChart.Series = new SeriesCollection();
+        //        foreach (var t in categoryExpenses)
+        //        {
+        //            this.plannedPieChart.Series.Add(new PieSeries
+        //            {
+        //                Title = t.Key,
+        //                Values = new ChartValues<decimal> {t.Value },
+        //                DataLabels = true,
+        //                LabelPoint = labelPoint
+        //            });
+        //        }
+
+        //        if (sum_of_percents < 100)
+        //        {
+        //            this.plannedPieChart.Series.Add(new PieSeries
+        //            {
+        //                Title = "Залишок",
+        //                Values = new ChartValues<decimal> {100 - sum_of_percents},
+        //                DataLabels = true,
+        //                LabelPoint = labelPoint
+        //            });
+        //        }
+        //    }
+
+        //    this.plannedPieChart.LegendLocation = LegendLocation.Bottom;
+        //}
+        //public void PlannedPie()
+        //{
+        //    Func<ChartPoint, string> labelPoint = chartPoint =>
+        //        string.Format("{0:P}", chartPoint.Participation);
+
+        //    Dictionary<string, decimal>? categoryExpenses = this.GetCategoryPlannedExpenses(App.GetCurrentUser());
+        //    decimal sum_of_percents = categoryExpenses.Values.Sum();
+
+        //    if (categoryExpenses != null)
+        //    {
+        //        this.plannedPieChart.Series = new SeriesCollection();
+
+        //        foreach (var t in categoryExpenses)
+        //        {
+        //            var pieSeries = new PieSeries
+        //            {
+        //                Title = t.Key,
+        //                Values = new ChartValues<decimal> { t.Value },
+        //                DataLabels = true,
+        //                LabelPoint = labelPoint,
+        //            };
+
+        //            this.plannedPieChart.Series.Add(pieSeries);
+        //        }
+
+        //        if (sum_of_percents < 100)
+        //        {
+        //            var remainingSeries = new PieSeries
+        //            {
+        //                Title = "Залишок",
+        //                Values = new ChartValues<decimal> { 100 - sum_of_percents },
+        //                DataLabels = true,
+        //                LabelPoint = labelPoint,
+        //                //ToolTip = "Залишок: "
+        //            };
+
+        //            this.plannedPieChart.Series.Add(remainingSeries);
+        //        }
+        //        this.plannedPieChart.LegendLocation = LegendLocation.Bottom;
+        //    }
+        //}
         public void PlannedPie()
         {
             Func<ChartPoint, string> labelPoint = chartPoint =>
-                string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
+                string.Format("{0:P}", chartPoint.Participation);
 
             Dictionary<string, decimal>? categoryExpenses = this.GetCategoryPlannedExpenses(App.GetCurrentUser());
+            decimal sum_of_percents = categoryExpenses.Values.Sum();
+
             if (categoryExpenses != null)
             {
                 this.plannedPieChart.Series = new SeriesCollection();
+
                 foreach (var t in categoryExpenses)
                 {
-                    this.plannedPieChart.Series.Add(new PieSeries
+                    var pieSeries = new PieSeries
                     {
                         Title = t.Key,
-                        Values = new ChartValues<double> { (double)t.Value },
+                        Values = new ChartValues<decimal> { t.Value },
                         DataLabels = true,
-                        LabelPoint = labelPoint
-                    });
+                        LabelPoint = labelPoint,
+                    };
+
+                    this.plannedPieChart.Series.Add(pieSeries);
+                }
+
+                if (sum_of_percents < 100)
+                {
+                    var remainingSeries = new PieSeries
+                    {
+                        Title = "Залишок",
+                        Values = new ChartValues<decimal> { 100 - sum_of_percents },
+                        DataLabels = true,
+                        LabelPoint = labelPoint,
+                    };
+
+                    this.plannedPieChart.Series.Add(remainingSeries);
                 }
             }
 
-            plannedPieChart.LegendLocation = LegendLocation.Bottom;
+            // Налаштування легенди
+            this.plannedPieChart.LegendLocation = LegendLocation.Bottom;
         }
+
+
 
         public void SimplePieControl()
         {
@@ -299,7 +396,7 @@ namespace Presentation
                 {
                     this.myPieChart.Series.Add(new PieSeries { 
                         Title = t.Key,
-                        Values = new ChartValues<double> { (double)t.Value },
+                        Values = new ChartValues<decimal> { t.Value },
                         DataLabels = true,
                         LabelPoint = labelPoint
                     });

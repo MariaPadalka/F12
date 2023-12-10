@@ -188,11 +188,11 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="3*"/>
-                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="1*"/>
                     <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
 
-                <!-- First Part (2/5) -->
+                <!-- First Part (3/5.2) -->
                 <Grid Grid.Row="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
@@ -251,6 +251,21 @@
                         </lvc:CartesianChart>
                     </Grid>
                 </Grid>
+                <!-- First Part (0.2/ 5.2) -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Grid.Column="0" Stretch="Uniform" MaxHeight="24" HorizontalAlignment="Center">
+                        <TextBlock Text="Витрати по категоріях" FontWeight="SemiBold"/>
+                    </Viewbox>
+
+                    <Viewbox Grid.Column="1" Stretch="Uniform" MaxHeight="24" HorizontalAlignment="Center">
+                        <TextBlock Text="Заплановані витрати" FontWeight="SemiBold"/>
+                    </Viewbox>
+
+                </Grid>
                 <!-- Second Part (3/5) -->
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
@@ -258,12 +273,14 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <lvc:PieChart Grid.Column="0" x:Name="myPieChart" LegendLocation="Top" >
+                    <lvc:PieChart Grid.Column="0" x:Name="myPieChart" >
                         <!-- Інші параметри для вашого PieChart, які можуть бути потрібні -->
-                        
                     </lvc:PieChart>
 
-                    <lvc:PieChart Grid.Column="1" x:Name="plannedPieChart" LegendLocation="Top">
+                    <lvc:PieChart Grid.Column="1" x:Name="plannedPieChart">
+                        <lvc:PieChart.DataTooltip>
+                            <lvc:DefaultTooltip Visibility="Collapsed" />
+                        </lvc:PieChart.DataTooltip>
                         <!-- Інші параметри для вашого PieChart, які можуть бути потрібні -->
                     </lvc:PieChart>
 
