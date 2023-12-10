@@ -15,6 +15,8 @@
     /// <summary>
     /// Interaction logic for Dashboard.xaml.
     /// </summary>
+    /// 
+
     public partial class Transactions : Page
     {
         private readonly TransactionService transactionService = new TransactionService();
@@ -89,6 +91,11 @@
             {
                 if (transaction != null)
                 {
+                    //if ((this.categoryRepository.GetCategoryById(transaction.FromCategory)?.Type == "Баланс" || this.categoryRepository.GetCategoryById(transaction.FromCategory)?.Type == "Дохід") && this.categoryRepository.GetCategoryById(transaction.ToCategory)?.Type == "Витрати")
+                    //{
+                    //    transaction.Amount *= -1;
+                    //}
+
                     data.Add(new TransactionDTO(transaction));
                 }
             }
@@ -133,10 +140,10 @@
                     date = this.datePickerPlannedDate?.SelectedDate.Value;
                 }
 
-                if ((this.categoryRepository.GetCategoryById(category_from)?.Type == "Баланс" || this.categoryRepository.GetCategoryById(category_from)?.Type == "Дохід") && this.categoryRepository.GetCategoryById(category_to)?.Type == "Витрати")
-                {
-                    amount *= -1;
-                }
+                //if ((this.categoryRepository.GetCategoryById(category_from)?.Type == "Баланс" || this.categoryRepository.GetCategoryById(category_from)?.Type == "Дохід") && this.categoryRepository.GetCategoryById(category_to)?.Type == "Витрати")
+                //{
+                //    amount *= -1;
+                //}
 
                 this.transactionService.AddTransaction(App.GetCurrentUser(), category_to, category_from, amount, date, details, planned);
 
