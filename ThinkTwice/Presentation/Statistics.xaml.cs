@@ -221,7 +221,7 @@ namespace Presentation
             DateTime startDate = DateTime.Now.AddMonths(-1); // Початок останнього місяця
             DateTime endDate = DateTime.Now;
 
-            var transactions = this.transactionService.GetTransactionsInTimePeriod(userDTO, startDate, endDate).Where(x => x.Planned == false);
+            var transactions = this.transactionService.GetTransactionsInTimePeriod(userDTO, startDate, endDate).Where(x => x.Planned == false && x.ToCategory!= null);
 
             var transactionsWithCategoryName = transactions?
             .Select(t => new

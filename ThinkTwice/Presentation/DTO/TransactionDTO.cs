@@ -16,8 +16,8 @@
             this.Date = t.Date?.ToString("yyyy-MM-dd");
             this.Details = t.Details;
             this.Planned = t.Planned;
-            this.FromCategory = this.categoryRepository.GetCategoryById(t.FromCategory).Title;
-            this.ToCategory = this.categoryRepository.GetCategoryById(t.ToCategory).Title;
+            this.FromCategory = this.categoryRepository.GetCategoryById(t.FromCategory)?.Title;
+            this.ToCategory = this.categoryRepository.GetCategoryById(t.ToCategory)?.Title;
         }
 
         public Guid Id { get; set; }
