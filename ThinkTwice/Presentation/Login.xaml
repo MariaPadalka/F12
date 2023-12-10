@@ -50,7 +50,7 @@
                 <TextBox x:Name="textBoxEmail" Width="222" Height="24" Margin="231,227,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" Foreground="#302f2f" KeyDown="TextBox_KeyDown">
                     <TextBox.Template>
                         <ControlTemplate TargetType="TextBox">
-                            <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5">
+                            <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">
                                 <ScrollViewer x:Name="PART_ContentHost"/>
                             </Border>
                         </ControlTemplate>
@@ -63,7 +63,7 @@
                 <TextBox Height="24" HorizontalAlignment="Left" x:Name="textBoxPassword"  VerticalAlignment="Top" Visibility="Collapsed" Width="222" Grid.ColumnSpan="2" Margin="230,278,0,0" KeyDown="TextBox_KeyDown">
                     <TextBox.Template>
                         <ControlTemplate TargetType="TextBox">
-                            <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5">
+                            <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">
                                 <ScrollViewer x:Name="PART_ContentHost"/>
                             </Border>
                         </ControlTemplate>
