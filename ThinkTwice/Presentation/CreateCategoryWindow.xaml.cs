@@ -21,11 +21,12 @@
         {
             this.InitializeComponent();
             this.settingsPage = page;
+
+            this.logger.Information("Спроба додавання категорії.");
         }
 
         private void CreateCategory(object sender, RoutedEventArgs e)
         {
-            this.logger.Information("Створення категорії.");
             if (this.errormessage.Text != string.Empty)
             {
                 this.logger.Error("Помилка при створенні категорії.");
@@ -39,7 +40,6 @@
             {
                 this.errormessage.Text = "Заповніть усі поля";
                 this.logger.Warning("Не заповнено усі поля.");
-
             }
             else
             {

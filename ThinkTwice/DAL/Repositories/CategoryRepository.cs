@@ -1,34 +1,23 @@
 ﻿namespace ThinkTwice_Context
 {
     using Microsoft.EntityFrameworkCore;
-    using Serilog;
 
     public class CategoryRepository
     {
         private readonly ThinkTwiceContext context = new ThinkTwiceContext();
-        private readonly ILogger logger = LoggerManager.Instance.Logger;
 
         public void CreateCategory(string title, bool isGeneral, decimal percentageAmount, string type, Guid? userId)
         {
-            try
+            var newCategory = new Category
             {
-                var newCategory = new Category
-                {
-                    Title = title,
-                    IsGeneral = isGeneral,
-                    PercentageAmount = percentageAmount,
-                    Type = type,
-                    UserId = userId,
-                };
-                this.context.Categories.Add(newCategory);
-                this.context.SaveChanges();
-
-                this.logger.Information("Category created.");
-            }
-            catch (Exception ex)
-            {
-                this.logger.Error(ex, "Creating category.");
-            }
+                Title = title,
+                IsGeneral = isGeneral,
+                PercentageAmount = percentageAmount,
+                Type = type,
+                UserId = userId,
+            };
+            this.context.Categories.Add(newCategory);
+            this.context.SaveChanges();
         }
 
         public virtual Category? GetCategoryById(Guid? categoryId)
@@ -58,52 +47,34 @@
 
         public void Update(Category cat)
         {
-            try
-            {
-                this.context.Entry(cat).State = EntityState.Modified;
-                this.context.SaveChanges();
-
-                this.logger.Information("Category updated.");
-            }
-            catch (Exception ex)
-            {
-                this.logger.Error(ex, "Updating category.");
-            }
+            this.context.Entry(cat).State = EntityState.Modified;
+            this.context.SaveChanges();
         }
 
         public virtual void Delete(Guid? id)
         {
-            try
+            var category = this.context.Categories.Find(id);
+            if (category != null)
             {
-                var category = this.context.Categories.Find(id);
-                if (category != null)
+                var transactionsWithCategory = this.context.Transactions
+                    .Where(t => t.FromCategory == category.Id || t.ToCategory == category.Id);
+
+                foreach (var transaction in transactionsWithCategory)
                 {
-                    var transactionsWithCategory = this.context.Transactions
-                        .Where(t => t.FromCategory == category.Id || t.ToCategory == category.Id);
-
-                    foreach (var transaction in transactionsWithCategory)
+                    if (transaction.FromCategory == category.Id)
                     {
-                        if (transaction.FromCategory == category.Id)
-                        {
-                            transaction.FromCategory = null;
-                        }
-
-                        if (transaction.ToCategory == category.Id)
-                        {
-                            transaction.ToCategory = null;
-                        }
+                        transaction.FromCategory = null;
                     }
 
-                    this.context.Categories.Remove(category);
-
-                    this.context.SaveChanges();
-
-                    this.logger.Information("Category deleted.");
+                    if (transaction.ToCategory == category.Id)
+                    {
+                        transaction.ToCategory = null;
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                this.logger.Error(ex, "Deleting category.");
+
+                this.context.Categories.Remove(category);
+
+                this.context.SaveChanges();
             }
         }
     }

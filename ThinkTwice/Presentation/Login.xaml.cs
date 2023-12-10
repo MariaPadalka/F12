@@ -7,14 +7,19 @@
     using System.Windows.Input;
     using System.Windows.Navigation;
     using BLL;
+    using Serilog;
+    using ThinkTwice_Context;
 
     public partial class Login : Page
     {
+        private readonly ILogger logger = LoggerManager.Instance.Logger;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Login"/> class.
         /// </summary>
         public Login()
         {
+            this.logger.Information("Спроба авторизації.");
             this.InitializeComponent();
         }
 
@@ -32,6 +37,7 @@
 
         private void Registration_Click(object sender, RoutedEventArgs e)
         {
+           
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("RegistrationView.xaml", UriKind.Relative));
         }
@@ -68,6 +74,7 @@
             if (!IsEmailValid(email))
             {
                 this.errormessage.Text = "Введіть коректну електронну пошту.";
+                this.logger.Error("Помилка авторизації.");
             }
             else
             {
@@ -75,11 +82,13 @@
                 if (user == null)
                 {
                     this.errormessage.Text = "Користувача не знайдено.";
+                    this.logger.Error("Помилка авторизації.");
                 }
                 else
                 {
                     this.errormessage.Text = string.Empty;
                     App.SetCurrentUser(user);
+                    this.logger.Information($"Користувача {App.CurrentUser.Name} {App.CurrentUser.Surname} авторизовано.");
                     this.GoToDashboard(sender, e);
                 }
             }

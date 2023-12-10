@@ -13,14 +13,15 @@
     public partial class RegistrationView : Page
     {
         private readonly ILogger logger = LoggerManager.Instance.Logger;
-        private RegistrationService registrationService = new RegistrationService();
 
+        private RegistrationService registrationService = new RegistrationService();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RegistrationView"/> class.
         /// </summary>
         public RegistrationView()
         {
+            this.logger.Information("Спроба реєстрації.");
             this.InitializeComponent();
         }
 

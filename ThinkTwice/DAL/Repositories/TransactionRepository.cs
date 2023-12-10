@@ -1,26 +1,16 @@
 ﻿namespace ThinkTwice_Context
 {
     using Microsoft.EntityFrameworkCore;
-    using Serilog;
 
     public class TransactionRepository
     {
         private readonly ThinkTwiceContext context = new ThinkTwiceContext();
-        private readonly ILogger logger = LoggerManager.Instance.Logger;
-
 
         public virtual void CreateTransaction(Transaction transaction)
         {
-            try
-            {
-                this.context.Transactions.Add(transaction);
-                this.context.SaveChanges();
-                this.logger.Information("Transaction created.");
-            }
-            catch (Exception ex)
-            {
-                this.logger.Error(ex, "Creating category.");
-            }
+
+            this.context.Transactions.Add(transaction);
+            this.context.SaveChanges();
         }
 
         public virtual Transaction? GetTransactionById(Guid? transactionId)
@@ -50,37 +40,17 @@
 
         public virtual void Update(Transaction cat)
         {
-            try
-            {
-                this.context.Entry(cat).State = EntityState.Modified;
-                this.context.SaveChanges();
-                this.logger.Information("Transaction updated.");
-
-            }
-            catch (Exception ex)
-            {
-                this.logger.Error(ex, "Transaction updated.");
-
-            }
+            this.context.Entry(cat).State = EntityState.Modified;
+            this.context.SaveChanges();
         }
 
         public virtual void Delete(Guid? id)
         {
-            try
+            var category = this.context.Transactions.Find(id);
+            if (category != null)
             {
-                var category = this.context.Transactions.Find(id);
-                if (category != null)
-                {
-                    this.context.Transactions.Remove(category);
-                    this.context.SaveChanges();
-                }
-                this.logger.Information("Transaction deleted.");
-
-            }
-            catch (Exception ex)
-            {
-                this.logger.Error(ex, "Deleting transaction.");
-
+                this.context.Transactions.Remove(category);
+                this.context.SaveChanges();
             }
         }
     }
