@@ -7,10 +7,14 @@
     using System.Windows.Input;
     using System.Windows.Navigation;
     using BLL;
+    using Serilog;
+    using ThinkTwice_Context;
 
     public partial class RegistrationView : Page
     {
+        private readonly ILogger logger = LoggerManager.Instance.Logger;
         private RegistrationService registrationService = new RegistrationService();
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RegistrationView"/> class.
@@ -86,6 +90,7 @@
             if (!all_fields_present || this.passwordError.Text != string.Empty || this.confirmPassError.Text != string.Empty || this.firstNameError.Text != string.Empty || this.lastNameError.Text != string.Empty || this.emailError.Text != string.Empty || this.dateError.Text != string.Empty)
             {
                 this.errormessage.Text = "Будь ласка, введіть коректні дані у всіх полях.";
+                this.logger.Error("Помилка при створенні користувача.");
             }
             else
             {
@@ -94,11 +99,13 @@
                 {
                     this.errormessage.Text = "Ви успішно зареєструвались.";
                     App.SetCurrentUser(user);
+                    this.logger.Information($"Користувача {App.CurrentUser.Name} {App.CurrentUser.Surname} успішно створено.");
                     this.GoToDashboard(sender, e);
                 }
                 else
                 {
                     this.errormessage.Text = "Ця пошта вже комусь належить.";
+                    this.logger.Error("Помилка при створенні користувача.");
                 }
             }
         }
@@ -115,10 +122,12 @@
             else if (password.Length < 8 || password.Length > 20)
             {
                 this.passwordError.Text = "Пароль повинен мати від 8 до 20 символів.";
+                this.logger.Error("Помилка при створенні користувача.");
             }
             else
             {
                 this.passwordError.Text = "Пароль має містити комбінацію цифр та літер різних регістрів.        ";
+                this.logger.Error("Помилка при створенні користувача.");
             }
 
             this.errormessage.Text = string.Empty;
@@ -135,10 +144,12 @@
             else if (password.Length < 8 || password.Length > 20)
             {
                 this.passwordError.Text = "Пароль повинен мати від 8 до 20 символів.";
+                this.logger.Error("Помилка при створенні користувача.");
             }
             else
             {
                 this.passwordError.Text = "Пароль має містити комбінацію цифр та літер різних регістрів.        ";
+                this.logger.Error("Помилка при створенні користувача.");
             }
 
             this.errormessage.Text = string.Empty;
@@ -152,6 +163,7 @@
             if (password != this.passwordBox1.Password)
             {
                 this.confirmPassError.Text = "Паролі не співпадають.";
+                this.logger.Error("Помилка при створенні користувача.");
             }
             else
             {
@@ -168,6 +180,7 @@
             if (password != this.passwordBox1.Password)
             {
                 this.confirmPassError.Text = "Паролі не співпадають.";
+                this.logger.Error("Помилка при створенні користувача.");
             }
             else
             {
@@ -184,14 +197,17 @@
             if (string.IsNullOrEmpty(firstName))
             {
                 this.firstNameError.Text = "Введіть ім'я.";
+                this.logger.Warning("Не заповнено обов'язкові поля");
             }
             else if (firstName.Length < 2 || firstName.Length > 18)
             {
                 this.firstNameError.Text = "Ім'я повинне мати від 2 до 18 символів.";
+                this.logger.Error("Помилка при створенні користувача.");
             }
             else if (!Regex.IsMatch(firstName, "^(?:[A-Za-z-]+|[А-ЩЬЮЯҐЄІЇа-щьюяґєії'-]+)$"))
             {
                 this.firstNameError.Text = "Введіть коректне ім'я.";
+                this.logger.Error("Помилка при створенні користувача.");
             }
             else
             {
@@ -208,14 +224,17 @@
             if (string.IsNullOrEmpty(lastName))
             {
                 this.lastNameError.Text = "Введіть прізвище.";
+                this.logger.Warning("Не заповнено обов'язкові поля");
             }
             else if (lastName.Length < 2 || lastName.Length > 18)
             {
                 this.lastNameError.Text = "Прізвище повинне мати від 2 до 18 символів.";
+                this.logger.Error("Помилка при створенні користувача.");
             }
             else if (!Regex.IsMatch(lastName, "^(?:[A-Za-z-]+|[А-ЩЬЮЯҐЄІЇа-щьюяґєії'-]+)$"))
             {
                 this.lastNameError.Text = "Введіть коректне прізвище.";
+                this.logger.Error("Помилка при створенні користувача.");
             }
             else
             {
@@ -232,10 +251,12 @@
             if (string.IsNullOrEmpty(email))
             {
                 this.emailError.Text = "Введіть електронну пошту.";
+                this.logger.Warning("Не заповнено обов'язкові поля");
             }
             else if (!IsEmailValid(email))
             {
                 this.emailError.Text = "Введіть коректну електронну пошту.";
+                this.logger.Error("Помилка при створенні користувача.");
             }
             else
             {
@@ -256,6 +277,7 @@
                 if (selectedDate > twelveYearsAgo)
                 {
                     this.dateError.Text = "Користувач повинен бути старше 12 років.";
+                    this.logger.Fatal("Клієнт не належить до дозволеної вікової категорії користувачів.");
                 }
                 else
                 {
@@ -265,6 +287,7 @@
             else
             {
                 this.dateError.Text = "Введіть коректну дату народження.";
+                this.logger.Error("Помилка при створенні користувача.");
             }
 
             this.errormessage.Text = string.Empty;
