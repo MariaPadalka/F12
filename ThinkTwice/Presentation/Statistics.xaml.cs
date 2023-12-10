@@ -240,7 +240,7 @@ namespace Presentation
                 var categoryExpenses = transactionsWithCategoryName
                     .Where(t => t.Type == "Витрати" && t.isGeneral == false) // Враховуємо тільки витрати (суму менше 0)
                     .GroupBy(t => t.CategoryName) // Групуємо транзакції за категоріями
-                    .ToDictionary(g => g.Key, g => g.Sum(t => -t.Amount)); // Сумуємо витрати для кожної категорії
+                    .ToDictionary(g => g.Key, g => g.Sum(t => t.Amount)); // Сумуємо витрати для кожної категорії
 
                 return categoryExpenses;
             }
