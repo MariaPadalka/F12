@@ -419,7 +419,7 @@
                                     <DataTemplate>
                                         <Border Margin="5" 
                                                 Background="{Binding Id, Converter={StaticResource GuidToBackgroundConverter}}"
-                                                BorderBrush="{Binding Type, Converter={StaticResource CategoryTypeToColorConverter}}" BorderThickness="1" CornerRadius="5" Width="Auto" VerticalAlignment="Center" MouseLeftButtonDown="OpenCreateCategoryWindow" Tag="{Binding Id}">
+                                                BorderBrush="{Binding Type, Converter={StaticResource CategoryTypeToColorConverter}}" BorderThickness="1" CornerRadius="5" Width="Auto" VerticalAlignment="Center" MouseLeftButtonDown="OpenCategoryWindow" Tag="{Binding Id}">
 
                                             <StackPanel>
                                                 <Grid>
@@ -429,7 +429,7 @@
                                                                 <Style TargetType="TextBlock">
                                                                     <Setter Property="Text" Value="{Binding Title}" />
                                                                     <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding Type}" Value="Витрати">
+                                                                        <!--<DataTrigger Binding="{Binding Type}" Value="Витрати"> --><!--тут просто додати ще одну умову--><!--
                                                                             <Setter Property="Text">
                                                                                 <Setter.Value>
                                                                                     <MultiBinding StringFormat="{}{0}, {1}%">
@@ -438,7 +438,21 @@
                                                                                     </MultiBinding>
                                                                                 </Setter.Value>
                                                                             </Setter>
-                                                                        </DataTrigger>
+                                                                        </DataTrigger>-->
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding Type}" Value="Витрати"/>
+                                                                                <Condition Binding="{Binding IsGeneral}" Value="False"/>
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Text">
+                                                                                <Setter.Value>
+                                                                                    <MultiBinding StringFormat="{}{0}, {1}%">
+                                                                                        <Binding Path="Title" />
+                                                                                        <Binding Path="PercentageAmount" />
+                                                                                    </MultiBinding>
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                        </MultiDataTrigger>
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </TextBlock.Style>

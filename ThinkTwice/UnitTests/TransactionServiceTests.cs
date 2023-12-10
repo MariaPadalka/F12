@@ -1,4 +1,4 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+Ôªøusing Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThinkTwice_Context;
 using BLL;
 using BLL.DTO;
@@ -842,7 +842,7 @@ namespace UnitTests
             var user = new User { Id = Guid.NewGuid(), Email = "test@example.com" };
             userRepositoryMock.Setup(repo => repo.GetUserById(userDTO.Id)).Returns(user);
 
-            var expenseCategory = new Category { Id = Guid.NewGuid(), Type = "¬ËÚ‡ÚË" };
+            var expenseCategory = new Category { Id = Guid.NewGuid(), Type = "–í–∏—Ç—Ä–∞—Ç–∏" };
             categoryRepositoryMock.Setup(repo => repo.GetCategoryById(It.IsAny<System.Guid?>())).Returns(expenseCategory);
 
             var transactions = new List<Transaction>
@@ -881,7 +881,7 @@ namespace UnitTests
 
             userRepositoryMock.Setup(repo => repo.GetUserById(userDTO.Id)).Returns(user);
             transactionRepositoryMock.Setup(repo => repo.GetTransactionsByUserId(user.Id)).Returns(new List<Transaction>());
-            categoryRepositoryMock.Setup(repo => repo.GetCategoryById(It.IsAny<Guid>())).Returns(new Category { Type = "¬ËÚ‡ÚË" });
+            categoryRepositoryMock.Setup(repo => repo.GetCategoryById(It.IsAny<Guid>())).Returns(new Category { Type = "√Ç√®√≤√∞√†√≤√®" });
 
             var transactionService = new TransactionService
             {
@@ -932,7 +932,7 @@ namespace UnitTests
 
             userRepositoryMock.Setup(repo => repo.GetUserById(userDTO.Id)).Returns(user);
             transactionRepositoryMock.Setup(repo => repo.GetTransactionsByUserId(user.Id)).Returns(transactions);
-            categoryRepositoryMock.Setup(repo => repo.GetCategoryById(It.IsAny<Guid>())).Returns(new Category { Type = "¡‡Î‡ÌÒ" });
+            categoryRepositoryMock.Setup(repo => repo.GetCategoryById(It.IsAny<Guid>())).Returns(new Category { Type = "–ë–∞–ª–∞–Ω—Å" });
 
             var transactionService = new TransactionService
             {
@@ -962,7 +962,7 @@ namespace UnitTests
 
             userRepositoryMock.Setup(repo => repo.GetUserById(userDTO.Id)).Returns(user);
             transactionRepositoryMock.Setup(repo => repo.GetTransactionsByUserId(user.Id)).Returns(new List<Transaction>());
-            categoryRepositoryMock.Setup(repo => repo.GetCategoryById(It.IsAny<Guid>())).Returns(new Category { Type = "¡‡Î‡ÌÒ" });
+            categoryRepositoryMock.Setup(repo => repo.GetCategoryById(It.IsAny<Guid>())).Returns(new Category { Type = "√Å√†√´√†√≠√±" });
 
             var transactionService = new TransactionService
             {

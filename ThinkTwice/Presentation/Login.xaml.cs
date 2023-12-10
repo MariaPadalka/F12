@@ -53,10 +53,16 @@
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
             string email = this.textBoxEmail.Text;
-            string password = this.passwordBox1.Password;
+            string password;
+            if (this.textBoxPassword.Visibility == Visibility.Visible)
+            {
+                password = this.textBoxPassword.Text;
+            }
+            else
+            {
+                password = this.passwordBox1.Password;
+            }
 
-            // string email = "olenka@lnu.edu.ua";
-            // string password = "123Oo345";
             AuthenticationService authenticationService = new AuthenticationService();
 
             if (!IsEmailValid(email))

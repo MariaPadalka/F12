@@ -2,6 +2,8 @@
 {
     using System.Data.SqlClient;
     using Bogus;
+    using Microsoft.Extensions.Configuration;
+    using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
     public enum TransType
     {
@@ -13,7 +15,6 @@
     public class Tables
     {
         private readonly int numberOfUsers = 3;
-        private int numberOfCategories = 7;
 
         public static void DisplayDataFromTable(SqlConnection connection, string tableName)
         {
@@ -61,10 +62,10 @@
             return userIds;
         }
 
-        public static Guid[] FillCategoryTable(SqlConnection connection, int numberOfCategories)
+        public static Guid[] FillCategoryTable(SqlConnection connection)
         {
             var faker = new Faker();
-            Guid[] categoryIds = new Guid[7];
+            Guid[] categoryIds = new Guid[4];
 
             using (SqlCommand command = new SqlCommand(
                 "INSERT INTO Categories (UserId, Title, IsGeneral, PercentageAmount, Type) " +
@@ -72,38 +73,12 @@
             {
                 command.Parameters.Clear();
                 command.Parameters.AddWithValue("@UserId", DBNull.Value);
-                command.Parameters.AddWithValue("@Title", "Їжа");
-                command.Parameters.AddWithValue("@IsGeneral", 1);
-                command.Parameters.AddWithValue("@PercentageAmount", 0);
-                command.Parameters.AddWithValue("@Type", TransType.Витрати.ToString());
-
-                categoryIds[0] = (Guid)command.ExecuteScalar();
-                command.Parameters.Clear();
-                command.Parameters.AddWithValue("@UserId", DBNull.Value);
-                command.Parameters.AddWithValue("@Title", "Одяг");
-                command.Parameters.AddWithValue("@IsGeneral", 1);
-                command.Parameters.AddWithValue("@PercentageAmount", 0);
-                command.Parameters.AddWithValue("@Type", TransType.Витрати.ToString());
-
-                categoryIds[1] = (Guid)command.ExecuteScalar();
-
-                command.Parameters.Clear();
-                command.Parameters.AddWithValue("@UserId", DBNull.Value);
-                command.Parameters.AddWithValue("@Title", "Комунальні послуги");
-                command.Parameters.AddWithValue("@IsGeneral", 1);
-                command.Parameters.AddWithValue("@PercentageAmount", 0);
-                command.Parameters.AddWithValue("@Type", TransType.Витрати.ToString());
-
-                categoryIds[2] = (Guid)command.ExecuteScalar();
-
-                command.Parameters.Clear();
-                command.Parameters.AddWithValue("@UserId", DBNull.Value);
                 command.Parameters.AddWithValue("@Title", "Зарплата");
                 command.Parameters.AddWithValue("@IsGeneral", 1);
                 command.Parameters.AddWithValue("@PercentageAmount", 0);
                 command.Parameters.AddWithValue("@Type", TransType.Дохід.ToString());
 
-                categoryIds[3] = (Guid)command.ExecuteScalar();
+                categoryIds[0] = (Guid)command.ExecuteScalar();
 
                 command.Parameters.Clear();
                 command.Parameters.AddWithValue("@UserId", DBNull.Value);
@@ -112,7 +87,7 @@
                 command.Parameters.AddWithValue("@PercentageAmount", 0);
                 command.Parameters.AddWithValue("@Type", TransType.Дохід.ToString());
 
-                categoryIds[4] = (Guid)command.ExecuteScalar();
+                categoryIds[1] = (Guid)command.ExecuteScalar();
                 command.Parameters.Clear();
                 command.Parameters.AddWithValue("@UserId", DBNull.Value);
                 command.Parameters.AddWithValue("@Title", "Готівка");
@@ -120,7 +95,7 @@
                 command.Parameters.AddWithValue("@PercentageAmount", 0);
                 command.Parameters.AddWithValue("@Type", TransType.Баланс.ToString());
 
-                categoryIds[5] = (Guid)command.ExecuteScalar();
+                categoryIds[2] = (Guid)command.ExecuteScalar();
                 command.Parameters.Clear();
                 command.Parameters.AddWithValue("@UserId", DBNull.Value);
                 command.Parameters.AddWithValue("@Title", "Картка");
@@ -128,7 +103,7 @@
                 command.Parameters.AddWithValue("@PercentageAmount", 0);
                 command.Parameters.AddWithValue("@Type", TransType.Баланс.ToString());
 
-                categoryIds[6] = (Guid)command.ExecuteScalar();
+                categoryIds[3] = (Guid)command.ExecuteScalar();
             }
 
             return categoryIds;
@@ -177,7 +152,7 @@
 
                     Guid[] userIds = FillUsersTable(connection, this.numberOfUsers);
 
-                    Guid[] categoryIds = FillCategoryTable(connection, this.numberOfCategories);
+                    Guid[] categoryIds = FillCategoryTable(connection);
 
                     FillTransactionsTable(connection, userIds, categoryIds, 30, 50);
 
@@ -191,6 +166,52 @@
             catch (Exception ex)
             {
                 Console.WriteLine("Помилка: " + ex.Message);
+            }
+        }
+
+        public static void AddUserCategories(Guid userId)
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+            string? connectionString = configuration.GetConnectionString("DefaultConnection");
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("", connection))
+                {
+                    command.CommandText = "INSERT INTO Categories (UserId, Title, IsGeneral, PercentageAmount, Type) " +
+                                          "VALUES (@UserId, @Title, @IsGeneral, @PercentageAmount, @Type)";
+
+                    // Inserting the first category
+                    command.Parameters.AddWithValue("@UserId", userId);
+                    command.Parameters.AddWithValue("@Title", "Їжа");
+                    command.Parameters.AddWithValue("@IsGeneral", 0);
+                    command.Parameters.AddWithValue("@PercentageAmount", 20);
+                    command.Parameters.AddWithValue("@Type", TransType.Витрати.ToString());
+                    command.ExecuteNonQuery(); // Execute the query
+
+                    // Inserting the second category
+                    command.Parameters.Clear(); // Clear parameters before reusing
+                    command.Parameters.AddWithValue("@UserId", userId);
+                    command.Parameters.AddWithValue("@Title", "Одяг");
+                    command.Parameters.AddWithValue("@IsGeneral", 0);
+                    command.Parameters.AddWithValue("@PercentageAmount", 10);
+                    command.Parameters.AddWithValue("@Type", TransType.Витрати.ToString());
+                    command.ExecuteNonQuery(); // Execute the query
+
+                    // Inserting the third category
+                    command.Parameters.Clear(); // Clear parameters before reusing
+                    command.Parameters.AddWithValue("@UserId", userId);
+                    command.Parameters.AddWithValue("@Title", "Комунальні послуги");
+                    command.Parameters.AddWithValue("@IsGeneral", 0);
+                    command.Parameters.AddWithValue("@PercentageAmount", 10);
+                    command.Parameters.AddWithValue("@Type", TransType.Витрати.ToString());
+                    command.ExecuteNonQuery(); // Execute the query
+                }
             }
         }
 

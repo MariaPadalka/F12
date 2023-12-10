@@ -24,7 +24,6 @@
         private readonly string emptyID = "1122F421-1716-410A-A1F2-334C3DC17096";
         private readonly SettingsService settingsService = new SettingsService();
         private ObservableCollection<Category> categories = new ObservableCollection<Category>();
-        private ObservableCollection<Category> categoriesToDelete = new ObservableCollection<Category>();
 
         public Settings()
         {
@@ -49,9 +48,30 @@
         public void UpdateItems()
         {
             this.categories = new ObservableCollection<Category>(this.settingsService.GetUserCategories(App.GetCurrentUser()));
+            this.categories = new ObservableCollection<Category>(this.categories.OrderByDescending(category => category.Type));
             this.categories = new ObservableCollection<Category>(this.categories.OrderByDescending(category => category.UserId));
             this.itemsControl.ItemsSource = this.categories;
         }
+
+        public void UpdateCategory(Category updatedCategory)
+        {
+            // Знаходимо існуючу категорію в колекції за її Id
+            var existingCategory = this.categories.FirstOrDefault(cat => cat.Id == updatedCategory.Id);
+
+            if (existingCategory != null)
+            {
+                // Оновлюємо властивості існуючої категорії
+                existingCategory.Title = updatedCategory.Title;
+                existingCategory.PercentageAmount = updatedCategory.PercentageAmount;
+
+                // Оновлюємо категорію в itemsSource
+                this.itemsControl.ItemsSource = null;
+                this.itemsControl.ItemsSource = this.categories;
+            }
+        }
+
+
+
 
         public void AddEmptyCategory()
         {
@@ -91,13 +111,21 @@
             ns.Navigate(new Uri("Login.xaml", UriKind.Relative));
         }
 
-        private void OpenCreateCategoryWindow(object sender, MouseButtonEventArgs e)
+        private void OpenCategoryWindow(object sender, MouseButtonEventArgs e)
         {
             var border = sender as Border;
-            if (border?.Tag is Guid categoryId && categoryId == new Guid(this.emptyID))
+            if (border?.Tag is Guid categoryId)
             {
-                var createCategoryWindow = new CreateCategoryWindow(this);
-                createCategoryWindow.ShowDialog();
+                if (categoryId == new Guid(this.emptyID))
+                {
+                    var createCategoryWindow = new CreateCategoryWindow(this);
+                    createCategoryWindow.ShowDialog();
+                }
+                else if (this.ChangeButton.Visibility == Visibility.Collapsed)
+                {
+                    var editCategoryWindow = new EditCategoryWindow(this, categoryId);
+                    editCategoryWindow.ShowDialog();
+                }
             }
         }
 
@@ -155,7 +183,7 @@
         private void DeleteCategory(Category category)
         {
             this.categories.Remove(category);
-            this.categoriesToDelete.Add(category);
+            this.settingsService.RemoveCategory(App.GetCurrentUser(), category.Id);
             this.itemsControl.ItemsSource = this.categories;
         }
 
@@ -184,14 +212,6 @@
 
                 App.SetCurrentUser(user);
                 this.settingsService.UpdateUser(user);
-
-                if (!this.categoriesToDelete.IsNullOrEmpty())
-                {
-                    foreach (var category in this.categoriesToDelete)
-                    {
-                        this.settingsService.RemoveCategory(user, category.Id);
-                    }
-                }
 
                 this.ChangeButton.Visibility = Visibility.Visible;
                 this.SaveButton.Visibility = Visibility.Collapsed;
