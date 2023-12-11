@@ -65,7 +65,7 @@
         public static Guid[] FillCategoryTable(SqlConnection connection)
         {
             var faker = new Faker();
-            Guid[] categoryIds = new Guid[4];
+            Guid[] categoryIds = new Guid[5];
 
             using (SqlCommand command = new SqlCommand(
                 "INSERT INTO Categories (UserId, Title, IsGeneral, PercentageAmount, Type) " +
@@ -104,6 +104,14 @@
                 command.Parameters.AddWithValue("@Type", TransType.Баланс.ToString());
 
                 categoryIds[3] = (Guid)command.ExecuteScalar();
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@UserId", DBNull.Value);
+                command.Parameters.AddWithValue("@Title", "Скарбничка");
+                command.Parameters.AddWithValue("@IsGeneral", 1);
+                command.Parameters.AddWithValue("@PercentageAmount", 0);
+                command.Parameters.AddWithValue("@Type", TransType.Баланс.ToString());
+
+                categoryIds[4] = (Guid)command.ExecuteScalar();
             }
 
             return categoryIds;

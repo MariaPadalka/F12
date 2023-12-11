@@ -108,7 +108,7 @@
                     .ToList();
                 var expenses = new ChartValues<decimal>(new decimal[7]);
                 var incomes = new ChartValues<decimal>(new decimal[7]);
-                var balance = new ChartValues<decimal>(new decimal[7]);
+                var savings = new ChartValues<decimal>(new decimal[7]);
                 var j = 0;
                 List<DateTime?> datesInRange = new List<DateTime?>();
                 if (date.Item2 == null)
@@ -125,27 +125,28 @@
                 {
                     decimal totalExpenses = 0;
                     decimal totalIncomes = 0;
-                    decimal totalBalance = 0;
+                    decimal totalSavings = 0;
                     var group = groupedTransactions.FirstOrDefault(i => i.Date?.DayOfYear == date_?.DayOfYear);
                     if (group != null)
                     {
                         foreach (var transaction in group.Transactions)
                         {
-                            var category = this.categoryRepository.GetCategoryById(transaction.ToCategory);
+                            var fromCategory = this.categoryRepository.GetCategoryById(transaction.FromCategory);
+                            var toCategory = this.categoryRepository.GetCategoryById(transaction.ToCategory);
 
-                            if (category != null)
+                            if (toCategory != null)
                             {
-                                if (category.Type == "Витрати")
+                                if (toCategory.Type == "Витрати")
                                 {
                                     totalExpenses += transaction.Amount;
                                 }
-                                else if (category.Type == "Дохід")
+                                else if (fromCategory.Type == "Дохід" && toCategory.Type == "Баланс" && toCategory.Title != "Скарбничка")
                                 {
                                     totalIncomes += transaction.Amount;
                                 }
-                                else if (category.Type == "Баланс")
+                                else if (toCategory.Title == "Скарбничка")
                                 {
-                                    totalBalance += transaction.Amount;
+                                    totalSavings += transaction.Amount;
                                 }
                             }
                         }
@@ -153,7 +154,7 @@
 
                     expenses[j] = totalExpenses;
                     incomes[j] = totalIncomes;
-                    balance[j] = totalBalance;
+                    savings[j] = totalSavings;
                     j += 1;
                 }
 
@@ -170,8 +171,8 @@
 
                 this.SeriesCollection.Add(new ColumnSeries
                 {
-                    Title = "Баланс",
-                    Values = balance,
+                    Title = "Збереження",
+                    Values = savings,
                     ColumnPadding = 6,
                     Fill = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0xBD, 0xD4, 0xF1)),
                 });
