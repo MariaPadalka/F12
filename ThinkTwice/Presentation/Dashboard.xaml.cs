@@ -101,10 +101,12 @@ namespace Presentation
 
             var incomes = this.transactionService.GetIncome(App.GetCurrentUser());
             var expense = this.transactionService.GetExpenses(App.GetCurrentUser());
+            var balance = this.transactionService.GetBalance(App.GetCurrentUser());
+            var savings = this.transactionService.GetSavings(App.GetCurrentUser());
             this.incomeValue.Text = currency + incomes.ToString();
-            this.balanceValue.Text = currency + this.transactionService.GetBalance(App.GetCurrentUser()).ToString();
+            this.balanceValue.Text = currency + balance.ToString();
             this.expensesValue.Text = currency + expense.ToString();
-            this.savingsValue.Text = currency + (incomes - expense).ToString();
+            this.savingsValue.Text = currency + savings.ToString();
             this.dataGrid.ItemsSource = transactionDTOs;
         }
 
@@ -135,7 +137,7 @@ namespace Presentation
                     .ToList();
                 var expenses = new ChartValues<decimal>(new decimal[7]);
                 var incomes = new ChartValues<decimal>(new decimal[7]);
-                var balance = new ChartValues<decimal>(new decimal[7]);
+                var savings = new ChartValues<decimal>(new decimal[7]);
                 var j = 0;
                 List<DateTime?> datesInRange = new List<DateTime?>();
                 for (DateTime? date_ = date.Item1.AddDays(1); date_ <= date.Item2; date_ = date_?.AddDays(1))
@@ -147,27 +149,33 @@ namespace Presentation
                 {
                     decimal totalExpenses = 0;
                     decimal totalIncomes = 0;
-                    decimal totalBalance = 0;
+                    decimal totalSavings = 0;
                     var group = groupedTransactions.FirstOrDefault(i => i.Date?.DayOfYear == date_?.DayOfYear);
                     if (group != null)
                     {
                         foreach (var transaction in group.Transactions)
                         {
-                            var category = this.categoryRepository.GetCategoryById(transaction.ToCategory);
+                            var fromCategory = this.categoryRepository.GetCategoryById(transaction.FromCategory);
+                            var toCategory = this.categoryRepository.GetCategoryById(transaction.ToCategory);
 
-                            if (category != null)
+                            if (toCategory != null)
                             {
-                                if (category.Type == "Витрати")
+                                if (toCategory.Type == "Витрати")
                                 {
                                     totalExpenses += transaction.Amount;
                                 }
-                                else if (category.Type == "Дохід")
+                                else if (fromCategory.Type == "Дохід" && toCategory.Type == "Баланс" && toCategory.Title != "Скарбничка")
                                 {
                                     totalIncomes += transaction.Amount;
                                 }
-                                else if (category.Type == "Баланс")
+                                else if (toCategory.Title == "Скарбничка")
                                 {
-                                    totalBalance += transaction.Amount;
+                                    totalSavings += transaction.Amount;
+                                }
+
+                                if (fromCategory.Title == "Скарбничка")
+                                {
+                                    totalSavings -= transaction.Amount;
                                 }
                             }
                         }
@@ -175,7 +183,7 @@ namespace Presentation
 
                     expenses[j] = totalExpenses;
                     incomes[j] = totalIncomes;
-                    balance[j] = totalBalance;
+                    savings[j] = totalSavings;
                     j += 1;
                 }
 
@@ -194,8 +202,8 @@ namespace Presentation
 
                 this.SeriesCollection.Add(new LineSeries
                 {
-                    Title = "Баланс",
-                    Values = balance,
+                    Title = "Збереженя",
+                    Values = savings,
                     PointGeometry = null,
                     Fill = new SolidColorBrush(System.Windows.Media.Colors.Transparent),
                     Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0xBD, 0xD4, 0xF1)),

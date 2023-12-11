@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Presentation"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" Height="620" Width="700" >
 
 
     <Grid Margin="0,0,47,56">
 
-        <Grid Margin="30,23,0,0" Background="White" Height="504" VerticalAlignment="Top">
+        <Grid Margin="30,23,0,0" Background="White" Height="515" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="107*"/>
                 <ColumnDefinition Width="73*"/>
@@ -162,6 +163,8 @@
                     </Style>
                 </Button.Resources>
             </Button>
+
+            <fa:ImageAwesome x:Name="RegistrationSpinner" Icon="Spinner" Spin="True" SpinDuration="3" Height="20" Width="20" Margin="315,495,0,0" Visibility="Collapsed" Foreground="#40667D"/>
 
 
             <Image x:Name="___icons_ThinkTwice2_PNG" Margin="294,4,20,408" RenderTransformOrigin="-3.669,-1.36">

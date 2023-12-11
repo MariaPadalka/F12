@@ -176,7 +176,9 @@
                 var transactions = this.GetTransactionsInTimePeriod(userDTO, start, null);
                 if (transactions != null)
                 {
-                    return transactions.Where(i => this.CategoryRepo.GetCategoryById(i.ToCategory)?.Type == "Дохід").Sum(i => i.Amount);
+                    return transactions.Where(i => this.CategoryRepo.GetCategoryById(i.FromCategory)?.Type == "Дохід" &&
+                     this.CategoryRepo.GetCategoryById(i.ToCategory)?.Type == "Баланс"
+                    && this.CategoryRepo.GetCategoryById(i.ToCategory)?.Title != "Скарбничка").Sum(i => i.Amount);
                 }
                 else
                 {
@@ -196,7 +198,33 @@
                 var transactions = this.GetTransactionsInTimePeriod(userDTO, null, null);
                 if (transactions != null)
                 {
-                    return transactions.Where(i => this.CategoryRepo.GetCategoryById(i.ToCategory)?.Type == "Баланс").Sum(i => i.Amount);
+                    var income = transactions.Where(i => this.CategoryRepo.GetCategoryById(i.FromCategory)?.Type == "Дохід" &&
+                     this.CategoryRepo.GetCategoryById(i.ToCategory)?.Type == "Баланс"
+                    && this.CategoryRepo.GetCategoryById(i.ToCategory)?.Title != "Скарбничка").Sum(i => i.Amount);
+                    var expenses = transactions.Where(i => this.CategoryRepo.GetCategoryById(i.ToCategory)?.Type == "Витрати").Sum(i => i.Amount);
+                    return income - expenses;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public decimal GetSavings(UserDTO? userDTO)
+        {
+            if (userDTO != null)
+            {
+                var transactions = this.GetTransactionsInTimePeriod(userDTO, null, null);
+                if (transactions != null)
+                {
+                    var inc = transactions.Where(i => this.CategoryRepo.GetCategoryById(i.ToCategory)?.Title == "Скарбничка").Sum(i => i.Amount);
+                    var exp = transactions.Where(i => this.CategoryRepo.GetCategoryById(i.FromCategory)?.Title == "Скарбничка").Sum(i => i.Amount);
+                    return inc - exp;
                 }
                 else
                 {

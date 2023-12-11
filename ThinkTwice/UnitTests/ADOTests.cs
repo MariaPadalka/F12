@@ -130,7 +130,7 @@ namespace UnitTests
                 testIds?.AddRange(categoryIds);
 
                 // Assert
-                Assert.AreEqual(4, categoryIds.Length);
+                Assert.AreEqual(5, categoryIds.Length);
                 CollectionAssert.AllItemsAreUnique(categoryIds);
                 connection.Close();
             }

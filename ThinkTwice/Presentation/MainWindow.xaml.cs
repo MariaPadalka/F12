@@ -13,6 +13,7 @@
         public MainWindow()
         {
             this.InitializeComponent();
+            this.ShowsNavigationUI = false;
             this.mainFrame.Navigate(new RegistrationView());
         }
     }

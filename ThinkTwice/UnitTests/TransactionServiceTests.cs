@@ -923,16 +923,27 @@ namespace UnitTests
             var categoryRepositoryMock = new Mock<CategoryRepository>();
 
             var user = new User { Id = userDTO.Id, Email = "test@example.com" };
+            var from_category = new Category();
+            from_category.Type = "Дохід";
+            from_category.Id = Guid.NewGuid();
+
+            var to_category = new Category();
+            to_category.Type = "Баланс";
+            to_category.Id = Guid.NewGuid();
+
+
             var transactions = new List<Transaction>
             {
-                new Transaction { Id = Guid.NewGuid(), UserId = user.Id, ToCategory = Guid.NewGuid(), Date = System.DateTime.Now, Amount = 100 },
-                new Transaction { Id = Guid.NewGuid(), UserId = user.Id, ToCategory = Guid.NewGuid(), Date = System.DateTime.Now, Amount = 200 },
-                new Transaction { Id = Guid.NewGuid(), UserId = user.Id, ToCategory = Guid.NewGuid(), Date = System.DateTime.Now, Amount = 300 }
+                new Transaction { Id = Guid.NewGuid(), UserId = user.Id, FromCategory = from_category.Id, ToCategory = to_category.Id, Date = System.DateTime.Now, Amount = 100 },
+                new Transaction { Id = Guid.NewGuid(), UserId = user.Id, FromCategory = from_category.Id, ToCategory = to_category.Id, Date = System.DateTime.Now, Amount = 200 },
+                new Transaction { Id = Guid.NewGuid(), UserId = user.Id, FromCategory = from_category.Id, ToCategory = to_category.Id, Date = System.DateTime.Now, Amount = 300 }
             };
 
             userRepositoryMock.Setup(repo => repo.GetUserById(userDTO.Id)).Returns(user);
             transactionRepositoryMock.Setup(repo => repo.GetTransactionsByUserId(user.Id)).Returns(transactions);
-            categoryRepositoryMock.Setup(repo => repo.GetCategoryById(It.IsAny<Guid>())).Returns(new Category { Type = "Баланс" });
+            categoryRepositoryMock.Setup(repo => repo.GetCategoryById(from_category.Id)).Returns(new Category { Type = "Дохід" });
+            categoryRepositoryMock.Setup(repo => repo.GetCategoryById(to_category.Id)).Returns(new Category { Type = "Баланс" });
+            // встановити FromCategory у всіх транзакціях тип "Дохід"
 
             var transactionService = new TransactionService
             {

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -79,7 +80,7 @@
             }
         }
 
-        private void Submit_Click(object sender, RoutedEventArgs e)
+        private async void Submit_Click(object sender, RoutedEventArgs e)
         {
             string email = this.textBoxEmail.Text;
             string password = this.passwordBox1.Password;
@@ -96,21 +97,33 @@
             }
             else
             {
-                var user = this.registrationService.Register(email, password, first_name, last_name, date, currency);
-                if (user != null)
+                this.RegistrationSpinner.Visibility = Visibility.Visible;
+
+                await Task.Run(() =>
                 {
-                    this.errormessage.Text = "Ви успішно зареєструвались.";
-                    App.SetCurrentUser(user);
-                    this.logger.Information($"Користувача {App.CurrentUser.Name} {App.CurrentUser.Surname} успішно створено.");
-                    this.GoToDashboard(sender, e);
-                }
-                else
-                {
-                    this.errormessage.Text = "Ця пошта вже комусь належить.";
-                    this.logger.Error("Помилка при створенні користувача.");
-                }
+                    var user = this.registrationService.Register(email, password, first_name, last_name, date, currency);
+
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        if (user != null)
+                        {
+                            this.errormessage.Text = "Ви успішно зареєструвались.";
+                            App.SetCurrentUser(user);
+                            this.logger.Information($"Користувача {App.CurrentUser.Name} {App.CurrentUser.Surname} успішно створено.");
+                            this.GoToDashboard(sender, e);
+                        }
+                        else
+                        {
+                            this.errormessage.Text = "Ця пошта вже комусь належить.";
+                            this.logger.Error("Помилка при створенні користувача.");
+                        }
+
+                        this.RegistrationSpinner.Visibility = Visibility.Collapsed;
+                    });
+                });
             }
         }
+
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
