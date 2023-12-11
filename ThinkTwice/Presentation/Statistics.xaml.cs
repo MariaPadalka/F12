@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Navigation;
-using BLL;
-using BLL.DTO;
-using LiveCharts;
-using LiveCharts.Definitions.Charts;
-using LiveCharts.Wpf;
-using Microsoft.AspNetCore.Hosting.Server;
-using ThinkTwice_Context;
-
-namespace Presentation
+﻿namespace Presentation
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Navigation;
+    using BLL;
+    using BLL.DTO;
+    using LiveCharts;
+    using LiveCharts.Wpf;
+    using Serilog;
+    using ThinkTwice_Context;
+
     /// <summary>
     /// Interaction logic for Statistics.xaml.
     /// </summary>
@@ -24,6 +22,8 @@ namespace Presentation
 
     public partial class Statistics : Page
     {
+        private readonly ILogger logger = LoggerManager.Instance.Logger;
+
         private static (DateTime?, DateTime?) statDate;
         private readonly TransactionService transactionService = new TransactionService();
         private readonly CategoryRepository categoryRepository = new CategoryRepository();
@@ -41,6 +41,8 @@ namespace Presentation
             PlannedPie();
 
             this.Loaded += this.YourWindow_Loaded;
+
+            this.logger.Information("Перехід на сторінку статистики.");
         }
 
         public SeriesCollection? SeriesCollection { get; set; }

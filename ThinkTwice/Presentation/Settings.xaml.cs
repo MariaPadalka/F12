@@ -14,6 +14,7 @@
     using BLL.DTO;
     using Microsoft.IdentityModel.Tokens;
     using Presentation.Converters;
+    using Serilog;
     using ThinkTwice_Context;
 
     /// <summary>
@@ -21,6 +22,8 @@
     /// </summary>
     public partial class Settings : Page
     {
+        private readonly ILogger logger = LoggerManager.Instance.Logger;
+
         private readonly string emptyID = "1122F421-1716-410A-A1F2-334C3DC17096";
         private readonly SettingsService settingsService = new SettingsService();
         private ObservableCollection<Category> categories = new ObservableCollection<Category>();
@@ -29,6 +32,8 @@
         {
             this.InitializeComponent();
             this.Loaded += this.YourWindow_Loaded;
+
+            this.logger.Information("Перехід на сторінку налаштувань.");
         }
 
         public ObservableCollection<Category> Categories { get => this.categories; set => this.categories = value; }
@@ -69,9 +74,6 @@
                 this.itemsControl.ItemsSource = this.categories;
             }
         }
-
-
-
 
         public void AddEmptyCategory()
         {
@@ -163,6 +165,7 @@
 
         private void ChangeClick(object sender, RoutedEventArgs e)
         {
+            this.logger.Information("Зміна налаштувань.");
             this.SaveButton.Visibility = Visibility.Visible;
             this.ChangeButton.Visibility = Visibility.Collapsed;
             this.textBoxName.IsEnabled = true;
@@ -189,6 +192,7 @@
 
         private void SaveClick(object sender, RoutedEventArgs e)
         {
+            this.logger.Information("Спроба збереження змін.");
             var allFieldsValid = this.AllFieldsValid();
             if (allFieldsValid)
             {
@@ -220,6 +224,12 @@
                 this.textBoxEmail.IsEnabled = false;
                 this.datePickerBirthdate.IsEnabled = false;
                 this.RemoveEmptyCategory();
+
+                this.logger.Information("Зміни збережено.");
+            }
+            else
+            {
+                this.logger.Error("Помилка при модифікації налаштувань");
             }
         }
 

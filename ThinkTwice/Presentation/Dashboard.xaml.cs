@@ -16,6 +16,7 @@ namespace Presentation
     using LiveCharts;
     using LiveCharts.Wpf;
     using Presentation.DTO;
+    using Serilog;
     using ThinkTwice_Context;
 
     /// <summary>
@@ -23,6 +24,8 @@ namespace Presentation
     /// </summary>
     public partial class Dashboard : Page
     {
+        private readonly ILogger logger = LoggerManager.Instance.Logger;
+
         private readonly TransactionService transactionService = new TransactionService();
         private readonly CategoryRepository categoryRepository = new CategoryRepository();
 
@@ -34,6 +37,8 @@ namespace Presentation
             this.InitializeComponent();
             this.Loaded += this.YourWindow_Loaded;
             this.Loaded += this.PaintGraphic;
+
+            this.logger.Information("Перехід на головну панель.");
         }
 
         public SeriesCollection? SeriesCollection { get; set; }
@@ -62,6 +67,7 @@ namespace Presentation
 
         public void Logout(object sender, RoutedEventArgs e)
         {
+            this.logger.Information($"Вихід користувача {App.CurrentUser.Name} {App.CurrentUser.Surname}.");
             App.RemoveUser();
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new Uri("Login.xaml", UriKind.Relative));

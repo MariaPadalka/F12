@@ -10,6 +10,7 @@
     using System.Windows.Navigation;
     using BLL;
     using Presentation.DTO;
+    using Serilog;
     using ThinkTwice_Context;
 
     /// <summary>
@@ -19,6 +20,8 @@
 
     public partial class Transactions : Page
     {
+        private readonly ILogger logger = LoggerManager.Instance.Logger;
+
         private readonly TransactionService transactionService = new TransactionService();
         private readonly CategoryRepository categoryRepository = new CategoryRepository();
         private readonly CategoryService categoryService = new CategoryService();
@@ -34,6 +37,8 @@
             this.ComboBox_Source();
             this.ComboBox_Destination();
             this.DatePickerBorder.Visibility = Visibility.Collapsed;
+
+            this.logger.Information("Перехід на сторінку транзакції.");
         }
 
         public void DashboardClick(object sender, RoutedEventArgs e)
@@ -148,6 +153,8 @@
 
         private void CreateTransactionButton_Click(object sender, RoutedEventArgs e)
         {
+            this.logger.Information("Спроба додавання транзакції.");
+
             var all_fields_valid = this.AllFieldsValid();
             if (all_fields_valid)
             {
@@ -199,6 +206,8 @@
                     }
 
                     this.dataGridPlannedTransactions.ItemsSource = rows;
+
+                    this.logger.Information("Додано заплановану транзакцію.");
                 }
                 else
                 {
@@ -226,6 +235,8 @@
                     }
 
                     this.dataGrid.ItemsSource = data;
+
+                    this.logger.Information("Додано поточну транзакцію.");
                 }
 
                 this.sourceComboBox.SelectedIndex = -1;
@@ -233,6 +244,10 @@
                 this.detailsTextBox.Text = string.Empty;
                 this.amountTextBox.Text = string.Empty;
                 this.datePickerPlannedDate.SelectedDate = null;
+            }
+            else
+            {
+                this.logger.Error("Помилка додавання транзакції");
             }
         }
 

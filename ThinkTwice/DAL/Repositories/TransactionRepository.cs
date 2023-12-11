@@ -8,6 +8,7 @@
 
         public virtual void CreateTransaction(Transaction transaction)
         {
+
             this.context.Transactions.Add(transaction);
             this.context.SaveChanges();
         }
