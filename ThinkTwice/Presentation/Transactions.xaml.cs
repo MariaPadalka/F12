@@ -34,8 +34,7 @@
             this.InitializeComponent();
             this.Loaded += this.YourWindow_Loaded;
 
-            this.ComboBox_Source();
-            this.ComboBox_Destination();
+            this.ResetFiels();
             this.DatePickerBorder.Visibility = Visibility.Collapsed;
 
             this.logger.Information("Перехід на сторінку транзакції.");
@@ -239,15 +238,65 @@
                     this.logger.Information("Додано поточну транзакцію.");
                 }
 
-                this.sourceComboBox.SelectedIndex = -1;
-                this.destinationComboBox.SelectedIndex = -1;
-                this.detailsTextBox.Text = string.Empty;
-                this.amountTextBox.Text = string.Empty;
-                this.datePickerPlannedDate.SelectedDate = null;
+                this.ResetFiels();
             }
             else
             {
                 this.logger.Error("Помилка додавання транзакції");
+            }
+        }
+
+        private void ResetFiels()
+        {
+            this.ComboBox_Source();
+            this.ComboBox_Destination();
+            this.detailsTextBox.Text = "Деталі";
+            this.amountTextBox.Text = "0,00";
+            this.amountTextBox.Foreground = Brushes.Gray;
+            this.detailsTextBox.Foreground = Brushes.Gray;
+            this.datePickerPlannedDate.SelectedDate = DateTime.Now.AddDays(1).Date;
+        }
+
+        private void TextBoxDetails_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (textBox.Text == "Деталі")
+            {
+                textBox.Text = string.Empty;
+                textBox.Foreground = Brushes.Black;
+            }
+        }
+
+        private void TextBoxDetails_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.Text = "Деталі";
+                textBox.Foreground = Brushes.Gray;
+            }
+        }
+        private void TextBoxAmount_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (textBox.Text == "0,00")
+            {
+                textBox.Text = string.Empty;
+                textBox.Foreground = Brushes.Black;
+            }
+        }
+
+        private void TextBoxAmount_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.Text = "0,00";
+                textBox.Foreground = Brushes.Gray;
             }
         }
 

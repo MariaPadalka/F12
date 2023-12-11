@@ -148,6 +148,11 @@
                                 {
                                     totalSavings += transaction.Amount;
                                 }
+
+                                if (fromCategory.Title == "Скарбничка")
+                                {
+                                    totalSavings -= transaction.Amount;
+                                }
                             }
                         }
                     }

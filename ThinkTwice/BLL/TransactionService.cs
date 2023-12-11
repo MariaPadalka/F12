@@ -222,7 +222,9 @@
                 var transactions = this.GetTransactionsInTimePeriod(userDTO, null, null);
                 if (transactions != null)
                 {
-                    return transactions.Where(i => this.CategoryRepo.GetCategoryById(i.ToCategory)?.Title == "Скарбничка").Sum(i => i.Amount);
+                    var inc = transactions.Where(i => this.CategoryRepo.GetCategoryById(i.ToCategory)?.Title == "Скарбничка").Sum(i => i.Amount);
+                    var exp = transactions.Where(i => this.CategoryRepo.GetCategoryById(i.FromCategory)?.Title == "Скарбничка").Sum(i => i.Amount);
+                    return inc - exp;
                 }
                 else
                 {

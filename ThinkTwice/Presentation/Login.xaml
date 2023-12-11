@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Presentation"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" Height="600" Width="700" >
     <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
 
@@ -39,6 +40,24 @@
                             <Setter Property="CornerRadius" Value="7"/>
                         </Style>
                     </Button.Resources>
+                    <Button.Style>
+                        <!--<Style TargetType="{x:Type Button}">
+                            <Setter Property="Foreground" Value="Navy" />
+                            <Style.Triggers>
+                                <Trigger Property="Mous" Value="true">
+                                    <Setter Property="Foreground" Value="Red" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>-->
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseCaptureWithin" Value="True">
+                                    <!-- Змініть колір на ваш вибір -->
+                                    <Setter Property="Background" Value="Blue"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                 </Button>
 
 
@@ -105,6 +124,7 @@
             </Button>
             <TextBlock Height="24" HorizontalAlignment="Center" Margin="0,195,0,0" x:Name="textBlockHeading" Text="Увійдіть у свій обліковий запис:" VerticalAlignment="Top" Width="276"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" RenderTransformOrigin="0.593,0.569"/>
             <!--<ContentControl x:Name="contentContainer"/>-->
+            <fa:ImageAwesome x:Name="Spinner" Icon="Spinner" Spin="True" SpinDuration="3" Height="20" Width="20" Margin="355,375,266,110" Visibility="Collapsed" Foreground="#40667D"/>
         </Grid>
 
     </Viewbox>

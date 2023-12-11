@@ -2,6 +2,7 @@
 {
     using System;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -20,7 +21,6 @@
         public Login()
         {
             this.InitializeComponent();
-
             this.logger.Information("Перехід на сторінку авторизації.");
         }
 
@@ -57,10 +57,11 @@
             }
         }
 
-        private void Submit_Click(object sender, RoutedEventArgs e)
+        private async void Submit_Click(object sender, RoutedEventArgs e)
         {
             string email = this.textBoxEmail.Text;
             string password;
+
             if (this.textBoxPassword.Visibility == Visibility.Visible)
             {
                 password = this.textBoxPassword.Text;
@@ -79,21 +80,33 @@
             }
             else
             {
-                var user = authenticationService.AuthenticateUser(email, password);
-                if (user == null)
+                this.Spinner.Visibility = Visibility.Visible;
+
+                await Task.Run(() =>
                 {
-                    this.errormessage.Text = "Користувача не знайдено.";
-                    this.logger.Error("Помилка авторизації.");
-                }
-                else
-                {
-                    this.errormessage.Text = string.Empty;
-                    App.SetCurrentUser(user);
-                    this.logger.Information($"Користувача {App.CurrentUser.Name} {App.CurrentUser.Surname} авторизовано.");
-                    this.GoToDashboard(sender, e);
-                }
+                    var user = authenticationService.AuthenticateUser(email, password);
+
+                    this.Dispatcher.Invoke(() =>
+                    {
+
+                        if (user == null)
+                        {
+                            this.errormessage.Text = "Користувача не знайдено.";
+                            this.logger.Error("Помилка авторизації.");
+                        }
+                        else
+                        {
+                            this.errormessage.Text = string.Empty;
+                            App.SetCurrentUser(user);
+                            this.logger.Information($"Користувача {App.CurrentUser.Name} {App.CurrentUser.Surname} авторизовано.");
+                            this.GoToDashboard(sender, e);
+                        }
+                        this.Spinner.Visibility = Visibility.Collapsed;
+                    });
+                });
             }
         }
+
 
         private void ShowPassword_Checked(object sender, RoutedEventArgs e)
         {
