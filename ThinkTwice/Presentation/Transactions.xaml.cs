@@ -70,6 +70,11 @@
             combinedList.AddRange(arr2);
 
             this.sourceComboBox.ItemsSource = combinedList;
+
+            if (combinedList.Count > 0)
+            {
+                this.sourceComboBox.SelectedIndex = 0;
+            }
         }
 
         public void ComboBox_Destination()
@@ -81,6 +86,11 @@
             combinedList.AddRange(arr2);
 
             this.destinationComboBox.ItemsSource = combinedList;
+
+            if (combinedList.Count > 0)
+            {
+                this.destinationComboBox.SelectedIndex = combinedList.Count - 1;
+            }
         }
 
         private void YourWindow_Loaded(object sender, RoutedEventArgs e)

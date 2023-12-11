@@ -328,6 +328,10 @@
                                                                     <Setter Property="CornerRadius" Value="5"/>
                                                                 </Style>
                                                             </TextBox.Resources>
+                                                            <!-- Додайте початкове значення тут -->
+                                                            <TextBox.Text>
+                                                                Деталі
+                                                            </TextBox.Text>
                                                         </TextBox>
                                                     </Grid>
 
@@ -353,6 +357,10 @@
                                                                         <Setter Property="CornerRadius" Value="5"/>
                                                                     </Style>
                                                                 </TextBox.Resources>
+                                                                <!-- Додайте початкове значення тут -->
+                                                                <TextBox.Text>
+                                                                    0,00
+                                                                </TextBox.Text>
                                                             </TextBox>
                                                         </Grid>
                                                     </Grid>
