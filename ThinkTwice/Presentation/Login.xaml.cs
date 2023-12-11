@@ -19,8 +19,9 @@
         /// </summary>
         public Login()
         {
-            this.logger.Information("Спроба авторизації.");
             this.InitializeComponent();
+
+            this.logger.Information("Перехід на сторінку авторизації.");
         }
 
         public static bool IsEmailValid(string email)

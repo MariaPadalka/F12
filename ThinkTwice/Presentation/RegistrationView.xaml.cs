@@ -21,8 +21,9 @@
         /// </summary>
         public RegistrationView()
         {
-            this.logger.Information("Спроба реєстрації.");
             this.InitializeComponent();
+
+            this.logger.Information("Перехід на сторінку реєстрації.");
         }
 
         public static bool IsEmailValid(string email)
