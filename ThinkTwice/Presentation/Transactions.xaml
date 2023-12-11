@@ -328,6 +328,10 @@
                                                                     <Setter Property="CornerRadius" Value="5"/>
                                                                 </Style>
                                                             </TextBox.Resources>
+                                                            <!-- Додайте початкове значення тут -->
+                                                            <TextBox.Text>
+                                                                Деталі
+                                                            </TextBox.Text>
                                                         </TextBox>
                                                     </Grid>
 
@@ -353,6 +357,10 @@
                                                                         <Setter Property="CornerRadius" Value="5"/>
                                                                     </Style>
                                                                 </TextBox.Resources>
+                                                                <!-- Додайте початкове значення тут -->
+                                                                <TextBox.Text>
+                                                                    0,00
+                                                                </TextBox.Text>
                                                             </TextBox>
                                                         </Grid>
                                                     </Grid>
@@ -443,16 +451,15 @@
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="10*"/>
-                                        <RowDefinition Height="1*"/>
-                                        <RowDefinition Height="2.5*"/>
+                                        
+                                        
                                     </Grid.RowDefinitions>
 
                                     <DataGrid Grid.Row="0" x:Name="dataGridPlannedTransactions" VerticalAlignment="Top"
                                                             AutoGenerateColumns="False" GridLinesVisibility="None" Background="White"
                                                             BorderBrush="Transparent" RowBackground="Transparent" RowHeight="30"
                                                             ColumnHeaderHeight="30" Grid.ColumnSpan="2"
-                                                            ScrollViewer.CanContentScroll="False" Loaded="DataGridPlannedTransactions_Loaded"
-                                                            PreviewMouseWheel="DataGrid_PreviewMouseWheel">
+                                                            >
                                         <DataGrid.Resources>
                                             <Style TargetType="DataGridRowHeader">
                                                 <Setter Property="Width" Value="0"/>
@@ -515,34 +522,6 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
 
-                                    <Grid Grid.Row="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="16*"/>
-                                            <ColumnDefinition Width="8*"/>
-                                            <ColumnDefinition Width="8*"/>
-                                            <ColumnDefinition Width="8*"/>
-                                            <ColumnDefinition Width="3*"/>
-                                            <ColumnDefinition Width="13*"/>
-                                        </Grid.ColumnDefinitions>
-                                        
-                                        <Grid Grid.Column="1">
-                                            <Viewbox>
-                                                <Button Width="Auto" Content="⮜" Background="Transparent" BorderThickness="0" Click="DataGridPlannedScrollBackward_Click"/>
-                                            </Viewbox>
-                                        </Grid>
-
-                                        <Grid Grid.Column="2">
-                                            <Viewbox>
-                                                <TextBlock x:Name="pointsPlannedTransactions" FontSize="10" FontStretch="ExtraCondensed" FontWeight="Bold" Height="20" Width="15" RenderTransformOrigin="0.473,0.473"><Run Language="uk-ua" Text="....."/></TextBlock>
-                                            </Viewbox>
-                                        </Grid>
-
-                                        <Grid Grid.Column="3">
-                                            <Viewbox>
-                                                <Button Content="⮞" Background="Transparent" BorderThickness="0" Click="DataGridPlannedScrollForward_Click"/>
-                                            </Viewbox>
-                                        </Grid>
-                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -573,13 +552,12 @@
                         <RowDefinition Height="10*"/>
                         <RowDefinition Height="1.5*"/>
                     </Grid.RowDefinitions>
-                    
-                        <DataGrid Grid.Row="0" x:Name="dataGrid" VerticalAlignment="Top" 
+
+                    <DataGrid Grid.Row="0" x:Name="dataGrid" VerticalAlignment="Top" 
                                   AutoGenerateColumns="False"  GridLinesVisibility="None" Background="White" 
                                   BorderBrush="Transparent" RowBackground="Transparent" Margin="37,0,0,0" 
                                   RowHeight="30" ColumnHeaderHeight="50" Grid.ColumnSpan="2"
-                                  ScrollViewer.CanContentScroll="False" Loaded="DataGridGeneralTransactions_Loaded"
-                                  PreviewMouseWheel="DataGrid_PreviewMouseWheel">
+                                   >
                         <DataGrid.Resources>
                             <Style TargetType="DataGridRowHeader">
                                 <Setter Property="Width" Value="0"/>
@@ -641,35 +619,6 @@
                             </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="16*"/>
-                            <ColumnDefinition Width="8*"/>
-                            <ColumnDefinition Width="8*"/>
-                            <ColumnDefinition Width="8*"/>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="13*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Grid Grid.Column="1">
-                            <Viewbox>
-                                <Button Width="Auto" Content="⮜" Background="Transparent" BorderThickness="0" Click="DataGridGeneralScrollBackward_Click"/>
-                            </Viewbox>
-                        </Grid>
-
-                        <Grid Grid.Column="2">
-                            <Viewbox>
-                                <TextBlock x:Name="pointsGeneralTransactions" FontSize="10" FontStretch="ExtraCondensed" FontWeight="Bold" Height="20" Width="15" RenderTransformOrigin="0.473,0.473"><Run Language="uk-ua" Text="....."/></TextBlock>
-                            </Viewbox>
-                        </Grid>
-
-                        <Grid Grid.Column="3">
-                            <Viewbox>
-                                <Button Content="⮞" Background="Transparent" BorderThickness="0" Click="DataGridGeneralScrollForward_Click"/>
-                            </Viewbox>
-                        </Grid>
-                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

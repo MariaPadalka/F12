@@ -74,7 +74,23 @@ namespace Presentation
             List<TransactionDTO>? transactionDTOs = new List<TransactionDTO>();
             foreach (var transaction in defaultData)
             {
-                transactionDTOs.Add(new TransactionDTO(transaction));
+                var transaction_copy = new Transaction();
+                transaction_copy.Date = transaction.Date;
+                transaction_copy.UserId = transaction.UserId;
+                transaction_copy.Amount = transaction.Amount;
+                transaction_copy.FromCategory = transaction.FromCategory;
+                transaction_copy.ToCategory = transaction.ToCategory;
+                transaction_copy.Id = transaction.Id;
+                transaction_copy.Details = transaction.Details;
+                if (transaction_copy != null)
+                {
+                    if ((this.categoryRepository.GetCategoryById(transaction_copy.FromCategory)?.Type == "Баланс" || this.categoryRepository.GetCategoryById(transaction_copy.FromCategory)?.Type == "Дохід") && this.categoryRepository.GetCategoryById(transaction_copy.ToCategory)?.Type == "Витрати")
+                    {
+                        transaction_copy.Amount *= -1;
+                    }
+
+                    transactionDTOs.Add(new TransactionDTO(transaction_copy));
+                }
             }
 
             var incomes = this.transactionService.GetIncome(App.GetCurrentUser());

@@ -70,6 +70,11 @@
             combinedList.AddRange(arr2);
 
             this.sourceComboBox.ItemsSource = combinedList;
+
+            if (combinedList.Count > 0)
+            {
+                this.sourceComboBox.SelectedIndex = 0;
+            }
         }
 
         public void ComboBox_Destination()
@@ -81,6 +86,11 @@
             combinedList.AddRange(arr2);
 
             this.destinationComboBox.ItemsSource = combinedList;
+
+            if (combinedList.Count > 0)
+            {
+                this.destinationComboBox.SelectedIndex = combinedList.Count - 1;
+            }
         }
 
         private void YourWindow_Loaded(object sender, RoutedEventArgs e)
@@ -89,14 +99,22 @@
             List<TransactionDTO> data = new List<TransactionDTO>();
             foreach (Transaction transaction in defaultData)
             {
-                if (transaction != null)
+                var transaction_copy = new Transaction();
+                transaction_copy.Date = transaction.Date;
+                transaction_copy.UserId = transaction.UserId;
+                transaction_copy.Amount = transaction.Amount;
+                transaction_copy.FromCategory = transaction.FromCategory;
+                transaction_copy.ToCategory = transaction.ToCategory;
+                transaction_copy.Id = transaction.Id;
+                transaction_copy.Details = transaction.Details;
+                if (transaction_copy != null)
                 {
-                    //if ((this.categoryRepository.GetCategoryById(transaction.FromCategory)?.Type == "Баланс" || this.categoryRepository.GetCategoryById(transaction.FromCategory)?.Type == "Дохід") && this.categoryRepository.GetCategoryById(transaction.ToCategory)?.Type == "Витрати")
-                    //{
-                    //    transaction.Amount *= -1;
-                    //}
+                    if ((this.categoryRepository.GetCategoryById(transaction_copy.FromCategory)?.Type == "Баланс" || this.categoryRepository.GetCategoryById(transaction_copy.FromCategory)?.Type == "Дохід") && this.categoryRepository.GetCategoryById(transaction_copy.ToCategory)?.Type == "Витрати")
+                    {
+                        transaction_copy.Amount *= -1;
+                    }
 
-                    data.Add(new TransactionDTO(transaction));
+                    data.Add(new TransactionDTO(transaction_copy));
                 }
             }
 
@@ -106,9 +124,22 @@
             List<TransactionDTO> rows = new List<TransactionDTO>();
             foreach (Transaction transaction in plannedData)
             {
-                if (transaction != null)
+                var transaction_copy = new Transaction();
+                transaction_copy.Date = transaction.Date;
+                transaction_copy.UserId = transaction.UserId;
+                transaction_copy.Amount = transaction.Amount;
+                transaction_copy.FromCategory = transaction.FromCategory;
+                transaction_copy.ToCategory = transaction.ToCategory;
+                transaction_copy.Id = transaction.Id;
+                transaction_copy.Details = transaction.Details;
+                if (transaction_copy != null)
                 {
-                    rows.Add(new TransactionDTO(transaction));
+                    if ((this.categoryRepository.GetCategoryById(transaction_copy.FromCategory)?.Type == "Баланс" || this.categoryRepository.GetCategoryById(transaction_copy.FromCategory)?.Type == "Дохід") && this.categoryRepository.GetCategoryById(transaction_copy.ToCategory)?.Type == "Витрати")
+                    {
+                        transaction_copy.Amount *= -1;
+                    }
+
+                    rows.Add(new TransactionDTO(transaction_copy));
                 }
             }
 
@@ -140,11 +171,6 @@
                     date = this.datePickerPlannedDate?.SelectedDate.Value;
                 }
 
-                //if ((this.categoryRepository.GetCategoryById(category_from)?.Type == "Баланс" || this.categoryRepository.GetCategoryById(category_from)?.Type == "Дохід") && this.categoryRepository.GetCategoryById(category_to)?.Type == "Витрати")
-                //{
-                //    amount *= -1;
-                //}
-
                 this.transactionService.AddTransaction(App.GetCurrentUser(), category_to, category_from, amount, date, details, planned);
 
                 if (planned)
@@ -153,9 +179,22 @@
                     List<TransactionDTO> rows = new List<TransactionDTO>();
                     foreach (Transaction transaction in plannedData)
                     {
-                        if (transaction != null)
+                        var transaction_copy = new Transaction();
+                        transaction_copy.Date = transaction.Date;
+                        transaction_copy.UserId = transaction.UserId;
+                        transaction_copy.Amount = transaction.Amount;
+                        transaction_copy.FromCategory = transaction.FromCategory;
+                        transaction_copy.ToCategory = transaction.ToCategory;
+                        transaction_copy.Id = transaction.Id;
+                        transaction_copy.Details = transaction.Details;
+                        if (transaction_copy != null)
                         {
-                            rows.Add(new TransactionDTO(transaction));
+                            if ((this.categoryRepository.GetCategoryById(transaction_copy.FromCategory)?.Type == "Баланс" || this.categoryRepository.GetCategoryById(transaction_copy.FromCategory)?.Type == "Дохід") && this.categoryRepository.GetCategoryById(transaction_copy.ToCategory)?.Type == "Витрати")
+                            {
+                                transaction_copy.Amount *= -1;
+                            }
+
+                            rows.Add(new TransactionDTO(transaction_copy));
                         }
                     }
 
@@ -167,9 +206,22 @@
                     List<TransactionDTO> data = new List<TransactionDTO>();
                     foreach (Transaction transaction in defaultData)
                     {
-                        if (transaction != null)
+                        var transaction_copy = new Transaction();
+                        transaction_copy.Date = transaction.Date;
+                        transaction_copy.UserId = transaction.UserId;
+                        transaction_copy.Amount = transaction.Amount;
+                        transaction_copy.FromCategory = transaction.FromCategory;
+                        transaction_copy.ToCategory = transaction.ToCategory;
+                        transaction_copy.Id = transaction.Id;
+                        transaction_copy.Details = transaction.Details;
+                        if (transaction_copy != null)
                         {
-                            data.Add(new TransactionDTO(transaction));
+                            if ((this.categoryRepository.GetCategoryById(transaction_copy.FromCategory)?.Type == "Баланс" || this.categoryRepository.GetCategoryById(transaction_copy.FromCategory)?.Type == "Дохід") && this.categoryRepository.GetCategoryById(transaction_copy.ToCategory)?.Type == "Витрати")
+                            {
+                                transaction_copy.Amount *= -1;
+                            }
+
+                            data.Add(new TransactionDTO(transaction_copy));
                         }
                     }
 
@@ -328,49 +380,6 @@
             double jumpSize = Math.Floor(scrollViewer.ViewportHeight);
 
             scrollViewer.ScrollToVerticalOffset(Math.Min(scrollViewer.ScrollableHeight, scrollViewer.VerticalOffset + jumpSize));
-        }
-
-        private void DataGridPlannedTransactions_Loaded(object sender, RoutedEventArgs e)
-        {
-            ScrollViewer? scrollViewer = this.GetScrollViewer(this.dataGridPlannedTransactions);
-            if (scrollViewer != null)
-            {
-                scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
-                scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
-            }
-        }
-
-        private void DataGridGeneralScrollBackward_Click(object sender, RoutedEventArgs e)
-        {
-            var scrollViewer = this.GetScrollViewer(this.dataGrid);
-
-            double jumpSize = Math.Floor(scrollViewer.ViewportHeight);
-
-            scrollViewer.ScrollToVerticalOffset(Math.Max(0, scrollViewer.VerticalOffset - jumpSize));
-        }
-
-        private void DataGridGeneralScrollForward_Click(object sender, RoutedEventArgs e)
-        {
-            var scrollViewer = this.GetScrollViewer(this.dataGrid);
-
-            double jumpSize = Math.Floor(scrollViewer.ViewportHeight);
-
-            scrollViewer.ScrollToVerticalOffset(Math.Min(scrollViewer.ScrollableHeight, scrollViewer.VerticalOffset + jumpSize));
-        }
-
-        private void DataGridGeneralTransactions_Loaded(object sender, RoutedEventArgs e)
-        {
-            ScrollViewer? scrollViewer = this.GetScrollViewer(this.dataGrid);
-            if (scrollViewer != null)
-            {
-                scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
-                scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
-            }
-        }
-
-        private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            e.Handled = true; // Заборонити обробку скролінгу миші
         }
     }
 }
