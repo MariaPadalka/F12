@@ -40,24 +40,6 @@
                             <Setter Property="CornerRadius" Value="7"/>
                         </Style>
                     </Button.Resources>
-                    <Button.Style>
-                        <!--<Style TargetType="{x:Type Button}">
-                            <Setter Property="Foreground" Value="Navy" />
-                            <Style.Triggers>
-                                <Trigger Property="Mous" Value="true">
-                                    <Setter Property="Foreground" Value="Red" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>-->
-                        <Style TargetType="Button">
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseCaptureWithin" Value="True">
-                                    <!-- Змініть колір на ваш вибір -->
-                                    <Setter Property="Background" Value="Blue"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
                 </Button>
 
 
