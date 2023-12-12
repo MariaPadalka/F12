@@ -103,7 +103,7 @@
                 </TextBox.Template>
             </TextBox>
             <PasswordBox Style="{StaticResource roundcornerpassword}" Height="23" HorizontalAlignment="Left" Margin="228,271,0,0" x:Name="passwordBox1" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" PasswordChanged="PasswordBox_PasswordChanged" KeyDown="TextBox_KeyDown"/>
-            <ToggleButton x:Name="toggleButtonShowPassword" Checked="ShowPassword_Checked" Unchecked="ShowPassword_Unchecked" Margin="57,273,176,212" Grid.Column="1" Background="White" BorderBrush="White">
+            <ToggleButton x:Name="toggleButtonShowPassword" Checked="ShowPassword_Checked" Unchecked="ShowPassword_Unchecked" Margin="57,274,176,224" Grid.Column="1" Background="White" BorderBrush="White">
                 <Image Width="16" Height="16">
                     <Image.Style>
                         <Style TargetType="Image">
@@ -129,7 +129,7 @@
                 </TextBox.Template>
             </TextBox>
             <PasswordBox Style="{StaticResource roundcornerpassword}" Height="23" HorizontalAlignment="Left" Margin="229,317,0,0" x:Name="passwordBoxConfirm" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" PasswordChanged="PasswordConfirmBox_PasswordChanged" KeyDown="TextBox_KeyDown"/>
-            <ToggleButton x:Name="toggleButtonShowConfirmPassword" Checked="ShowConfirmPassword_Checked" Unchecked="ShowConfirmPassword_Unchecked" Margin="57,319,175,166" Grid.Column="1" Background="White" BorderBrush="White">
+            <ToggleButton x:Name="toggleButtonShowConfirmPassword" Checked="ShowConfirmPassword_Checked" Unchecked="ShowConfirmPassword_Unchecked" Margin="57,320,175,178" Grid.Column="1" Background="White" BorderBrush="White">
                 <Image Width="16" Height="16">
                     <Image.Style>
                         <Style TargetType="Image">

@@ -202,7 +202,8 @@
                      this.CategoryRepo.GetCategoryById(i.ToCategory)?.Type == "Баланс"
                     && this.CategoryRepo.GetCategoryById(i.ToCategory)?.Title != "Скарбничка").Sum(i => i.Amount);
                     var expenses = transactions.Where(i => this.CategoryRepo.GetCategoryById(i.ToCategory)?.Type == "Витрати").Sum(i => i.Amount);
-                    return income - expenses;
+                    var savings = this.GetSavings(userDTO);
+                    return income - (expenses + savings);
                 }
                 else
                 {

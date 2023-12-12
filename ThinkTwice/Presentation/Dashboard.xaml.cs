@@ -107,7 +107,7 @@ namespace Presentation
             this.balanceValue.Text = currency + balance.ToString();
             this.expensesValue.Text = currency + expense.ToString();
             this.savingsValue.Text = currency + savings.ToString();
-            this.dataGrid.ItemsSource = transactionDTOs;
+            this.dataGrid.ItemsSource = transactionDTOs.OrderBy(i => i.Date).Reverse();
         }
 
         private string GetCurrency(string? currency)

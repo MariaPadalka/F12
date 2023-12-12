@@ -122,7 +122,7 @@
                 }
             }
 
-            this.dataGrid.ItemsSource = data;
+            this.dataGrid.ItemsSource = data.OrderBy(i => i.Date).Reverse();
 
             List<Transaction>? plannedData = this.transactionService.GetTransactions(App.GetCurrentUser())?.Where(c => (c.Date > DateTime.Now.Date && c.Planned == true)).ToList();
             List<TransactionDTO> rows = new List<TransactionDTO>();
@@ -147,7 +147,7 @@
                 }
             }
 
-            this.dataGridPlannedTransactions.ItemsSource = rows;
+            this.dataGridPlannedTransactions.ItemsSource = rows.OrderBy(i => i.Date);
         }
 
         private void CreateTransactionButton_Click(object sender, RoutedEventArgs e)
