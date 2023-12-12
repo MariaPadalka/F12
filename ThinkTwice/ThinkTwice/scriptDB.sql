@@ -29,7 +29,6 @@ CREATE TABLE Transactions (
     To_category UNIQUEIDENTIFIER,
     Amount DECIMAL(10, 2) NOT NULL,
     Date DATE,
-    Title NVARCHAR(50) NOT NULL,
     Details NVARCHAR(255),
     Planned BIT NOT NULL,
 

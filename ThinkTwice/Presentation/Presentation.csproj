@@ -10,18 +10,24 @@
   <ItemGroup>
     <None Remove="icons\blue_dollar.png" />
     <None Remove="icons\green-dollar.png" />
-    <None Remove="icons\hide.png" />
-    <None Remove="icons\home.png" />
-    <None Remove="icons\payment.png" />
-    <None Remove="icons\red-dollar.png" />
-    <None Remove="icons\settings.png" />
-    <None Remove="icons\statistics.png" />
+    <None Remove="icons\home_black.png" />
+    <None Remove="icons\home_grey.png" />
+    <None Remove="icons\left-chevron.png" />
+    <None Remove="icons\logout_grey.png" />
+	<None Remove="icons\hide.png" />
+	<None Remove="icons\red-dollar.png" />
+	<None Remove="icons\right-chevron.png" />
+    <None Remove="icons\settings_black.png" />
+    <None Remove="icons\settings_grey.png" />
+    <None Remove="icons\statistics_black.png" />
+    <None Remove="icons\statistics_grey.png" />
     <None Remove="icons\thinkTwice.PNG" />
     <None Remove="icons\ThinkTwice2.PNG" />
     <None Remove="icons\ThinkTwiceBlack.PNG" />
-    <None Remove="icons\transactions.png" />
-    <None Remove="icons\view.png" />
-    <None Remove="icons\violet-dollar.png" />
+    <None Remove="icons\transactions_black.png" />
+    <None Remove="icons\transactions_grey.png" />
+	<None Remove="icons\view.png" />
+	<None Remove="icons\violet-dollar.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,22 +37,37 @@
     <Content Include="icons\green-dollar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="icons\hide.png">
+	  <Content Include="icons\hide.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+    <Content Include="icons\home_black.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="icons\home.png">
+    <Content Include="icons\home_grey.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="icons\payment.png">
+    <Content Include="icons\left-chevron.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\logout_grey.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="icons\red-dollar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="icons\settings.png">
+    <Content Include="icons\right-chevron.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="icons\statistics.png">
+    <Content Include="icons\settings_black.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\settings_grey.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\statistics_black.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\statistics_grey.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="icons\thinkTwice.PNG">
@@ -58,24 +79,46 @@
     <Content Include="icons\ThinkTwiceBlack.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="icons\transactions.png">
+    <Content Include="icons\transactions_black.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="icons\view.png">
+    <Content Include="icons\transactions_grey.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+	  <Content Include="icons\view.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
     <Content Include="icons\violet-dollar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+    <PackageReference Include="LiveCharts" Version="0.9.7" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj" />
     <ProjectReference Include="..\DAL\DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Transactions.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

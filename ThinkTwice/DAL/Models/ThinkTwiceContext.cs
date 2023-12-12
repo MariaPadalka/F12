@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-
-namespace ThinkTwice_Context
+﻿namespace ThinkTwice_Context
 {
+    using Microsoft.EntityFrameworkCore;
 
     public partial class ThinkTwiceContext : DbContext
     {
@@ -51,7 +48,6 @@ namespace ThinkTwice_Context
                 entity.Property(e => e.Date).HasColumnType("date");
                 entity.Property(e => e.Details).HasMaxLength(255);
                 entity.Property(e => e.FromCategory).HasColumnName("From_category");
-                entity.Property(e => e.Title).HasMaxLength(50);
                 entity.Property(e => e.ToCategory).HasColumnName("To_category");
 
                 entity.HasOne(d => d.FromCategoryNavigation).WithMany(p => p.TransactionFromCategoryNavigations)
@@ -81,7 +77,7 @@ namespace ThinkTwice_Context
                 entity.Property(e => e.Surname).HasMaxLength(50);
             });
 
-            OnModelCreatingPartial(modelBuilder);
+            this.OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

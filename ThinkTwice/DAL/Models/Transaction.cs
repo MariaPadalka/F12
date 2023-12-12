@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ThinkTwice_Context
+﻿namespace ThinkTwice_Context
 {
-    public partial class Transaction
+    public class Transaction
     {
         public Guid Id { get; set; }
 
@@ -16,8 +13,6 @@ namespace ThinkTwice_Context
         public decimal Amount { get; set; }
 
         public DateTime? Date { get; set; }
-
-        public string Title { get; set; } = null!;
 
         public string? Details { get; set; }
 

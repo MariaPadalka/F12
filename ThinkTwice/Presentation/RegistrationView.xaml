@@ -4,34 +4,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Presentation"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" Height="620" Width="700" >
 
 
     <Grid Margin="0,0,47,56">
 
-        <!--Button as a Link button using style-->
-        <!--end Button as a Link button using style-->
-
-        <!--end Button as a Link button using style-->
-
-        <!--end Button as a Link button using style-->
-        <Grid Margin="30,23,0,0" Background="White" Height="504" VerticalAlignment="Top">
+        <Grid Margin="30,23,0,0" Background="White" Height="515" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="107*"/>
                 <ColumnDefinition Width="73*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="252*" />
-                <!--   <RowDefinition Height="12*" />-->
             </Grid.RowDefinitions>
             <TextBlock Height="20" HorizontalAlignment="Left" Margin="214,433,0,0" x:Name ="errormessage" VerticalAlignment="Top" Width="250"  OpacityMask="Crimson" Foreground="#FFE5572C" Grid.ColumnSpan="2" TextAlignment="Center" />
             <TextBlock Height="23" HorizontalAlignment="Left" Margin="113,124,0,0" x:Name="textBlockFirstname" Text="Ім'я:" VerticalAlignment="Top" Width="110" Foreground="#302f2f"/>
             <TextBlock Height="23" HorizontalAlignment="Left" Margin="113,172,0,0" x:Name="textBlockLastName" Text="Прізвище:" VerticalAlignment="Top" Width="110" Foreground="#302f2f"/>
-            <TextBlock Height="22" HorizontalAlignment="Left" Margin="113,222,0,0" x:Name="textBlockEmailId" Text="Email:" VerticalAlignment="Top" Width="110" Foreground="#302f2f"/>
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="113,222,0,0" x:Name="textBlockEmailId" Text="Email:" VerticalAlignment="Top" Width="110" Foreground="#302f2f"/>
             <TextBlock Height="23" HorizontalAlignment="Left" Margin="113,271,0,0" x:Name="textBlockPassword" Text="Пароль:" VerticalAlignment="Top" Width="110" Foreground="#302f2f" />
             <TextBlock Height="23" HorizontalAlignment="Left" Margin="113,317,0,0" x:Name="textBlockConfirmPwd" Text="Підтвердіть пароль:" VerticalAlignment="Top" Width="110" Foreground="#302f2f"/>
             <TextBlock Text="Дата народження:" Margin="113,364,146,116" HorizontalAlignment="Left" Foreground="#302f2f"/>
-            <DatePicker BorderThickness="0" x:Name="datePickerBirthdate" Height="24" HorizontalAlignment="Left" Margin="229,364,0,0" VerticalAlignment="Top" Width="222" SelectedDateChanged="DatePicker_SelectedDateChanged" Language="uk-UA" Grid.ColumnSpan="2">
+            <DatePicker BorderThickness="0" x:Name="datePickerBirthdate" Height="24" HorizontalAlignment="Left" Margin="229,364,0,0" VerticalAlignment="Top" Width="222" SelectedDateChanged="DatePicker_SelectedDateChanged" Language="uk-UA" Grid.ColumnSpan="2" KeyDown="TextBox_KeyDown">
                 <DatePicker.Resources>
                     <Style TargetType="{x:Type DatePickerTextBox}">
                         <Setter Property="Template">
@@ -57,7 +51,7 @@
             </DatePicker>
             <TextBlock Height="20" HorizontalAlignment="Left" Margin="229,387,0,0" x:Name ="dateError" VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Grid.ColumnSpan="2" />
             <TextBlock Text="Валюта:"  Margin="113,405,150,75" Foreground="#302f2f"/>
-            <ComboBox BorderThickness="0" Height="23" HorizontalAlignment="Left" Margin="229,407,0,0" x:Name="comboBoxCurrency" IsEditable="True" IsReadOnly="True" Text="UAH" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2">
+            <ComboBox BorderThickness="0" Height="23" HorizontalAlignment="Left" Margin="229,407,0,0" x:Name="comboBoxCurrency" IsEditable="True" IsReadOnly="True" Text="UAH" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" KeyDown="TextBox_KeyDown">
                 <ComboBoxItem Content="USD" BorderThickness="0"/>
                 <ComboBoxItem Content="EUR" BorderThickness="0"/>
                 <ComboBoxItem Content="UAH" BorderThickness="0"/>
@@ -66,7 +60,7 @@
             <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3" Height="23" HorizontalAlignment="Left" Margin="229,364,0,0"  VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" />
 
 
-            <TextBox Height="23" HorizontalAlignment="Left" Margin="229,124,0,0" x:Name="textBoxFirstName" VerticalAlignment="Top" Width="222" TextChanged="textBoxFirstName_TextChanged" Grid.ColumnSpan="2">
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="229,124,0,0" x:Name="textBoxFirstName" VerticalAlignment="Top" Width="222" TextChanged="TextBoxFirstName_TextChanged" Grid.ColumnSpan="2" KeyDown="TextBox_KeyDown">
                 <TextBox.Template>
                     <ControlTemplate TargetType="TextBox">
                         <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">
@@ -77,7 +71,7 @@
             </TextBox>
             <TextBlock x:Name="firstNameError" Foreground="Red" Margin="229,151,93,0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
 
-            <TextBox Height="23" HorizontalAlignment="Left" Margin="229,172,0,0" x:Name="textBoxLastName" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" TextChanged="textBoxLastName_TextChanged">
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="229,172,0,0" x:Name="textBoxLastName" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" TextChanged="TextBoxLastName_TextChanged" KeyDown="TextBox_KeyDown">
                 <TextBox.Template>
                     <ControlTemplate TargetType="TextBox">
                         <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">
@@ -88,7 +82,7 @@
             </TextBox>
             <TextBlock x:Name="lastNameError" Foreground="Red" Margin="229,200,93,0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
 
-            <TextBox Height="22" HorizontalAlignment="Left" Margin="229,222,0,0" x:Name="textBoxEmail" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" TextChanged="textBoxEmail_TextChanged">
+            <TextBox Height="22" HorizontalAlignment="Left" Margin="229,222,0,0" x:Name="textBoxEmail" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" TextChanged="TextBoxEmail_TextChanged" KeyDown="TextBox_KeyDown">
                 <TextBox.Template>
                     <ControlTemplate TargetType="TextBox">
                         <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">
@@ -99,7 +93,7 @@
             </TextBox>
             <TextBlock x:Name="emailError" Foreground="Red" Margin="229,252,126,0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
 
-            <TextBox Height="23" HorizontalAlignment="Left" x:Name="textBoxPassword"  VerticalAlignment="Top" Visibility="Collapsed" Width="222" Grid.ColumnSpan="2" Margin="228,271,0,0" TextChanged="textBoxPassword_TextChanged">
+            <TextBox Height="23" HorizontalAlignment="Left" x:Name="textBoxPassword"  VerticalAlignment="Top" Visibility="Collapsed" Width="222" Grid.ColumnSpan="2" Margin="228,271,0,0" TextChanged="TextBoxPassword_TextChanged" KeyDown="TextBox_KeyDown">
                 <TextBox.Template>
                     <ControlTemplate TargetType="TextBox">
                         <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">
@@ -108,8 +102,8 @@
                     </ControlTemplate>
                 </TextBox.Template>
             </TextBox>
-            <PasswordBox Style="{StaticResource roundcornerpassword}" Height="23" HorizontalAlignment="Left" Margin="228,271,0,0" x:Name="passwordBox1" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" PasswordChanged="PasswordBox_PasswordChanged"/>
-            <ToggleButton x:Name="toggleButtonShowPassword" Checked="ShowPassword_Checked" Unchecked="ShowPassword_Unchecked" Margin="57,273,176,212" Grid.Column="1" Background="White" BorderBrush="White">
+            <PasswordBox Style="{StaticResource roundcornerpassword}" Height="23" HorizontalAlignment="Left" Margin="228,271,0,0" x:Name="passwordBox1" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" PasswordChanged="PasswordBox_PasswordChanged" KeyDown="TextBox_KeyDown"/>
+            <ToggleButton x:Name="toggleButtonShowPassword" Checked="ShowPassword_Checked" Unchecked="ShowPassword_Unchecked" Margin="57,274,176,224" Grid.Column="1" Background="White" BorderBrush="White">
                 <Image Width="16" Height="16">
                     <Image.Style>
                         <Style TargetType="Image">
@@ -125,7 +119,7 @@
             </ToggleButton>
             <TextBlock x:Name="passwordError" Foreground="Red" Margin="113,294,156,0" VerticalAlignment="Top" Grid.ColumnSpan="2" TextAlignment="Right"/>
 
-            <TextBox Height="23" HorizontalAlignment="Left" Margin="229,317,0,0" VerticalAlignment="Top" Width="222" x:Name="textBoxConfirmPassword" Visibility="Collapsed" Grid.ColumnSpan="2" TextChanged="textBoxConfirmPassword_TextChanged">
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="229,317,0,0" VerticalAlignment="Top" Width="222" x:Name="textBoxConfirmPassword" Visibility="Collapsed" Grid.ColumnSpan="2" TextChanged="TextBoxConfirmPassword_TextChanged" KeyDown="TextBox_KeyDown">
                 <TextBox.Template>
                     <ControlTemplate TargetType="TextBox">
                         <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">
@@ -134,8 +128,8 @@
                     </ControlTemplate>
                 </TextBox.Template>
             </TextBox>
-            <PasswordBox Style="{StaticResource roundcornerpassword}" Height="23" HorizontalAlignment="Left" Margin="229,317,0,0" x:Name="passwordBoxConfirm" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" PasswordChanged="PasswordConfirmBox_PasswordChanged"/>
-            <ToggleButton x:Name="toggleButtonShowConfirmPassword" Checked="ShowConfirmPassword_Checked" Unchecked="ShowConfirmPassword_Unchecked" Margin="57,319,175,166" Grid.Column="1" Background="White" BorderBrush="White">
+            <PasswordBox Style="{StaticResource roundcornerpassword}" Height="23" HorizontalAlignment="Left" Margin="229,317,0,0" x:Name="passwordBoxConfirm" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" PasswordChanged="PasswordConfirmBox_PasswordChanged" KeyDown="TextBox_KeyDown"/>
+            <ToggleButton x:Name="toggleButtonShowConfirmPassword" Checked="ShowConfirmPassword_Checked" Unchecked="ShowConfirmPassword_Unchecked" Margin="57,320,175,178" Grid.Column="1" Background="White" BorderBrush="White">
                 <Image Width="16" Height="16">
                     <Image.Style>
                         <Style TargetType="Image">
@@ -169,6 +163,8 @@
                     </Style>
                 </Button.Resources>
             </Button>
+
+            <fa:ImageAwesome x:Name="RegistrationSpinner" Icon="Spinner" Spin="True" SpinDuration="3" Height="20" Width="20" Margin="315,495,0,0" Visibility="Collapsed" Foreground="#40667D"/>
 
 
             <Image x:Name="___icons_ThinkTwice2_PNG" Margin="294,4,20,408" RenderTransformOrigin="-3.669,-1.36">

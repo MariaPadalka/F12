@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ThinkTwice_Context
+﻿namespace ThinkTwice_Context
 {
-    public partial class Category
+    public class Category
     {
         public Guid Id { get; set; }
 

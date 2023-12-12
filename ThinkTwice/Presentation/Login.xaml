@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Presentation"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" Height="600" Width="700" >
     <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
 
@@ -47,10 +48,10 @@
                         <BitmapImage UriSource="/icons/ThinkTwice.PNG" />
                     </Image.Source>
                 </Image>
-                <TextBox x:Name="textBoxEmail" Width="222" Height="24" Margin="231,227,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" Foreground="#302f2f">
+                <TextBox x:Name="textBoxEmail" Width="222" Height="24" Margin="231,227,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" Foreground="#302f2f" KeyDown="TextBox_KeyDown">
                     <TextBox.Template>
                         <ControlTemplate TargetType="TextBox">
-                            <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5">
+                            <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">
                                 <ScrollViewer x:Name="PART_ContentHost"/>
                             </Border>
                         </ControlTemplate>
@@ -58,12 +59,12 @@
                 </TextBox>
                 <TextBlock Height="24" HorizontalAlignment="Left" Margin="159,230,0,0" x:Name="textBlockEmailId" Text="Email:" VerticalAlignment="Top" Width="45" Foreground="#363633"/>
                 <TextBlock Height="24" HorizontalAlignment="Left" Margin="157,280,0,0" x:Name="textBlockPassword" Text="Пароль:" VerticalAlignment="Top" Width="61" Foreground="#363633" />
-                <PasswordBox Style="{StaticResource roundcornerpassword}" Height="24" HorizontalAlignment="Left" Margin="230,278,0,0" x:Name="passwordBox1" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2"/>
-                
-                <TextBox Height="24" HorizontalAlignment="Left" x:Name="textBoxPassword"  VerticalAlignment="Top" Visibility="Collapsed" Width="222" Grid.ColumnSpan="2" Margin="230,278,0,0">
+                <PasswordBox Style="{StaticResource roundcornerpassword}" Height="24" HorizontalAlignment="Left" Margin="230,278,0,0" x:Name="passwordBox1" VerticalAlignment="Top" Width="222" Grid.ColumnSpan="2" KeyDown="TextBox_KeyDown"/>
+
+                <TextBox Height="24" HorizontalAlignment="Left" x:Name="textBoxPassword"  VerticalAlignment="Top" Visibility="Collapsed" Width="222" Grid.ColumnSpan="2" Margin="230,278,0,0" KeyDown="TextBox_KeyDown">
                     <TextBox.Template>
                         <ControlTemplate TargetType="TextBox">
-                            <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5">
+                            <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">
                                 <ScrollViewer x:Name="PART_ContentHost"/>
                             </Border>
                         </ControlTemplate>
@@ -105,6 +106,7 @@
             </Button>
             <TextBlock Height="24" HorizontalAlignment="Center" Margin="0,195,0,0" x:Name="textBlockHeading" Text="Увійдіть у свій обліковий запис:" VerticalAlignment="Top" Width="276"  FontSize="17" FontStretch="ExtraCondensed" FontWeight="Bold" RenderTransformOrigin="0.593,0.569"/>
             <!--<ContentControl x:Name="contentContainer"/>-->
+            <fa:ImageAwesome x:Name="Spinner" Icon="Spinner" Spin="True" SpinDuration="3" Height="20" Width="20" Margin="355,375,266,110" Visibility="Collapsed" Foreground="#40667D"/>
         </Grid>
 
     </Viewbox>

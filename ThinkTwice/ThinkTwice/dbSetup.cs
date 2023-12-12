@@ -1,10 +1,8 @@
-﻿using System;
-using System.Data.SqlClient;
-using System.IO;
-
-namespace DB_Setup
+﻿namespace DB_Setup
 {
-    public class SetupScript
+    using System.Data.SqlClient;
+
+    public class DbSetup
     {
         public void SetupDatabase()
         {
@@ -14,7 +12,7 @@ namespace DB_Setup
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            string connectionString = configuration.GetConnectionString("MasterConnection");
+            string? connectionString = configuration.GetConnectionString("MasterConnection");
             try
             {
                 // Читання SQL-скрипта з файлу
