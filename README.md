@@ -1,6 +1,15 @@
 # ThinkTwice
+---------------
+## Financial Management App
+This project is a financial management application designed to help users track their transactions and manage their finances effectively.
 
-Brief project description here.
+### Features
+
+Transaction Tracking: Users can easily record their income and expenses, categorize transactions, and add additional details such as dates and descriptions.
+
+Expense Analysis: The application provides visualizations and insights into users' spending habits through charts and graphs, allowing them to identify trends and make informed financial decisions.
+
+Budget Planning: Users can set budgets for different expense categories and receive notifications when they exceed predefined limits, helping them stay within their financial goals.
 
 ## How to Clone This Project
 
